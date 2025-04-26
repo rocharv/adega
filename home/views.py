@@ -1,7 +1,8 @@
 from .forms import LoginForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def home_index(request):
@@ -21,5 +22,14 @@ def home_login(request):
                 login(request, user)
                 return redirect("home_index")
             else:
-                form.add_error(None, "Invalid username or password.")
+                form.add_error(None, "Usuário ou senha inválidos.")
     return render(request, "home/login.html", {"form": form})
+
+def home_logout(request):
+    if request.user.is_authenticated:
+        logout(request)
+        # successfully logged out message
+        messages.success(request, "Você saiu com sucesso.")
+    else:
+        messages.warning(request, "Você não está logado.")
+    return redirect("home_login")

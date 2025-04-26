@@ -4,18 +4,36 @@
 {% block content %}
   <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card shadow bg-body-tertiary p-4" style="min-width: 300px; max-width: 400px;">
-      <!-- image in the center -->
       <div class="text-center mb-3">
         <img src="{% static 'home/images/adega_logo.png' %}" alt="adega_logo" style="width: 60px;height: 60px;">
       </div>
       <h2 class="text-center">Login</h2>
-      <form method="post" novalidate>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-grid mt-3">
-          <button type="submit" class="btn btn-primary">Login</button>
-        </div>
-      </form>
+      {% crispy form %}
+      {% if messages %}
+        {% for message in messages %}
+          <!-- success messages-->
+          {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">
+              {{ message }}
+            </div>
+          {% endif %}
+          <!-- error messages-->
+          {% if message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+          {% endif %}
+          <!-- warning messages-->
+          {% if message.tags == 'warning' %}
+            <div class="alert alert-warning" role="alert">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      <!-- <div class="d-grid mt-3">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div> -->
     </div>
   </div>
 {% endblock %}
