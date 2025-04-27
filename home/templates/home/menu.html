@@ -1,0 +1,128 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block body %}
+  <nav class="navbar navbar-expand-md shadow fixed-top bg-body-secondary" style="padding: 0rem; margin: 5px;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home_index' %}">
+          <img src="{% static 'home/images/three_barrels_light.png' %}" alt="Logo" class="img-fluid" style="width: 40px; height: auto;">
+        Adega
+        </a>
+        <!-- Navbar small screens -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Navbar lefthand links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Armazéns
+            </a>
+            <ul class="dropdown-menu bg-body-secondary shadow">
+              <li><a class="dropdown-item" href="/warehouse/add">Incluir</a></li>
+              <li><a class="dropdown-item" href="/warehouse/list">Listar/Editar/Apagar</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/warehouse/set_default">Definir Padrão</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/warehouse/transfer">Transferências</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Pessoas
+            </a>
+            <ul class="dropdown-menu bg-body-secondary shadow">
+              <li><a class="dropdown-item" href="/person/add/">Incluir</a></li>
+              <li><a class="dropdown-item" href="/person/list/">Listar/Editar/Apagar</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/person/set_default">Definir Padrão</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Empresas
+            </a>
+            <ul class="dropdown-menu bg-body-secondary shadow">
+              <li><a class="dropdown-item" href="/person/add/">Incluir</a></li>
+              <li><a class="dropdown-item" href="/person/list/">Listar/Editar/Apagar</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categoria de itens
+            </a>
+            <ul class="dropdown-menu bg-body-secondary shadow">
+              <li><a class="dropdown-item" href="category/add/">Incluir</a></li>
+              <li><a class="dropdown-item" href="category/list/">Listar/Editar/Apagar</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Itens
+            </a>
+            <ul class="dropdown-menu bg-body-secondary shadow">
+              <li><a class="dropdown-item" href="item/add/">Incluir</a></li>
+              <li><a class="dropdown-item" href="item/list/">Listar/Editar/Apagar</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Transações
+            </a>
+            <ul class="dropdown-menu bg-body-secondary shadow">
+              <li><a class="dropdown-item" href="transaction/add/">Incluir</a></li>
+              <li><a class="dropdown-item" href="transaction/list/">Listar/Editar/Apagar</a></li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home_help' %}">
+              Ajuda
+            </a>
+          </li>
+
+        </ul>
+
+        <!-- Navbar righthand links -->
+        <ul class="navbar-nav mb-2">
+            <li class="nav-item dropdown">
+            <a class="nav-link d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle" style="color: #0AF; font-size: 2rem;"></i>
+                {% if user.is_superuser %}
+                <i class="bi bi-shield-lock" style="color: #FA0; font-size: 1rem; position: relative; top: 0.5rem;"></i>
+              {% endif %}
+              <span class="ms-2">{{ user.username }}</span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Alterar senha</a></li>
+              {% if user.is_superuser %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center" href="{% url 'admin:index' %}">
+                  Gerenciar usuários
+                  <i class="bi bi-shield-lock ms-2" style="color: #FA0; font-size: 1rem;"></i>
+                  </a>
+                </li>
+              {% endif %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'home_logout' %}">Fazer logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="container" style="margin-top: 6rem;">
+    {% block content %}
+    {% endblock %}
+  </div>
+{% endblock %}

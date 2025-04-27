@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={"placeholder": "Senha"})
     )
 
-    def __init__(self, *args, is_view_only=False ,**kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         # Set the form tag attributes

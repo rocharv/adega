@@ -1,0 +1,73 @@
+{% extends 'home/menu.html' %}
+{% load static %}
+{% block content %}
+  <!-- Section  -->
+  <h1>Ajuda</h1>
+
+  <!-- Greetings -->
+  <h4 style="font-style: italic;">
+    Olá{% if user.first_name %}, {{ user.first_name }} {{ user.last_name }}{% endif %}!
+  </h4>
+
+  <!-- Text -->
+  <p>
+    A <code>Adega</code> é um sistema de gerenciamento de inventário.
+  </p>
+  <p>
+    O seu nome foi inspirado no local onde se armazenam bebidas, especialmente vinhos. Já que a <code>Adega</code> foi desenvolvida originalmente para gerenciar o inventário da <b>Secretaria de TI</b> da
+    <a href="https://www.vinhedo.sp.gov.br/">Prefeitura de Vinhedo.</a>
+  </p>
+  <div class="card bg-body-secondary" style="padding: 1rem; max-width: 15rem;">
+    <p class="card-title">
+      A <code>Adega</code> ajuda a gerenciar:
+      <ul class="card-body">
+        <li>Armazéns</li>
+        <li>Pessoas</li>
+        <li>Empresas</li>
+        <li>Categoria de itens</li>
+        <li>Itens</li>
+      </ul>
+    </p>
+  </div>
+  <h2>Armazéns</h2>
+  <p>
+    Um <code>armazém</code>, na perspectiva do sistema, é qualquer local onde possam ser gerenciados itens.
+  </p>
+  <p>
+    Ele pode ser um almoxarifado, um depósito, uma sala, um armário, etc.
+  </p>
+  <p>
+    O <code>armazém padrão</code> nada mais é do que aquele que aparecerá por padrão, pré-selecionado, em todos os campos de seleção de <code>armazém</code> do sistema. Ele pode ser alterado a qualquer momento.
+  </p>
+  <div class="bd-callout bd-callout-info">
+    <strong>Dica: </strong>
+    Não é recomendada a criação indiscriminada de armazéns, já que isso pode tornar mais lenta a gestão do inventário. O ideal é criar armazéns apenas para locais que realmente necessitem de controle.
+  </div>
+
+  <h2>Pessoas</h2>
+  <p>
+      Uma <code>pessoa</code> é qualquer indivíduo que precise estar cadastrada no sistema. Ela pode ser uma funcionária, uma colaboradora, uma fornecedora, uma cliente, etc.
+  </p>
+
+  <h2>Empresas</h2>
+  <p>
+      Uma <code>empresa</code> é qualquer entidade que precise estar cadastrada no sistema. Ela pode ser uma empresa, uma instituição, um órgão público, etc.
+  </p>
+
+  <h2>Itens & Categoria de Itens</h2>
+  <p>
+      Um <code>item</code> é qualquer coisa que possa ser gerenciada em um <code>armazém</code>. Ele pode ser um produto, um equipamento, um material, uma licença digital de software, etc. Porém, todo <code>item</code> deve ter uma maneira de ser <strong>unicamente identificado</strong>, seja por um número de série, uma etiqueta patrimonial ou, no limite, o <code>id</code> gerado pelo sistema.
+  </p>
+  <p>
+      Todo <code>item</code> deve ser criado a partir de uma <code>categoria de itens</code>. A <code>categoria de itens</code> é uma abstração que define as características comuns de um grupo de itens.
+  <p>
+      Por exemplo, <code>a categoria de itens</code> com o nome <strong>"Apple iPhone 16 Pro Max - Titânio Preto"</strong> define perfeitamente um tipo de celular, mas não define um <code>item</code> armazenável. Um <code>item</code> precisa ter sido criado a partir de uma <code>categoria de itens</code> e conter um número exclusivo.
+  </p>
+  <p>
+      Uma <code>categoria de itens</code> não pode ser incluída ou removida de um armazém.
+  </p>
+  <div class="bd-callout bd-callout-info">
+    <strong>Dica: </strong>
+    A vantagem de criar uma <code>categoria de itens</code> é que ela permite o cadastro em massa de diversos item no <code>armazém</code>, cada um com seu <strong>id</strong> de sistema. Posteriormente, é possível entrar no <code>armazém</code> e editar detalhes dos <code>itens</code> individualmente sempre que necessário, atribuindo-lhes um número de série, etiqueta patrimonial etc.
+  </div>
+{% endblock %}
