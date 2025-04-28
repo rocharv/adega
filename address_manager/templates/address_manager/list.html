@@ -1,1 +1,122 @@
-Hello Address Manager!
+{% extends "home/menu.html" %}
+{% block content %}
+  <table id="address-table" class="table table-striped" style=" width:100%">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Logradouro</th>
+        <th>Número</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>Criado em</th>
+      </tr>
+    </thead>
+    <!-- <tfoot>
+      <tr>
+        <th>Id</th>
+        <th>Logradouro</th>
+        <th>Número</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>Criado em</th>
+      </tr>
+    </tfoot> -->
+  </table>
+  <button id="create_button" class="btn btn-primary">Incluir</button>
+  <button id="view_button" class="btn btn-primary disabled">Detalhes</button>
+  <button id="edit_button" class="btn btn-primary disabled">Editar</button>
+  <button id="delete_button" class="btn btn-danger disabled">Apagar</button>
+  <script>
+    const table = new DataTable('#address-table', {
+      ajax: '{% url "address_list_api" %}',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
+      },
+      processing: true,
+      serverSide: true,
+    });
+
+    selectedRowsIds = [];
+    // Mark the selected rows using the DataTable API
+    table.on('click', 'tbody tr', function (e) {
+      e.currentTarget.classList.toggle('selected');
+    });
+
+    // Add selected rows ids to selectRowsIds array using the html element
+    // on click event in addrss-table tr
+    $( "table " ).on('click', 'tbody tr', function (e) {
+      const rowId = e.currentTarget.cells[0].innerText;
+      if (selectedRowsIds.includes(rowId)) {
+        selectedRowsIds = selectedRowsIds.filter(id => id !== rowId);
+      } else {
+        selectedRowsIds.push(rowId);
+      }
+      // if there are exactly 1 selected row, enable the edit button
+      if (selectedRowsIds.length === 1) {
+        document.querySelector('#view_button').classList.remove('disabled');
+        document.querySelector('#edit_button').classList.remove('disabled');
+      } else {
+        document.querySelector('#view_button').classList.add('disabled');
+        document.querySelector('#edit_button').classList.add('disabled');
+      }
+      // if there are more than 0 selected rows, enable the delete button
+      if (selectedRowsIds.length > 0) {
+        document.querySelector('#delete_button').classList.remove('disabled');
+      } else {
+        document.querySelector('#delete_button').classList.add('disabled');
+      }
+
+    });
+
+
+    // Include button event
+    document.querySelector('#create_button').addEventListener('click', function () {
+      window.location.href = "{% url 'address_create' %}";
+    });
+
+    // View button event
+    document.querySelector('#view_button').addEventListener('click', function () {
+        if (selectedRowsIds.length === 1) {
+          window.location.href = "/address_manager/view/" + selectedRowsIds[0] + "/";
+        }
+    });
+
+    // Edit button event
+    document.querySelector('#edit_button').addEventListener('click', function () {
+        if (selectedRowsIds.length === 1) {
+          window.location.href = "/address_manager/edit/" + selectedRowsIds[0] + "/";
+        }
+    });
+
+    // Delete button event
+    document.querySelector('#delete_button').addEventListener('click', function () {
+      // confirm the delete action
+      answer = confirm("Você tem certeza que deseja apagar o(s) endereço(s) selecionado(s)?");
+      if (!answer) {
+        return;
+      } else {
+        // ajax delete request
+        $.ajax({
+          url: "{% url 'address_delete' %}",
+          type: "POST",
+          data: {
+            ids: selectedRowsIds,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function (response) {
+            // reload the datatable
+            table.ajax.reload();
+            // reset the selected rows in datatables tabl object and in the selectedRowsIds array
+            selectedRowsIds = [];
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr);
+            alert("Erro ao apagar o(s) endereço(s) selecionado(s).");
+          }
+        });
+      }
+      // reset the selected rows in datatables tabl object and in the selectedRowsIds array
+      selectedRowsIds = [];
+    });
+  </script>
+{% endblock %}

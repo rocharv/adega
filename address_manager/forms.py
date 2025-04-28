@@ -60,12 +60,12 @@ class AddressForm(forms.ModelForm):
             # Disable all fields in the form
             for field_name, field in self.fields.items():
                 field.widget.attrs.update({"disabled": "disabled"})
-            # Add to current layout a button to go back to root
+            # Add to current layout a button to go back to list address
             self.helper.layout.append(
                 Button(
                     "cancel", "Voltar",
                     css_class="btn btn-primary",
-                    onclick="window.location.href='/'",
+                    onclick="window.location.href='/address_manager/list/'",
                 ),
             )
         else:
@@ -76,7 +76,7 @@ class AddressForm(forms.ModelForm):
                     Button(
                         "cancel", "Cancelar",
                         css_class="btn btn-secondary",
-                        onclick="window.location.href='/'",
+                        onclick="window.location.href='/address_manager/list/'",
                     ),
                 )
             )
