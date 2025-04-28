@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -6,4 +6,10 @@ urlpatterns = [
     path('help/', views.home_help, name='home_help'),
     path('login/', views.home_login, name='home_login'),
     path('logout/', views.home_logout, name='home_logout'),
+
+    path(
+        'address_manager/',
+         include('address_manager.urls'),
+         name='address_manager'
+    ),
 ]

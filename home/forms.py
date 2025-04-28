@@ -29,5 +29,5 @@ class LoginForm(forms.Form):
         self.helper.layout = Layout(
             FloatingField("username"),
             FloatingField("password"),
+            Submit("submit", "Login", css_class="w-100"),
         )
-        self.helper.add_input(Submit("submit", "Login", css_class="w-100"))
