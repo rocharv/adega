@@ -25,7 +25,7 @@ def address_create(request):
         else:
             messages.error(
                 request,
-                VERBOSE_NAME + " anterior não foi criada(o)."
+                VERBOSE_NAME + " anterior não foi criado(a)."
             )
             # return the form with errors
     else:
@@ -50,10 +50,33 @@ def address_delete(request):
     return redirect(address_list)
 
 def address_edit(request, id):
-    pass
+    ACTION = "Alterar " + VERBOSE_NAME
+    # Get the address object by id
+    address = Address.objects.get(id=id)
+    # Create the form with the address object
+    if request.method == "POST":
+        form = AddressForm(request.POST, instance=address)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                VERBOSE_NAME + " anterior alterado(a) com sucesso."
+            )
+            return redirect(address_list)
+        else:
+            messages.error(
+                request,
+                VERBOSE_NAME + " anterior não foi alterado(a)."
+            )
+    else:
+        form = AddressForm(instance=address)
+    return render(
+        request, "address_manager/create_view.html",
+        {'form': form, 'action': ACTION},
+    )
 
 def address_list(request):
-    ACTION = "Visualizar " + VERBOSE_NAME_PLURAL
+    ACTION = "Listar/Editar/Apagar " + VERBOSE_NAME_PLURAL
     addresses = Address.objects.all()
     return render(
         request, "address_manager/list.html",

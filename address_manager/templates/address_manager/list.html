@@ -1,39 +1,38 @@
 {% extends "home/menu.html" %}
 {% block content %}
-  <table id="address-table" class="table table-striped" style=" width:100%">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Logradouro</th>
-        <th>Número</th>
-        <th>Cidade</th>
-        <th>Estado</th>
-        <th>Criado em</th>
-      </tr>
-    </thead>
-    <!-- <tfoot>
-      <tr>
-        <th>Id</th>
-        <th>Logradouro</th>
-        <th>Número</th>
-        <th>Cidade</th>
-        <th>Estado</th>
-        <th>Criado em</th>
-      </tr>
-    </tfoot> -->
-  </table>
-  <button id="create_button" class="btn btn-primary">Incluir</button>
-  <button id="view_button" class="btn btn-primary disabled">Detalhes</button>
-  <button id="edit_button" class="btn btn-primary disabled">Editar</button>
-  <button id="delete_button" class="btn btn-danger disabled">Apagar</button>
+  <div class="card bg-body-tertiary shadow" style="padding: 1rem;">
+    <h3 style="margin-bottom: 2rem;">{{ action }}</h3>
+    <p>Selecione uma (ou mais) linhas na tabela abaixo e clique em um dos botões para executar a ação.</p>
+    <table id="address-table" class="table table-striped" style=" width:100%">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Logradouro</th>
+          <th>Número</th>
+          <th>Cidade</th>
+          <th>Estado</th>
+          <th>Criado em</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem;">
+      <button id="create_button" class="btn btn-primary">Incluir</button>
+      <button id="view_button" class="btn btn-primary disabled">Detalhes</button>
+      <button id="edit_button" class="btn btn-primary disabled">Editar</button>
+      <button id="delete_button" class="btn btn-danger disabled">Apagar</button>
+
+    </div>
+  </div>
   <script>
     const table = new DataTable('#address-table', {
       ajax: '{% url "address_list_api" %}',
       language: {
-        url: '//cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
+        url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
       },
-      processing: true,
+      processing: true, // show loading indicator
       serverSide: true,
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50, 100],
     });
 
     selectedRowsIds = [];

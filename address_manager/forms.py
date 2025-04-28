@@ -72,7 +72,7 @@ class AddressForm(forms.ModelForm):
             # Add to current layout both buttons to submit and cancel
             self.helper.layout.append(
                 ButtonHolder(
-                    Submit("submit", "Incluir", css_class="btn btn-primary"),
+                    Submit("submit", "Confirmar", css_class="btn btn-primary"),
                     Button(
                         "cancel", "Cancelar",
                         css_class="btn btn-secondary",
