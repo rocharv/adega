@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <a class="navbar-brand">
           <img src="{% static 'home/images/three_barrels_light.png' %}" alt="Logo" class="img-fluid" style="width: 40px; height: auto;">
-        Adega
+          Adega
         </a>
         <!-- Navbar small screens -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,19 +89,17 @@
             </ul>
           </li>
 
-
           <li class="nav-item">
             <a class="nav-link" href="{% url 'home_help' %}">
               Ajuda
             </a>
           </li>
-
         </ul>
 
         <!-- Navbar righthand links -->
-        <ul class="navbar-nav mb-2">
+        <ul class="navbar-nav mb-2" style="align-items: center;">
             <li class="nav-item dropdown">
-            <a class="nav-link d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link d-flex align-items-center" style="padding: 0px;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-person-circle" style="color: #0AF; font-size: 2rem;"></i>
                 {% if user.is_superuser %}
                 <i class="bi bi-shield-lock" style="color: #FA0; font-size: 1rem; position: relative; top: 0.5rem;"></i>
