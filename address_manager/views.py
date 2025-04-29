@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db import transaction
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -39,14 +40,15 @@ def address_delete(request):
     ACTION = "Excluir " + VERBOSE_NAME
     # Get the address object by id
     if request.method == "POST":
-        # delete all related ids
-        print("Rodrigo:")
-        print(request.POST.getlist('ids'))
-        Address.objects.filter(id__in=request.POST.getlist('ids'))
+        # delete all related ids in a single atomic bulk transaction
+        ids = request.POST.getlist('selected_rows[]')
+        with transaction.atomic():
+            Address.objects.filter(id__in=ids).delete()
         messages.success(
             request,
             VERBOSE_NAME + " anterior excluída(o) com sucesso."
         )
+
     return redirect(address_list)
 
 def address_edit(request, id):

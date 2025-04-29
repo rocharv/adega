@@ -62,11 +62,14 @@ class AddressForm(forms.ModelForm):
                 field.widget.attrs.update({"disabled": "disabled"})
             # Add to current layout a button to go back to list address
             self.helper.layout.append(
-                Button(
-                    "cancel", "Voltar",
-                    css_class="btn btn-primary",
-                    onclick="window.location.href='/address_manager/list/'",
-                ),
+                ButtonHolder(
+                    Button(
+                        "cancel", "Voltar",
+                        css_class="btn btn-primary",
+                        onclick="window.location.href='/address_manager/list/'",
+                    ),
+                    css_class="d-grid gap-2 d-md-flex justify-content-end",
+                )
             )
         else:
             # Add to current layout both buttons to submit and cancel
@@ -78,5 +81,6 @@ class AddressForm(forms.ModelForm):
                         css_class="btn btn-secondary",
                         onclick="window.location.href='/address_manager/list/'",
                     ),
+                    css_class="d-grid gap-2 d-md-flex justify-content-end",
                 )
             )

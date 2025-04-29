@@ -5,7 +5,7 @@ from django.db import transaction
 from django.db.models import Model
 from address_manager.models import Address
 
-# Keep your helper functions
+# Helper function to add row dict to the model
 def add_to_model(model: Model, rows: list[dict]):
     # Create a list of dictionaries with the address data
     instances = [model(**data) for data in rows]
@@ -38,14 +38,15 @@ def generate_addresses(n: int = 100):
 
 # Define the Command class
 class Command(BaseCommand):
-    help = 'Generates fake addresses and adds them to the database.' # Add help text
-
-    # You can add arguments to your command here if needed
-    # def add_arguments(self, parser):
-    #     parser.add_argument('num_addresses', type=int, help='The number of addresses to generate')
-
+    help = 'Generates fake addresses and adds them to the database.'
     def handle(self, *args, **options):
         self.stdout.write("Generating fake addresses...")
-        # Call your main logic function here
-        generate_addresses(100_100)
-        self.stdout.write(self.style.SUCCESS("Successfully generated and added addresses."))
+        # Try to generate addresses
+        try:
+            generate_addresses(100_100)
+        except Exception as e:
+            self.stdout.write(self.style.ERROR("Error generating addresses."))
+            return
+        self.stdout.write(
+            self.style.SUCCESS("Successfully generated and added addresses.")
+        )
