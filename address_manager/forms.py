@@ -14,13 +14,17 @@ class CrudForm(forms.ModelForm):
 
     def __init__(self, *args, is_view_only=False ,**kwargs):
         super().__init__(*args, **kwargs)
+
+        # Set atributte helper to crispy-forms FormHelper
         self.helper = FormHelper()
-        # Set the form tag attributes
+
+        # Set the form tag attributes and avoid browser validation
         self.helper.form_class = 'form-floating'
         self.helper.form_method = 'post'
         self.helper.attrs = {
             "novalidate": "novalidate",
         }
+
         # Set the layout of the form
         self.helper.layout = Layout(
             FloatingField("zip_code"),
@@ -49,13 +53,10 @@ class CrudForm(forms.ModelForm):
                 "style": "height: 10rem",
             }
         )
+
         # Add placeholders to all fields and disable them if is_view_only
         for field_name, field in self.fields.items():
             field.widget.attrs.update({"placeholder": field.label})
-        # Set the label for the 'company' field to show the short name
-        # instead of the default string representation
-        # self.fields["company"].label_from_instance = lambda obj: obj.short_name
-        # # change action to return to "/person/list/" in case of is_view_only
         if is_view_only:
             # Disable all fields in the form
             for field_name, field in self.fields.items():

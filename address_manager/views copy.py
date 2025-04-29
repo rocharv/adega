@@ -22,6 +22,7 @@ except ImportError:
     )
 
 # Constants to define crud operations
+ENTITY_PLURAL = "addresses"
 ALL_FIELDS = [
     field.name.split('.')[-1] for field in MODEL._meta.get_fields()
         if not field.primary_key and not
@@ -65,8 +66,7 @@ def address_create(request):
     else:
         form = CrudForm()
     return render(
-        request,
-        APP_STR + "/create_view.html",
+        request, APP_STR + "/create_view.html",
         {'form': form, 'action': ACTION},
     )
 
@@ -99,10 +99,12 @@ def address_edit(request, id):
 
 def address_list(request):
     ACTION = "Listar/Editar/Apagar " + VERBOSE_NAME_PLURAL
+    entities = MODEL.objects.all()
     return render(
-        request,
-        APP_STR + "/list.html",
-        {'action': ACTION},
+        request, APP_STR + "/list.html",
+        {
+            ENTITY_PLURAL: entities,
+            'action': ACTION},
     )
 
 def address_list_api(request):
@@ -164,7 +166,6 @@ def address_view(request, id):
     # Create the form with the entity object
     form = CrudForm(instance=entity, is_view_only=True)
     return render(
-        request,
-        APP_STR +"/create_view.html",
+        request, APP_STR +"/create_view.html",
         {'form': form, 'action': ACTION},
     )
