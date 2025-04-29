@@ -1,30 +1,20 @@
-from django.apps import apps
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .forms import CrudForm
+from .forms import AddressForm
+from .models import Address
 
-# Dynamic import of a class models
-APP_STR = "address_manager"
-MODEL_STR = "Address"
-try:
-    MODEL = apps.get_model(APP_STR, MODEL_STR)
-except ImportError:
-    MODEL = None
-    raise ImportError(
-        f"Model {MODEL_STR} not found in app {APP_STR}. Please check the model name and app name."
-    )
-ENTITY_PLURAL = "addresses"
-VERBOSE_NAME = MODEL._meta.verbose_name.lower()
-VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
 
+VERBOSE_NAME = Address._meta.verbose_name.lower()
+VERBOSE_NAME_PLURAL = Address._meta.verbose_name_plural.lower()
 
 def address_create(request):
     ACTION = "Incluir " + VERBOSE_NAME
     if request.method == "POST":
-        form = CrudForm(request.POST)
+        form = AddressForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(
@@ -32,7 +22,7 @@ def address_create(request):
                 VERBOSE_NAME + " anterior criada(o) com sucesso."
             )
             # clear the form
-            form = CrudForm()
+            form = AddressForm()
         else:
             messages.error(
                 request,
@@ -40,7 +30,7 @@ def address_create(request):
             )
             # return the form with errors
     else:
-        form = CrudForm()
+        form = AddressForm()
     return render(
         request, "address_manager/create_view.html",
         {'form': form, 'action': ACTION},
@@ -48,26 +38,26 @@ def address_create(request):
 
 def address_delete(request):
     ACTION = "Excluir " + VERBOSE_NAME
-    # Get the entity object by id
+    # Get the address object by id
     if request.method == "POST":
         # delete all related ids in a single atomic bulk transaction
         ids = request.POST.getlist('selected_rows[]')
         with transaction.atomic():
-            MODEL.objects.filter(id__in=ids).delete()
+            Address.objects.filter(id__in=ids).delete()
 
     return redirect(address_list)
 
 def address_edit(request, id):
     ACTION = "Alterar " + VERBOSE_NAME
     # Get the address object by id
-    entity = MODEL.objects.get(id=id)
+    address = Address.objects.get(id=id)
     # Create the form with the address object
     if request.method == "POST":
-        form = CrudForm(request.POST, instance=entity)
+        form = AddressForm(request.POST, instance=address)
         if form.is_valid():
             form.save()
     else:
-        form = CrudForm(instance=entity)
+        form = AddressForm(instance=address)
     return render(
         request, "address_manager/create_view.html",
         {'form': form, 'action': ACTION},
@@ -75,11 +65,11 @@ def address_edit(request, id):
 
 def address_list(request):
     ACTION = "Listar/Editar/Apagar " + VERBOSE_NAME_PLURAL
-    entities = MODEL.objects.all()
+    addresses = Address.objects.all()
     return render(
         request, "address_manager/list.html",
         {
-            ENTITY_PLURAL: entities,
+            'addresses': addresses,
             'action': ACTION},
     )
 
@@ -111,7 +101,7 @@ def address_list_api(request):
         order_column_name = f"-{order_column_name}"
 
     # --- Base QuerySet ---
-    queryset = MODEL.objects.all() #
+    queryset = Address.objects.all() #
 
     # --- Total Records (before filtering) ---
     records_total = queryset.count()
@@ -162,10 +152,10 @@ def address_list_api(request):
 
 def address_view(request, id):
     ACTION = "Visualizar " + VERBOSE_NAME
-    # Get the entity object by id
-    entity = MODEL.objects.get(id=id)
-    # Create the form with the entity object
-    form = CrudForm(instance=entity, is_view_only=True)
+    # Get the address object by id
+    address = Address.objects.get(id=id)
+    # Create the form with the address object
+    form = AddressForm(instance=address, is_view_only=True)
     return render(
         request, "address_manager/create_view.html",
         {'form': form, 'action': ACTION},

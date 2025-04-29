@@ -5,7 +5,7 @@ from crispy_bootstrap5.bootstrap5 import FloatingField
 from .models import Address
 
 
-class CrudForm(forms.ModelForm):
+class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = "__all__"
