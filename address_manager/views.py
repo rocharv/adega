@@ -6,9 +6,32 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .forms import CrudForm
 
-# Dynamic import of a class models
+
+# Constants to define crud operations
 APP_STR = "address_manager"
 MODEL_STR = "Address"
+ENTITY_PLURAL = "addresses"
+TABLE_COLUMNS = {
+        0: 'id',         # Assuming you want the model's primary key as 'Id'
+        1: 'street',     # Corresponds to 'Logradouro'
+        2: 'number',     # Corresponds to 'Número'
+        3: 'city',       # Corresponds to 'Cidade'
+        4: 'state',      # Corresponds to 'Estado'
+        5: 'created_at', # Corresponds to 'Criado em'
+}
+def get_query(search_value):
+    return (
+        Q(street__icontains=search_value) |       # Search 'Logradouro'
+        Q(number__icontains=search_value) |       # Search 'Número'
+        Q(city__icontains=search_value) |         # Search 'Cidade'
+        Q(state__icontains=search_value) |        # Search 'Estado'
+        Q(zip_code__icontains=search_value) |     # Added zip_code
+        Q(neighborhood__icontains=search_value)  # Added neighborhood
+        # Add Q(id__icontains=search_value) if you want to search by ID,
+        # but it might need conversion if search_value isn't numeric.
+    )
+
+# Dynamic import of a class models
 try:
     MODEL = apps.get_model(APP_STR, MODEL_STR)
 except ImportError:
@@ -16,10 +39,8 @@ except ImportError:
     raise ImportError(
         f"Model {MODEL_STR} not found in app {APP_STR}. Please check the model name and app name."
     )
-ENTITY_PLURAL = "addresses"
 VERBOSE_NAME = MODEL._meta.verbose_name.lower()
 VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
-
 
 def address_create(request):
     ACTION = "Incluir " + VERBOSE_NAME
@@ -42,7 +63,7 @@ def address_create(request):
     else:
         form = CrudForm()
     return render(
-        request, "address_manager/create_view.html",
+        request, APP_STR + "/create_view.html",
         {'form': form, 'action': ACTION},
     )
 
@@ -69,7 +90,7 @@ def address_edit(request, id):
     else:
         form = CrudForm(instance=entity)
     return render(
-        request, "address_manager/create_view.html",
+        request, APP_STR + "/create_view.html",
         {'form': form, 'action': ACTION},
     )
 
@@ -77,7 +98,7 @@ def address_list(request):
     ACTION = "Listar/Editar/Apagar " + VERBOSE_NAME_PLURAL
     entities = MODEL.objects.all()
     return render(
-        request, "address_manager/list.html",
+        request, APP_STR + "/list.html",
         {
             ENTITY_PLURAL: entities,
             'action': ACTION},
@@ -93,20 +114,12 @@ def address_list_api(request):
     # --- Column mapping (MUST match your HTML table header order and models.py fields) ---
     # This maps the DataTables column index (0, 1, 2...) to your Address model field names
     # Ensure this order matches the <th> order in your HTML: Id, Logradouro, Número, Cidade, Estado, Criado em
-    column_mapping = {
-        0: 'id',         # Assuming you want the model's primary key as 'Id'
-        1: 'street',     # Corresponds to 'Logradouro'
-        2: 'number',     # Corresponds to 'Número'
-        3: 'city',       # Corresponds to 'Cidade'
-        4: 'state',      # Corresponds to 'Estado'
-        5: 'created_at', # Corresponds to 'Criado em'
-    }
 
     # --- Sorting ---
     order_column_index = int(request.GET.get('order[0][column]', 0))
     order_dir = request.GET.get('order[0][dir]', 'asc')
     # Get the field name from mapping, default to 'id' if index is out of bounds
-    order_column_name = column_mapping.get(order_column_index, 'id')
+    order_column_name = TABLE_COLUMNS.get(order_column_index, 'id')
     if order_dir == 'desc':
         order_column_name = f"-{order_column_name}"
 
@@ -119,17 +132,7 @@ def address_list_api(request):
     # --- Filtering (Global Search) ---
     # Adjust fields included in the search based on your model and table
     if search_value:
-        search_filter = (
-            Q(street__icontains=search_value) |       # Search 'Logradouro'
-            Q(number__icontains=search_value) |       # Search 'Número'
-            Q(city__icontains=search_value) |         # Search 'Cidade'
-            Q(state__icontains=search_value) |        # Search 'Estado'
-            Q(zip_code__icontains=search_value) |     # Added zip_code
-            Q(neighborhood__icontains=search_value) # Added neighborhood
-            # Add Q(id__icontains=search_value) if you want to search by ID,
-            # but it might need conversion if search_value isn't numeric.
-        )
-        queryset = queryset.filter(search_filter)
+        queryset = queryset.filter(get_query(search_value))
 
     # --- Filtered Records Count ---
     records_filtered = queryset.count()
@@ -140,16 +143,13 @@ def address_list_api(request):
 
     # --- Prepare data for JSON response ---
     data = []
-    for address in queryset:
-        data.append([
-            address.id,                                  # Id
-            address.street,                              # Logradouro
-            address.number,                              # Número
-            address.city,                                # Cidade
-            address.state,                               # Estado
-            address.created_at.strftime('%Y-%m-%d %H:%M:%S') # Criado em
-                if address.created_at else ''             # Format date safely
-        ])
+    row = []
+    for qs in queryset:
+        row.clear()
+        for col in TABLE_COLUMNS.values():
+            col_value = getattr(qs, col)
+            row.append(col_value)
+        data.append(row.copy())
 
     # --- 5. Format JSON Response ---
     response = {
@@ -167,6 +167,6 @@ def address_view(request, id):
     # Create the form with the entity object
     form = CrudForm(instance=entity, is_view_only=True)
     return render(
-        request, "address_manager/create_view.html",
+        request, APP_STR +"/create_view.html",
         {'form': form, 'action': ACTION},
     )
