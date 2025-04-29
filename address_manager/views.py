@@ -44,10 +44,6 @@ def address_delete(request):
         ids = request.POST.getlist('selected_rows[]')
         with transaction.atomic():
             Address.objects.filter(id__in=ids).delete()
-        messages.success(
-            request,
-            VERBOSE_NAME + " anterior excluída(o) com sucesso."
-        )
 
     return redirect(address_list)
 
@@ -60,16 +56,6 @@ def address_edit(request, id):
         form = AddressForm(request.POST, instance=address)
         if form.is_valid():
             form.save()
-            messages.success(
-                request,
-                VERBOSE_NAME + " anterior alterado(a) com sucesso."
-            )
-            return redirect(address_list)
-        else:
-            messages.error(
-                request,
-                VERBOSE_NAME + " anterior não foi alterado(a)."
-            )
     else:
         form = AddressForm(instance=address)
     return render(

@@ -95,10 +95,12 @@
 
         // Check if rowData is not empty and has at least one element
         if (rowData.length > 0 && rowData[0].length > 0) {
-          // Get the content of the first cell (index 0) of the first selected row
+          // Get the content of the first cell (index 0) of the
+          // first selected row
           var firstCellContent = rowData[0][0];
 
-          // if the first cell content is in the selectedRowsIds array, remove it
+          // if the first cell content is in the selectedRowsIds array,
+          //  remove it
           if (selectedRowsIds.includes(firstCellContent)) {
             selectedRowsIds = selectedRowsIds.filter(function(item) {
               return item !== firstCellContent;
@@ -118,18 +120,31 @@
       });
       $('#view_button').click(function() {
         if (!$(this).prop('disabled')) {
-          window.location.href = '/address_manager/view/' + selectedRowsIds[0] + '/';
+          window.location.href = '/address_manager/view/' +
+            selectedRowsIds[0] + '/';
         }
       });
 
       $('#edit_button').click(function() {
         if (!$(this).prop('disabled')) {
-          window.location.href = '/address_manager/edit/' + selectedRowsIds[0] + '/';
+          window.location.href = '/address_manager/edit/' +
+            selectedRowsIds[0] + '/';
         }
       });
 
       $('#delete_button').click(function() {
-        if (!$(this).prop('disabled')) {
+        // Show confirmation dialog before deletion
+        // it shows the total number of selected rows
+        if (selectedRowsIds.length > 1) {
+          var isConfirmationOk = confirm('Você tem certeza que deseja apagar '
+            + selectedRowsIds.length + ' registros?' +
+          'escolhidos: ' + selectedRowsIds.join(', '));
+        } else {
+          var isConfirmationOk =
+           confirm('Você tem certeza que deseja apagar o registro ' +
+           selectedRowsIds[0] + '?');
+        }
+        if (!$(this).prop('disabled') && isConfirmationOk) {
           // Send a POST request to the delete URL with the selected row IDs
           $.ajax({
             url: '/address_manager/delete/',
