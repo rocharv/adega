@@ -23,9 +23,11 @@ except ImportError:
 
 # Constants to define crud operations
 ENTITY_PLURAL = "addresses"
-ALL_FIELDS = [field.name for field in MODEL._meta.get_fields()
-              if not field.primary_key and not
-              isinstance(field, (ForeignKey, OneToOneField, ManyToManyField))]
+ALL_FIELDS = [
+    field.name.split('.')[-1] for field in MODEL._meta.get_fields()
+        if not field.primary_key and not
+        isinstance(field, (ForeignKey, OneToOneField, ManyToManyField))
+]
 TABLE_COLUMNS = { # Insert here the columns you want to show in the table
     0: 'id', # this is mandatory
     1: 'street',
