@@ -1,10 +1,12 @@
+from .forms import CrudForm
 from django.apps import apps
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import ForeignKey, ManyToManyField, Model, OneToOneField, Q
+from django.db.models import (
+    ForeignKey, ManyToManyField, Model, OneToOneField, Q
+)
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .forms import CrudForm
 
 
 # Dynamic import of a class model described by MODEL_STR
@@ -112,20 +114,30 @@ def address_list_api(request):
     order_column_index = int(request.GET.get('order[0][column]', 0))
     order_dir = request.GET.get('order[0][dir]', 'asc')
 
-    # Get the field name from mapping, default to 'id' if index is out of bounds
+    # Get the field name from mapping,
+    # default to 'id' if index is out of bounds
     order_column_name = TABLE_COLUMNS.get(order_column_index, 'id')
     if order_dir == 'desc':
         order_column_name = f"-{order_column_name}"
+
     # Base QuerySet
-    queryset = MODEL.objects.all() #
+    queryset = MODEL.objects.all()
+
     # Total records count before filtering
     records_total = queryset.count()
+
     # Filter records based on search value, matching any column
     if search_value:
-        queryset = queryset.filter(get_match_in_any_column_query(search_value))
+        queryset = queryset.filter(
+            get_match_in_any_column_query(search_value)
+        )
     records_filtered = queryset.count()
+
     # Apply sorting and pagination
-    queryset = queryset.order_by(order_column_name).distinct()[start:start + length]
+    queryset = (
+        queryset.order_by(order_column_name).distinct()[start:start + length]
+    )
+
     # Prepare data field for JSON response to DataTables
     data = []
     row = []
@@ -135,6 +147,7 @@ def address_list_api(request):
             col_value = getattr(qs, col)
             row.append(col_value)
         data.append(row.copy())
+
     # Format JSON Response to DataTables request
     response = {
         'draw': draw,
