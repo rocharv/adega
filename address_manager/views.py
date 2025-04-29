@@ -1,46 +1,45 @@
 from django.apps import apps
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import ForeignKey, ManyToManyField, Model, OneToOneField, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .forms import CrudForm
 
 
-# Constants to define crud operations
+# Dynamic import of a class model described by MODEL_STR
 APP_STR = "address_manager"
 MODEL_STR = "Address"
-ENTITY_PLURAL = "addresses"
-TABLE_COLUMNS = {
-        0: 'id',         # Assuming you want the model's primary key as 'Id'
-        1: 'street',     # Corresponds to 'Logradouro'
-        2: 'number',     # Corresponds to 'Número'
-        3: 'city',       # Corresponds to 'Cidade'
-        4: 'state',      # Corresponds to 'Estado'
-        5: 'created_at', # Corresponds to 'Criado em'
-}
-def get_query(search_value):
-    return (
-        Q(street__icontains=search_value) |       # Search 'Logradouro'
-        Q(number__icontains=search_value) |       # Search 'Número'
-        Q(city__icontains=search_value) |         # Search 'Cidade'
-        Q(state__icontains=search_value) |        # Search 'Estado'
-        Q(zip_code__icontains=search_value) |     # Added zip_code
-        Q(neighborhood__icontains=search_value)  # Added neighborhood
-        # Add Q(id__icontains=search_value) if you want to search by ID,
-        # but it might need conversion if search_value isn't numeric.
+try:
+    MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
+except ImportError:
+    MODEL: Model = None
+    raise ImportError(
+        f"Model {MODEL_STR} not found in app {APP_STR}. "
+        f"Please check the model name and app name."
     )
 
-# Dynamic import of a class models
-try:
-    MODEL = apps.get_model(APP_STR, MODEL_STR)
-except ImportError:
-    MODEL = None
-    raise ImportError(
-        f"Model {MODEL_STR} not found in app {APP_STR}. Please check the model name and app name."
-    )
+# Constants to define crud operations
+ENTITY_PLURAL = "addresses"
+ALL_FIELDS = [field.name for field in MODEL._meta.get_fields()
+              if not field.primary_key and not
+              isinstance(field, (ForeignKey, OneToOneField, ManyToManyField))]
+TABLE_COLUMNS = { # Insert here the columns you want to show in the table
+    0: 'id', # this is mandatory
+    1: 'street',
+    2: 'number',
+    3: 'city',
+    4: 'state',
+    5: 'created_at',
+}
 VERBOSE_NAME = MODEL._meta.verbose_name.lower()
 VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
+
+def get_match_in_any_column_query(search_value):
+    query = Q()
+    for field in ALL_FIELDS:
+        query = query | Q(**{f"{field}__icontains": search_value})
+    return query
 
 def address_create(request):
     ACTION = "Incluir " + VERBOSE_NAME
@@ -105,43 +104,29 @@ def address_list(request):
     )
 
 def address_list_api(request):
-    # --- 1. Get DataTables parameters ---
+    # Get DataTables parameters
     draw = int(request.GET.get('draw', 0))
     start = int(request.GET.get('start', 0))
     length = int(request.GET.get('length', 10))
     search_value = request.GET.get('search[value]', '')
-
-    # --- Column mapping (MUST match your HTML table header order and models.py fields) ---
-    # This maps the DataTables column index (0, 1, 2...) to your Address model field names
-    # Ensure this order matches the <th> order in your HTML: Id, Logradouro, Número, Cidade, Estado, Criado em
-
-    # --- Sorting ---
     order_column_index = int(request.GET.get('order[0][column]', 0))
     order_dir = request.GET.get('order[0][dir]', 'asc')
+
     # Get the field name from mapping, default to 'id' if index is out of bounds
     order_column_name = TABLE_COLUMNS.get(order_column_index, 'id')
     if order_dir == 'desc':
         order_column_name = f"-{order_column_name}"
-
-    # --- Base QuerySet ---
+    # Base QuerySet
     queryset = MODEL.objects.all() #
-
-    # --- Total Records (before filtering) ---
+    # Total records count before filtering
     records_total = queryset.count()
-
-    # --- Filtering (Global Search) ---
-    # Adjust fields included in the search based on your model and table
+    # Filter records based on search value, matching any column
     if search_value:
-        queryset = queryset.filter(get_query(search_value))
-
-    # --- Filtered Records Count ---
+        queryset = queryset.filter(get_match_in_any_column_query(search_value))
     records_filtered = queryset.count()
-
-    # --- Apply Sorting and Pagination ---
-    # Use `.distinct()` if your filtering involves joins that might create duplicates
+    # Apply sorting and pagination
     queryset = queryset.order_by(order_column_name).distinct()[start:start + length]
-
-    # --- Prepare data for JSON response ---
+    # Prepare data field for JSON response to DataTables
     data = []
     row = []
     for qs in queryset:
@@ -150,8 +135,7 @@ def address_list_api(request):
             col_value = getattr(qs, col)
             row.append(col_value)
         data.append(row.copy())
-
-    # --- 5. Format JSON Response ---
+    # Format JSON Response to DataTables request
     response = {
         'draw': draw,
         'recordsTotal': records_total,
