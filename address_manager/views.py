@@ -39,6 +39,21 @@ TABLE_COLUMNS = { # Insert here the columns you want to show in the table
     7: 'state',
     8: 'country',
 }
+
+# Convert column names to verbose_name in the model
+# append it to a list VERBOSE_NAME_LIST
+VERBOSE_COLUMN_LIST = []
+for field in MODEL._meta.get_fields():
+    if field.name in TABLE_COLUMNS.values():
+        verbose_col_name = field.verbose_name
+        if verbose_col_name not in VERBOSE_COLUMN_LIST:
+            VERBOSE_COLUMN_LIST.append(verbose_col_name)
+        else:
+            raise ValueError(
+                f"Duplicate verbose name '{verbose_col_name}'"
+                f"found in model fields."
+            )
+
 VERBOSE_NAME = MODEL._meta.verbose_name.lower()
 VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
 
@@ -106,7 +121,7 @@ def list_all(request):
     return render(
         request,
         APP_STR + "/list.html",
-        {'action': ACTION},
+        {'action': ACTION, 'table_columns': VERBOSE_COLUMN_LIST,},
     )
 
 def list_all_api(request):

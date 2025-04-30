@@ -6,15 +6,9 @@
     <table id="data-table" class="table table-striped" style=" width:100%">
       <thead>
         <tr>
-          <th>Id</th>
-          <th>CEP</th>
-          <th>Logradouro</th>
-          <th>Número</th>
-          <th>Comp.</th>
-          <th>Bairro</th>
-          <th>Cidade</th>
-          <th>Estado</th>
-          <th>País</th>
+          {%for column in table_columns %}
+            <th>{{ column }}</th>
+          {% endfor %}
         </tr>
       </thead>
     </table>
