@@ -25,8 +25,8 @@ except ImportError:
 # Constants to define crud operations
 ALL_FIELDS = [
     field.name.split('.')[-1] for field in MODEL._meta.get_fields()
-        if not field.primary_key and not
-        isinstance(field, (ForeignKey, OneToOneField, ManyToManyField))
+        # if not field.primary_key and not
+        # isinstance(field, (ForeignKey, OneToOneField, ManyToManyField))
 ]
 TABLE_COLUMNS = { # Insert here the columns you want to show in the table
     0: 'id', # this is mandatory
@@ -71,7 +71,7 @@ def create_new(request):
             form.save()
             messages.success(
                 request,
-                VERBOSE_NAME + " anterior criada(o) com sucesso."
+                VERBOSE_NAME + " anterior criado(a) com sucesso."
             )
             # clear the form
             form = CrudForm(crud_form_type="create")

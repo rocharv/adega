@@ -1,0 +1,14 @@
+from django.urls import path, include
+from . import views
+
+
+app_name = 'company_manager'
+urlpatterns = [
+    path('create/', views.create_new, name='create_new'),
+    path('delete/', views.delete_bulk, name='delete_bulk'),
+    path('edit/<int:id>/', views.edit_id, name='edit_id'),
+    path('list/', views.list_all, name='list_all'),
+    path('view/<int:id>/', views.view_id, name='view_id'),
+
+    path('addresses/', views.list_all_api, name='list_all_api')
+]
