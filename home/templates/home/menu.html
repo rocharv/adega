@@ -34,8 +34,8 @@
               Endereços
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'address_create' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'address_list' %}">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="{% url 'address_manager:create_new' %}">Incluir</a></li>
+              <li><a class="dropdown-item" href="{% url 'address_manager:list_all' %}">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
@@ -44,8 +44,8 @@
               Empresas
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="/person/add/">Incluir</a></li>
-              <li><a class="dropdown-item" href="/person/list/">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="">Incluir</a></li>
+              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
@@ -54,8 +54,8 @@
               Pessoas
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="/person/add/">Incluir</a></li>
-              <li><a class="dropdown-item" href="/person/list/">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="">Incluir</a></li>
+              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
@@ -64,8 +64,8 @@
               Categoria de itens
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="category/add/">Incluir</a></li>
-              <li><a class="dropdown-item" href="category/list/">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="">Incluir</a></li>
+              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
@@ -74,8 +74,8 @@
               Itens
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="item/add/">Incluir</a></li>
-              <li><a class="dropdown-item" href="item/list/">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="">Incluir</a></li>
+              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
@@ -84,13 +84,13 @@
               Transações
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="transaction/add/">Incluir</a></li>
-              <li><a class="dropdown-item" href="transaction/list/">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="">Incluir</a></li>
+              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'home_help' %}">
+            <a class="nav-link" href="{% url 'home:home_help' %}">
               Ajuda
             </a>
           </li>
@@ -119,7 +119,7 @@
                 </li>
               {% endif %}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'home_logout' %}">Fazer logout</a></li>
+              <li><a class="dropdown-item" href="{% url 'home:home_logout' %}">Fazer logout</a></li>
             </ul>
           </li>
         </ul>

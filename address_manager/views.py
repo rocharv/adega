@@ -44,7 +44,7 @@ def get_match_in_any_column_query(search_value):
         query = query | Q(**{f"{field}__icontains": search_value})
     return query
 
-def address_create(request):
+def create_new(request):
     ACTION = "Incluir " + VERBOSE_NAME
     if request.method == "POST":
         form = CrudForm(request.POST)
@@ -70,7 +70,7 @@ def address_create(request):
         {'form': form, 'action': ACTION},
     )
 
-def address_delete(request):
+def delete_bulk(request):
     ACTION = "Excluir " + VERBOSE_NAME
     # Get the entity object by id
     if request.method == "POST":
@@ -78,10 +78,9 @@ def address_delete(request):
         ids = request.POST.getlist('selected_rows[]')
         with transaction.atomic():
             MODEL.objects.filter(id__in=ids).delete()
+    return redirect(reversed("address_manager:list_all"))
 
-    return redirect(address_list)
-
-def address_edit(request, id):
+def edit_id(request, id):
     ACTION = "Editar " + VERBOSE_NAME
     # Get the address object by id
     entity = MODEL.objects.get(id=id)
@@ -93,11 +92,11 @@ def address_edit(request, id):
     else:
         form = CrudForm(instance=entity)
     return render(
-        request, APP_STR + "/create_view.html",
+        request, APP_STR + "/create_edit_view.html",
         {'form': form, 'action': ACTION},
     )
 
-def address_list(request):
+def list_all(request):
     ACTION = "Listar/Editar/Apagar " + VERBOSE_NAME_PLURAL
     return render(
         request,
@@ -105,7 +104,7 @@ def address_list(request):
         {'action': ACTION},
     )
 
-def address_list_api(request):
+def list_all_api(request):
     # Get DataTables parameters
     draw = int(request.GET.get('draw', 0))
     start = int(request.GET.get('start', 0))
@@ -157,7 +156,7 @@ def address_list_api(request):
     }
     return JsonResponse(response)
 
-def address_view(request, id):
+def view_id(request, id):
     ACTION = "Visualizar detalhes de " + VERBOSE_NAME
     # Get the entity object by id
     entity = MODEL.objects.get(id=id)
@@ -165,6 +164,6 @@ def address_view(request, id):
     form = CrudForm(instance=entity, is_view_only=True)
     return render(
         request,
-        APP_STR +"/create_view.html",
+        APP_STR +"/create_edit_view.html",
         {'form': form, 'action': ACTION},
     )

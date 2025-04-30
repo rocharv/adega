@@ -15,13 +15,14 @@
               <b>Erro: </b>{{ message }}
             </div>
           {% endif %}
-        {% endfor %}
-      {% endif %}
+          {% endfor %}
+        {% endif %}
       <h3 style="margin-bottom: 2rem;">{{ action }}</h3>
       <form method="post" novalidate>
         {% csrf_token %}
         {% load crispy_forms_tags %}
         {% crispy form %}
+      </form>
     </div>
     </div>
   </div>

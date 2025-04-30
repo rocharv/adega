@@ -1,12 +1,14 @@
 from django.urls import path, include
 from . import views
 
-urlpatterns = [
-    path('create/', views.address_create, name='address_create'),
-    path('delete/', views.address_delete, name='address_delete'),
-    path('edit/<int:id>/', views.address_edit, name='address_edit'),
-    path('list/', views.address_list, name='address_list'),
-    path('view/<int:id>/', views.address_view, name='address_view'),
 
-    path('addresses/', views.address_list_api, name='address_list_api')
+app_name = 'address_manager'
+urlpatterns = [
+    path('create/', views.create_new, name='create_new'),
+    path('delete/', views.delete_bulk, name='delete_bulk'),
+    path('edit/<int:id>/', views.edit_id, name='edit_id'),
+    path('list/', views.list_all, name='list_all'),
+    path('view/<int:id>/', views.view_id, name='view_id'),
+
+    path('addresses/', views.list_all_api, name='list_all_api')
 ]

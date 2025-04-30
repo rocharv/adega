@@ -6,7 +6,14 @@ from django.db.models import (
     ForeignKey, ManyToManyField, Model, OneToOneField, Q
 )
 from django.http import JsonResponse
+<<<<<<< HEAD
 from django.shortcuts import render, redirect
+=======
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from .forms import AddressForm
+from .models import Address
+>>>>>>> 8f9aac7 (feat: better definition of domains in urls.)
 
 
 # Dynamic import of a class model described by MODEL_STR
@@ -66,7 +73,11 @@ def address_create(request):
     else:
         form = CrudForm()
     return render(
+<<<<<<< HEAD
         request, APP_STR + "/create_view.html",
+=======
+        request, "address_manager/create_edit_view.html",
+>>>>>>> 8f9aac7 (feat: better definition of domains in urls.)
         {'form': form, 'action': ACTION},
     )
 
@@ -79,7 +90,7 @@ def address_delete(request):
         with transaction.atomic():
             MODEL.objects.filter(id__in=ids).delete()
 
-    return redirect(address_list)
+    return redirect(reverse("address_manager:address_list"))
 
 def address_edit(request, id):
     ACTION = "Editar " + VERBOSE_NAME
@@ -93,7 +104,11 @@ def address_edit(request, id):
     else:
         form = CrudForm(instance=entity)
     return render(
+<<<<<<< HEAD
         request, APP_STR + "/create_view.html",
+=======
+        request, "address_manager/create_edit_view.html",
+>>>>>>> 8f9aac7 (feat: better definition of domains in urls.)
         {'form': form, 'action': ACTION},
     )
 
@@ -166,6 +181,10 @@ def address_view(request, id):
     # Create the form with the entity object
     form = CrudForm(instance=entity, is_view_only=True)
     return render(
+<<<<<<< HEAD
         request, APP_STR +"/create_view.html",
+=======
+        request, "address_manager/create_edit_view.html",
+>>>>>>> 8f9aac7 (feat: better definition of domains in urls.)
         {'form': form, 'action': ACTION},
     )
