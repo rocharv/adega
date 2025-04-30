@@ -56,7 +56,7 @@ def create_new(request):
                 VERBOSE_NAME + " anterior criada(o) com sucesso."
             )
             # clear the form
-            form = CrudForm()
+            form = CrudForm(crud_form_type="create")
         else:
             messages.error(
                 request,
@@ -64,7 +64,7 @@ def create_new(request):
             )
             # return the form with errors
     else:
-        form = CrudForm()
+        form = CrudForm(crud_form_type="create")
     return render(
         request,
         APP_STR + "/create_edit_view.html",
@@ -87,11 +87,12 @@ def edit_id(request, id):
     entity = MODEL.objects.get(id=id)
     # Create the form with the address object
     if request.method == "POST":
-        form = CrudForm(request.POST, instance=entity)
+        form = CrudForm(request.POST, instance=entity, crud_form_type="edit")
         if form.is_valid():
             form.save()
+            return redirect(reverse("address_manager:list_all"))
     else:
-        form = CrudForm(instance=entity)
+        form = CrudForm(instance=entity, crud_form_type="edit")
     return render(
         request, APP_STR + "/create_edit_view.html",
         {'form': form, 'action': ACTION},
@@ -162,7 +163,7 @@ def view_id(request, id):
     # Get the entity object by id
     entity = MODEL.objects.get(id=id)
     # Create the form with the entity object
-    form = CrudForm(instance=entity, is_view_only=True)
+    form = CrudForm(instance=entity, crud_form_type="view")
     return render(
         request,
         APP_STR +"/create_edit_view.html",
