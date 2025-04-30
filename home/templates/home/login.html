@@ -16,19 +16,19 @@
         {% for message in messages %}
           <!-- success messages-->
           {% if message.tags == 'success' %}
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success" style="margin-top: 1rem;" role="alert">
               {{ message }}
             </div>
           {% endif %}
           <!-- error messages-->
           {% if message.tags == 'error' %}
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" style="margin-top: 1rem;" role="alert">
               {{ message }}
             </div>
           {% endif %}
           <!-- warning messages-->
           {% if message.tags == 'warning' %}
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning" style="margin-top: 1rem;" role="alert">
               {{ message }}
             </div>
           {% endif %}

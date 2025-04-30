@@ -3,7 +3,7 @@
 {% block body %}
   <nav class="navbar navbar-expand-md shadow fixed-top bg-body-secondary" style="padding: 0rem; margin: 5px;">
     <div class="container-fluid">
-        <a class="navbar-brand">
+        <a class="navbar-brand" href="{% url 'home:home_index' %}" style="padding: 0px;">
           <img src="{% static 'home/images/three_barrels_light.png' %}" alt="Logo" class="img-fluid" style="width: 40px; height: auto;">
           Adega
         </a>

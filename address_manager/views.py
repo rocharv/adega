@@ -30,11 +30,14 @@ ALL_FIELDS = [
 ]
 TABLE_COLUMNS = { # Insert here the columns you want to show in the table
     0: 'id', # this is mandatory
-    1: 'street',
-    2: 'number',
-    3: 'city',
-    4: 'state',
-    5: 'created_at',
+    1: 'zip_code',
+    2: 'street',
+    3: 'number',
+    4: 'complement',
+    5: 'neighborhood',
+    6: 'city',
+    7: 'state',
+    8: 'country',
 }
 VERBOSE_NAME = MODEL._meta.verbose_name.lower()
 VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
