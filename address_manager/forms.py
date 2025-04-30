@@ -9,8 +9,6 @@ class CrudForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = "__all__"
-        verbose_name = "Endereço"
-        verbose_name_plural = "Endereços"
 
     def __init__(self, *args, is_view_only=False ,**kwargs):
         super().__init__(*args, **kwargs)
@@ -25,36 +23,14 @@ class CrudForm(forms.ModelForm):
             "novalidate": "novalidate",
         }
 
-        # Set the layout of the form
-        self.helper.layout = Layout(FloatingField("zip_code"))
-        self.helper.layout.fields.append(FloatingField("street"))
-        self.helper.layout.fields.append(FloatingField("number"))
-
-            # FloatingField("street"),
-            # FloatingField("number"),
-            # FloatingField("complement"),
-            # FloatingField("neighborhood"),
-            # FloatingField("city"),
-            # FloatingField("state"),
-            # FloatingField("country"),
-            # FloatingField("reference"),
-            # ButtonHolder(
-            #     Submit("submit", "Incluir", css_class="btn btn-primary"),
-            #     Button(
-            #         "cancel", "Cancelar",
-            #         css_class="btn btn-secondary",
-            #         onclick="window.location.href='/'",
-            #     ),
-            # ),
-        # )
-        # Special case for the 'birthdate' field: set type to 'date'
-        # This is necessary because the default widget for DateInput is 'text'
-        # in Django, and we want to use the HTML5 date input type
-        self.fields["reference"].widget = forms.Textarea(
-            attrs={
-                "style": "height: 10rem",
-            }
-        )
+        # Set Layout to crispy-forms Layout
+        self.helper.layout = Layout()
+        for field_name in self.fields:
+            # if field type is DateField, set widget to HTML 5 date input
+            if isinstance(self.fields[field_name], forms.DateField):
+                self.fields[field_name].widget.input_type = "date"
+            else:
+                self.helper.layout.fields.append(FloatingField(field_name))
 
         # Add placeholders to all fields and disable them if is_view_only
         for _field_name, field in self.fields.items():
