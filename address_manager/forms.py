@@ -26,16 +26,18 @@ class CrudForm(forms.ModelForm):
         }
 
         # Set the layout of the form
-        self.helper.layout = Layout(
-            FloatingField("zip_code"),
-            FloatingField("street"),
-            FloatingField("number"),
-            FloatingField("complement"),
-            FloatingField("neighborhood"),
-            FloatingField("city"),
-            FloatingField("state"),
-            FloatingField("country"),
-            FloatingField("reference"),
+        self.helper.layout = Layout(FloatingField("zip_code"))
+        self.helper.layout.fields.append(FloatingField("street"))
+        self.helper.layout.fields.append(FloatingField("number"))
+
+            # FloatingField("street"),
+            # FloatingField("number"),
+            # FloatingField("complement"),
+            # FloatingField("neighborhood"),
+            # FloatingField("city"),
+            # FloatingField("state"),
+            # FloatingField("country"),
+            # FloatingField("reference"),
             # ButtonHolder(
             #     Submit("submit", "Incluir", css_class="btn btn-primary"),
             #     Button(
@@ -44,7 +46,7 @@ class CrudForm(forms.ModelForm):
             #         onclick="window.location.href='/'",
             #     ),
             # ),
-        )
+        # )
         # Special case for the 'birthdate' field: set type to 'date'
         # This is necessary because the default widget for DateInput is 'text'
         # in Django, and we want to use the HTML5 date input type
@@ -55,11 +57,11 @@ class CrudForm(forms.ModelForm):
         )
 
         # Add placeholders to all fields and disable them if is_view_only
-        for field_name, field in self.fields.items():
+        for _field_name, field in self.fields.items():
             field.widget.attrs.update({"placeholder": field.label})
         if is_view_only:
             # Disable all fields in the form
-            for field_name, field in self.fields.items():
+            for _field_name, field in self.fields.items():
                 field.widget.attrs.update({"disabled": "disabled"})
             # Add to current layout a button to go back to list address
             self.helper.layout.append(

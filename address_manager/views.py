@@ -7,6 +7,7 @@ from django.db.models import (
 )
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 
 # Dynamic import of a class model described by MODEL_STR
@@ -66,7 +67,7 @@ def create_new(request):
         form = CrudForm()
     return render(
         request,
-        APP_STR + "/create_view.html",
+        APP_STR + "/create_edit_view.html",
         {'form': form, 'action': ACTION},
     )
 
@@ -78,7 +79,7 @@ def delete_bulk(request):
         ids = request.POST.getlist('selected_rows[]')
         with transaction.atomic():
             MODEL.objects.filter(id__in=ids).delete()
-    return redirect(reversed("address_manager:list_all"))
+    return redirect(reverse("address_manager:list_all"))
 
 def edit_id(request, id):
     ACTION = "Editar " + VERBOSE_NAME
