@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Address(models.Model):
+    verbose_name = "Endereço"
     zip_code = models.CharField(
         "CEP",
         max_length=16,
@@ -59,6 +60,15 @@ class Address(models.Model):
         "Atualizado em",
         auto_now=True,
     )
+
+    def __str__(self):
+        summary = (
+            f"{self.street}, {self.number} - {self.city}/{self.state} - "
+            f"{self.country} - {self.zip_code}"
+        )
+        return summary
+
+
 
     class Meta:
         verbose_name = "Endereço"

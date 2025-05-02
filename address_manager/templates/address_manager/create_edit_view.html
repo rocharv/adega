@@ -26,4 +26,41 @@
     </div>
     </div>
   </div>
+
+<script>
+  // Listen to the event of element  "id_zip_code" losing focus
+  // When the event is triggered and if the focus was previuslyon the
+  // same element, call the function getAddress
+  // getAddress will get the address through ajax GET method from the url
+  // format "https://brasilapi.com.br/api/cep/v2/"+zipCode
+  // Use jQuery whenever possible
+
+  $(document).ready(function () {
+    $('#id_zip_code').on('focusout', function () {
+      const zipCode = $(this).val().replace(/\D/g, ''); // Remove non-digit characters
+      if (zipCode) {
+        const url = "https://brasilapi.com.br/api/cep/v2/"+zipCode;
+        $.ajax({
+          url: url,
+          method: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            // update input fields with the data received
+            $('#id_street').val(data.street || '');
+            $('#id_neighborhood').val(data.neighborhood || '');
+            $('#id_city').val(data.city || '');
+            $('#id_state').val(data.state || '');
+            // Set the focus on the street field
+            $('#id_number').focus();
+            // error messsage if zip code is not found, but service is ok
+            if (data.errors) {
+              alert('Erro: ' + data.errors[0].message);
+            }
+          },
+        });
+      }
+    });
+  });
+
+</script>
 {% endblock %}

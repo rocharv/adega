@@ -2,17 +2,24 @@ from .forms import CrudForm
 from django.apps import apps
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import (
-    ForeignKey, ManyToManyField, Model, OneToOneField, Q
-)
+from django.db.models import Model, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
-# Dynamic import of a class model described by MODEL_STR
+## Make changes here -------------------------------------------------------
 APP_STR = "company_manager"
 MODEL_STR = "Company"
+TABLE_COLUMNS = {
+    0: 'id', # this is mandatory (don't remove)
+    1: 'short_name',
+    2: 'name',
+    3: 'cnpj',
+}
+## -------------------------------------------------------------------------
+
+# Dynamic import of a class model described by MODEL_STR
 try:
     MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
 except ImportError:
@@ -22,22 +29,6 @@ except ImportError:
         f"Please check the model name and app name."
     )
 
-# Constants to define crud operations
-ALL_FIELDS = [
-    field.name.split('.')[-1] for field in MODEL._meta.get_fields()
-        if not field.primary_key and not
-        isinstance(field, (ForeignKey, OneToOneField, ManyToManyField))
-]
-TABLE_COLUMNS = { # Insert here the columns you want to show in the table
-    0: 'id', # this is mandatory
-    1: 'short_name', # this is mandatory
-    2: 'name',
-    3: 'cnpj',
-    4: 'email',
-}
-
-# Convert column names to verbose_name in the model
-# append it to a list VERBOSE_NAME_LIST
 VERBOSE_COLUMN_LIST = []
 for field in MODEL._meta.get_fields():
     if field.name in TABLE_COLUMNS.values():
@@ -55,14 +46,14 @@ VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
 
 def get_match_in_any_column_query(search_value):
     query = Q()
-    for field in ALL_FIELDS:
+    for field in TABLE_COLUMNS.values():
         query = query | Q(**{f"{field}__icontains": search_value})
     return query
 
 def create_new(request):
     ACTION = "Incluir " + VERBOSE_NAME
     if request.method == "POST":
-        form = CrudForm(request.POST)
+        form = CrudForm(request.POST, primary_key=None, crud_form_type="create")
         if form.is_valid():
             form.save()
             messages.success(
@@ -93,7 +84,7 @@ def delete_bulk(request):
         ids = request.POST.getlist('selected_rows[]')
         with transaction.atomic():
             MODEL.objects.filter(id__in=ids).delete()
-    return redirect(reverse("address_manager:list_all"))
+    return redirect(reverse(f"{APP_STR}:list_all"))
 
 def edit_id(request, id):
     ACTION = "Editar " + VERBOSE_NAME
@@ -101,12 +92,12 @@ def edit_id(request, id):
     entity = MODEL.objects.get(id=id)
     # Create the form with the address object
     if request.method == "POST":
-        form = CrudForm(request.POST, instance=entity, crud_form_type="edit")
+        form = CrudForm(request.POST, instance=entity, primary_key = id, crud_form_type="edit")
         if form.is_valid():
             form.save()
-            return redirect(reverse("address_manager:list_all"))
+            return redirect(reverse(f"{APP_STR}:list_all"))
     else:
-        form = CrudForm(instance=entity, crud_form_type="edit")
+        form = CrudForm(instance=entity, primary_key = id, crud_form_type="edit")
     return render(
         request, APP_STR + "/create_edit_view.html",
         {'form': form, 'action': ACTION},
@@ -176,8 +167,9 @@ def view_id(request, id):
     ACTION = "Visualizar detalhes de " + VERBOSE_NAME
     # Get the entity object by id
     entity = MODEL.objects.get(id=id)
+
     # Create the form with the entity object
-    form = CrudForm(instance=entity, crud_form_type="view")
+    form = CrudForm(instance=entity, primary_key = id, crud_form_type="view")
     return render(
         request,
         APP_STR +"/create_edit_view.html",

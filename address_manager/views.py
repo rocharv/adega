@@ -2,34 +2,18 @@ from .forms import CrudForm
 from django.apps import apps
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import (
-    ForeignKey, ManyToManyField, Model, OneToOneField, Q
-)
+from django.db.models import Model, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
-# Dynamic import of a class model described by MODEL_STR
+## Make changes here -------------------------------------------------------
 APP_STR = "address_manager"
 MODEL_STR = "Address"
-try:
-    MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
-except ImportError:
-    MODEL: Model = None
-    raise ImportError(
-        f"Model {MODEL_STR} not found in app {APP_STR}. "
-        f"Please check the model name and app name."
-    )
-
-# Constants to define crud operations
-ALL_FIELDS = [
-    field.name.split('.')[-1] for field in MODEL._meta.get_fields()
-        # if not field.primary_key and not
-        # isinstance(field, (ForeignKey, OneToOneField, ManyToManyField))
-]
-TABLE_COLUMNS = { # Insert here the columns you want to show in the table
-    0: 'id', # this is mandatory
+TABLE_COLUMNS = {
+    # can't have relationships columns
+    0: 'id', # this is mandatory (don't remove)
     1: 'zip_code',
     2: 'street',
     3: 'number',
@@ -39,9 +23,18 @@ TABLE_COLUMNS = { # Insert here the columns you want to show in the table
     7: 'state',
     8: 'country',
 }
+## -------------------------------------------------------------------------
 
-# Convert column names to verbose_name in the model
-# append it to a list VERBOSE_NAME_LIST
+# Dynamic import of a class model described by MODEL_STR
+try:
+    MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
+except ImportError:
+    MODEL: Model = None
+    raise ImportError(
+        f"Model {MODEL_STR} not found in app {APP_STR}. "
+        f"Please check the model name and app name."
+    )
+
 VERBOSE_COLUMN_LIST = []
 for field in MODEL._meta.get_fields():
     if field.name in TABLE_COLUMNS.values():
@@ -59,7 +52,7 @@ VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
 
 def get_match_in_any_column_query(search_value):
     query = Q()
-    for field in ALL_FIELDS:
+    for field in TABLE_COLUMNS.values():
         query = query | Q(**{f"{field}__icontains": search_value})
     return query
 

@@ -3,6 +3,7 @@ from address_manager.models import Address
 
 
 class Company(models.Model):
+    verbose_name = "Empresa"
     short_name = models.CharField(
         "Empresa",
         help_text="Use um nome curto, diferente da razão social, mas que "
@@ -63,6 +64,9 @@ class Company(models.Model):
         "Atualizado em",
         auto_now=True,
     )
+
+    def __str__(self):
+        return self.short_name
 
     class Meta:
         verbose_name = "Empresa"
