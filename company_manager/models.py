@@ -45,6 +45,7 @@ class Company(models.Model):
 
     address = models.ForeignKey(
         "address_manager.Address",
+        verbose_name="Endereço",
         on_delete=models.CASCADE,
         blank=True,
         null=True,

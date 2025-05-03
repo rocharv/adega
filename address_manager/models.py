@@ -63,11 +63,11 @@ class Address(models.Model):
 
     def __str__(self):
         summary = (
-            f"{self.street}, {self.number} - {self.city}/{self.state} - "
-            f"{self.country} - {self.zip_code}"
+            f"{self.street}, {self.number + ', ' if self.number else ''}"
+            f"{self.complement + ', ' if self.complement else ''}"
+            f"{self.city} - {self.state}, {self.country}"
         )
         return summary
-
 
 
     class Meta:
@@ -77,6 +77,3 @@ class Address(models.Model):
         indexes = [
             models.Index(fields=["zip_code"]),
         ]
-
-    def __str__(self):
-        return f"{self.street}, {self.number} - {self.city}/{self.state}"

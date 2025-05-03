@@ -16,6 +16,8 @@ TABLE_COLUMNS = {
     1: 'short_name',
     2: 'name',
     3: 'cnpj',
+    4: 'created_at',
+    5: 'updated_at',
 }
 ## -------------------------------------------------------------------------
 
@@ -53,7 +55,7 @@ def get_match_in_any_column_query(search_value):
 def create_new(request):
     ACTION = "Incluir " + VERBOSE_NAME
     if request.method == "POST":
-        form = CrudForm(request.POST, primary_key=None, crud_form_type="create")
+        form = CrudForm(request.POST, crud_form_type="create")
         if form.is_valid():
             form.save()
             messages.success(
@@ -92,12 +94,12 @@ def edit_id(request, id):
     entity = MODEL.objects.get(id=id)
     # Create the form with the address object
     if request.method == "POST":
-        form = CrudForm(request.POST, instance=entity, primary_key = id, crud_form_type="edit")
+        form = CrudForm(request.POST, instance=entity, crud_form_type="edit")
         if form.is_valid():
             form.save()
             return redirect(reverse(f"{APP_STR}:list_all"))
     else:
-        form = CrudForm(instance=entity, primary_key = id, crud_form_type="edit")
+        form = CrudForm(instance=entity, crud_form_type="edit")
     return render(
         request, APP_STR + "/create_edit_view.html",
         {'form': form, 'action': ACTION},
@@ -169,7 +171,7 @@ def view_id(request, id):
     entity = MODEL.objects.get(id=id)
 
     # Create the form with the entity object
-    form = CrudForm(instance=entity, primary_key = id, crud_form_type="view")
+    form = CrudForm(instance=entity, crud_form_type="view")
     return render(
         request,
         APP_STR +"/create_edit_view.html",
