@@ -65,7 +65,7 @@ class Address(models.Model):
         summary = (
             f"{self.street}, {self.number + ', ' if self.number else ''}"
             f"{self.complement + ', ' if self.complement else ''}"
-            f"{self.city} - {self.state}, {self.country}"
+            f"{self.city}/{self.state}, {self.country}"
         )
         return summary
 

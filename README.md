@@ -20,6 +20,11 @@ pipx install poetry
 poetry install
 ```
 
+- Create cache table for select2
+```
+poetry run python manage.py createcachetable select2_cache_table
+```
+
 - Run project's migrations:
 ```
 poetry run python manage.py makemigrations

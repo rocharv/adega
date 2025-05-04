@@ -18,7 +18,7 @@
           {% endfor %}
         {% endif %}
       <h3 style="margin-bottom: 2rem;">{{ action }}</h3>
-      <form method="post" class="form-floating" novalidate>
+      <form method="post" novalidate>
         {% csrf_token %}
         {% load crispy_forms_tags %}
         {% crispy form %}
@@ -28,9 +28,5 @@
   </div>
 
   <script>
-    $(document).ready(function() {
-      // Initialize Select2 for the select element
-      $('#id_address').select2();
-    });
   </script>
 {% endblock %}

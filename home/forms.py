@@ -1,7 +1,6 @@
 # forms.py
-from crispy_bootstrap5.bootstrap5 import FloatingField
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Field, Layout, Submit
+from crispy_forms.layout import Layout, Field, Submit
 from django import forms
 
 
@@ -20,14 +19,10 @@ class LoginForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         # Set the form tag attributes
-        self.helper.form_class = 'form-floating'
-        self.helper.form_method = 'post'
-        self.helper.attrs = {
-            "novalidate": "novalidate",
-        }
+        self.helper = FormHelper(self)
+        self.helper.form_method = "POST"
+
         # Set the layout of the form
-        self.helper.layout = Layout(
-            FloatingField("username"),
-            FloatingField("password"),
-            Submit("submit", "Login", css_class="w-100"),
+        self.helper.layout.append(
+            Submit("submit", "Login", css_class="w-100 mt-4"),
         )

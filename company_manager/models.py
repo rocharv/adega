@@ -1,5 +1,4 @@
 from django.db import models
-from address_manager.models import Address
 
 
 class Company(models.Model):
