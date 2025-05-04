@@ -21,7 +21,6 @@ class Company(models.Model):
     cnpj = models.CharField(
         "CNPJ",
         max_length=32,
-        blank=True,
         unique=True,
     )
 

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_select2',
     'crispy_forms',
     'crispy_bootstrap5',
     'home',
@@ -48,6 +49,24 @@ INSTALLED_APPS = [
     'warehouse_manager',
     'transaction_manager',
 ]
+
+# Django-Select2 Cache Configuration
+# https://django-select2.readthedocs.io/en/latest/installation.html#caching
+# Choose a cache backend (e.g., database, redis, memcached)
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+    },
+    'select2': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'select2_cache_table', # Name your cache table
+    }
+}
+
+# Tell select2 which cache configuration to use:
+SELECT2_CACHE_BACKEND = 'select2'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
