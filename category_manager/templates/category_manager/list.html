@@ -1,0 +1,169 @@
+{% extends "home/menu.html" %}
+{% block content %}
+  <div class="card bg-body-tertiary shadow" style="padding: 1rem;">
+    <h3 style="margin-bottom: 2rem;">{{ action }}</h3>
+    <p>Selecione um (ou mais) registros na tabela abaixo e clique em um dos botões para executar a ação.</p>
+    <table id="data-table" class="table table-striped" style=" width:100%">
+      <thead>
+        <tr>
+          {%for column in table_columns %}
+            <th>{{ column }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+    </table>
+    <div class="d-grid gap-2 d-md-flex justify-content-end" style="margin-top: 2rem;">
+      <button id="create_button" class="btn btn-primary">Incluir</button>
+      <button id="view_button" class="btn btn-primary">Detalhes</button>
+      <button id="edit_button" class="btn btn-primary">Editar</button>
+      <button id="delete_button" class="btn btn-danger">Apagar</button>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      //- Change here --------------------------------------------------------
+      const create_new_url = '{% url "category_manager:create_new" %}';
+      const delete_bulk_url = '{% url "category_manager:delete_bulk" %}';
+      const edit_id_url = '/category_manager/edit/';
+      const list_all_api_url = '{% url "category_manager:list_all_api" %}';
+      const view_id_url = '/category_manager/view/';
+      //----------------------------------------------------------------------
+
+      //----------------------------------------------------------------------
+      // DataTables setup
+      //----------------------------------------------------------------------
+      const table = new DataTable('#data-table', {
+        ajax: list_all_api_url,
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
+        },
+        processing: true, // show loading indicator
+        serverSide: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50, 100],
+        select: {
+          style: 'multi',
+        },
+      });
+
+      //----------------------------------------------------------------------
+      // Function to visually update View and Edit buttons according to the
+      // selected rows, on select and deselect events
+      //----------------------------------------------------------------------
+      function updateButtons() {
+        if (selectedRowsIds.length === 0) {
+          $ ( "#view_button" ).prop('disabled', true);
+          $ ( "#edit_button" ).prop('disabled', true);
+          $ ( "#delete_button" ).prop('disabled', true);
+        }
+        if (selectedRowsIds.length === 1) {
+          $ ( "#view_button" ).prop('disabled', false);
+          $ ( "#edit_button" ).prop('disabled', false);
+          $ ( "#delete_button" ).prop('disabled', false);
+        }
+        if (selectedRowsIds.length > 1) {
+          $ ( "#view_button" ).prop('disabled', true);
+          $ ( "#edit_button" ).prop('disabled', true);
+          $ ( "#delete_button" ).prop('disabled', false);
+        }
+      }
+
+      //----------------------------------------------------------------------
+      // Update the selectRowsIds array on select and deselect events
+      //----------------------------------------------------------------------
+      var selectedRowsIds = [];
+      updateButtons();
+      // Handle row selection in DataTable object table
+      table.on('select', function(e, dt, type, indexes) {
+        if (type === 'row') {
+          var rowData = table.rows(indexes).data().toArray();
+          if (rowData.length > 0 && rowData[0].length > 0) {
+            // Get the content of the first cell (index 0 = id)
+            // of the first selected row
+            var firstCellContent = rowData[0][0];
+            // if the first cell content is not already in
+            // the selectedRowsIds array, add it
+            if (!selectedRowsIds.includes(firstCellContent)) {
+              selectedRowsIds.push(firstCellContent);
+            }
+            updateButtons();
+          }
+        }
+      });
+      // Handle row deselection in DataTable object table
+      table.on('deselect', function(e, dt, type, indexes) {
+        if (type === 'row') {
+          var rowData = table.rows(indexes).data().toArray();
+          if (rowData.length > 0 && rowData[0].length > 0) {
+            // Get the content of the first cell (index 0) of the
+            // first selected row
+            var firstCellContent = rowData[0][0];
+            // if the first cell content is in the selectedRowsIds array,
+            //  remove it
+            if (selectedRowsIds.includes(firstCellContent)) {
+              selectedRowsIds = selectedRowsIds.filter(function(item) {
+                return item !== firstCellContent;
+              });
+              updateButtons();
+            }
+          }
+        }
+      });
+
+      //----------------------------------------------------------------------
+      // Button click event handlers when the buttons are enabled
+      //----------------------------------------------------------------------
+      $( '#create_button' ).click(function() {
+          window.location.href = create_new_url;
+      });
+      $( '#view_button' ).click(function() {
+        if (!$(this).prop('disabled')) {
+          window.location.href = view_id_url + selectedRowsIds[0] + '/';
+        }
+      });
+      $( '#edit_button' ).click(function() {
+        if (!$(this).prop('disabled')) {
+          window.location.href = edit_id_url + selectedRowsIds[0] + '/';
+        }
+      });
+      $( '#delete_button' ).click(function() {
+        // Show confirmation dialog before deletion
+        // it shows the total number of selected rows and their IDs
+        if (selectedRowsIds.length > 1) {
+          var isConfirmationOk = confirm(
+            'Você tem certeza que deseja apagar ' + selectedRowsIds.length +
+            ' registros?\n' +
+            '- Escolhidos: ' + selectedRowsIds.join(', ') + '\n' +
+            '- CUIDADO: registros dependentes deles também serão apagados!'
+          );
+        } else {
+          var isConfirmationOk = confirm(
+            'Você tem certeza que deseja apagar o registro ' +
+            selectedRowsIds[0] + '?\n' +
+            '- CUIDADO: registros dependentes dele também serão apagados!'
+          );
+        }
+        if (!$(this).prop('disabled') && isConfirmationOk) {
+          // Send a POST request to the delete URL with the selected row IDs
+          $.ajax({
+            url: delete_bulk_url,
+            type: 'POST',
+            data: {
+              'selected_rows': selectedRowsIds,
+              'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+              // Reload the table after successful deletion
+              table.ajax.reload();
+              selectedRowsIds = [];
+              updateButtons();
+            },
+            error: function(xhr, status, error) {
+              console.error('Error deleting rows:', error);
+            }
+          });
+        }
+      });
+    });
+  </script>
+{% endblock %}

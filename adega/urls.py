@@ -21,7 +21,6 @@ from django.urls import include, path
 urlpatterns = [
     path('', include("home.urls")),
     path('admin/', admin.site.urls),
-
     path(
         'address_manager/',
         include('address_manager.urls'),
@@ -36,6 +35,11 @@ urlpatterns = [
         'person_manager/',
         include('person_manager.urls'),
         name='person_manager'
+    ),
+    path(
+        'category_manager/',
+        include('category_manager.urls'),
+        name='category_manager'
     ),
 
     path("select2/", include("django_select2.urls")),

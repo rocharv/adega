@@ -33,7 +33,6 @@ class CompanyWidget(ModelSelect2Widget):
         'name__icontains',
         'cnpj__icontains',
     ]
-
 ## -------------------------------------------------------------------------
 
 # Define the HTML5 date and datetime widgets
