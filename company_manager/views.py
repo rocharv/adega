@@ -2,7 +2,7 @@ from .forms import CrudForm
 from django.apps import apps
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import Model, Q
+from django.db.models import ForeignKey, Model, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -16,8 +16,7 @@ TABLE_COLUMNS = {
     1: 'short_name',
     2: 'name',
     3: 'cnpj',
-    4: 'created_at',
-    5: 'updated_at',
+    4: 'address',
 }
 ## -------------------------------------------------------------------------
 
@@ -31,25 +30,30 @@ except ImportError:
         f"Please check the model name and app name."
     )
 
+FK_FIELDS = [
+    field.name for field in MODEL._meta.get_fields()
+    if isinstance(field, ForeignKey)
+]
 VERBOSE_COLUMN_LIST = []
-for field in MODEL._meta.get_fields():
-    if field.name in TABLE_COLUMNS.values():
-        verbose_col_name = field.verbose_name
-        if verbose_col_name not in VERBOSE_COLUMN_LIST:
-            VERBOSE_COLUMN_LIST.append(verbose_col_name)
-        else:
-            raise ValueError(
-                f"Duplicate verbose name '{verbose_col_name}'"
-                f"found in model fields."
-            )
-
+for field in TABLE_COLUMNS.values():
+    VERBOSE_COLUMN_LIST.append(
+        MODEL._meta.get_field(field).verbose_name
+    )
 VERBOSE_NAME = MODEL._meta.verbose_name.lower()
 VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
 
 def get_match_in_any_column_query(search_value):
+    """
+    Creates a query object that matches the search_value in any of the fields
+    defined in TABLE_COLUMNS, including foreign key fields.
+    """
     query = Q()
     for field in TABLE_COLUMNS.values():
-        query = query | Q(**{f"{field}__icontains": search_value})
+        if field in FK_FIELDS:
+            # Assuming we want to search on the primary key of the related model
+            query = query | Q(**{f"{field}__pk__icontains": search_value})
+        else:
+            query = query | Q(**{f"{field}__icontains": search_value})
     return query
 
 def create_new(request):
@@ -148,13 +152,19 @@ def list_all_api(request):
 
     # Prepare data field for JSON response to DataTables
     data = []
-    row = []
     for qs in queryset:
-        row.clear()
+        row = []
         for col in TABLE_COLUMNS.values():
-            col_value = getattr(qs, col)
+            if col in FK_FIELDS:
+                # Serialize foreign key fields
+                # (e.g., use their string representation or a specific field)
+                fk_instance = getattr(qs, col)
+                col_value = str(fk_instance) if fk_instance else None
+            else:
+                # Serialize regular fields
+                col_value = getattr(qs, col, None)
             row.append(col_value)
-        data.append(row.copy())
+        data.append(row)
 
     # Format JSON Response to DataTables request
     response = {

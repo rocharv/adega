@@ -32,6 +32,11 @@ urlpatterns = [
         include('company_manager.urls'),
         name='company_manager'
     ),
+    path(
+        'person_manager/',
+        include('person_manager.urls'),
+        name='person_manager'
+    ),
 
     path("select2/", include("django_select2.urls")),
 ]

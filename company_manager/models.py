@@ -65,7 +65,9 @@ class Company(models.Model):
     )
 
     def __str__(self):
-        return self.short_name
+        summary = self.short_name +" (" + self.cnpj + ")"
+        return summary
+
 
     class Meta:
         verbose_name = "Empresa"
