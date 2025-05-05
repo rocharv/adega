@@ -20,134 +20,133 @@
     </div>
   </div>
   <script>
-    const table = new DataTable('#data-table', {
-      ajax: '{% url "company_manager:list_all_api" %}',
-      language: {
-        url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
-      },
-      processing: true, // show loading indicator
-      serverSide: true,
-      pageLength: 5,
-      lengthMenu: [5, 10, 25, 50, 100],
-      select: {
-        style: 'multi',
-      },
-    });
+    $(document).ready(function () {
+      //- Change here --------------------------------------------------------
+      const create_new_url = '{% url "company_manager:create_new" %}';
+      const delete_bulk_url = '{% url "company_manager:delete_bulk" %}';
+      const edit_id_url = '/company_manager/edit/';
+      const list_all_api_url = '{% url "company_manager:list_all_api" %}';
+      const view_id_url = '/company_manager/view/';
+      //----------------------------------------------------------------------
 
-    // Visually Enable View and Edit buttons according to the selected rows
-    // on select and deselect events
-    function updateButtons() {
-      // Add the disabled attribute to all buttons
-      if (selectedRowsIds.length === 0) {
-        $ ( "#view_button" ).prop('disabled', true);
-        $ ( "#edit_button" ).prop('disabled', true);
-        $ ( "#delete_button" ).prop('disabled', true);
-      }
-      // selectedRowsIds length is 1
-      // Remove disable attribute from View, Edit and Delete buttons
-      if (selectedRowsIds.length === 1) {
-        $ ( "#view_button" ).prop('disabled', false);
-        $ ( "#edit_button" ).prop('disabled', false);
-        $ ( "#delete_button" ).prop('disabled', false);
-      }
-      // selectedRowsIds length is greater than 1
-      // Add disable attribute to View and Edit
-      // remove disable attribute from Delete button
-      if (selectedRowsIds.length > 1) {
-        $ ( "#view_button" ).prop('disabled', true);
-        $ ( "#edit_button" ).prop('disabled', true);
-        $ ( "#delete_button" ).prop('disabled', false);
-      }
-    }
+      //----------------------------------------------------------------------
+      // DataTables setup
+      //----------------------------------------------------------------------
+      const table = new DataTable('#data-table', {
+        ajax: list_all_api_url,
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
+        },
+        processing: true, // show loading indicator
+        serverSide: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50, 100],
+        select: {
+          style: 'multi',
+        },
+      });
 
-    // Array to store selected row IDs
-    let selectedRowsIds = [];
-    updateButtons();
-
-    // Listen for the 'select' event
-    table.on('select', function(e, dt, type, indexes) {
-      if (type === 'row') {
-        // Get the data of the selected row
-        var rowData = table.rows(indexes).data().toArray();
-
-        // Check if rowData is not empty and has at least one element
-        if (rowData.length > 0 && rowData[0].length > 0) {
-          // Get the content of the first cell (index 0 = id)
-          // of the first selected row
-          var firstCellContent = rowData[0][0];
-
-          // if the first cell content is not already in
-          // the selectedRowsIds array, add it
-          if (!selectedRowsIds.includes(firstCellContent)) {
-            selectedRowsIds.push(firstCellContent);
-          }
-          updateButtons();
+      //----------------------------------------------------------------------
+      // Function to visually update View and Edit buttons according to the
+      // selected rows, on select and deselect events
+      //----------------------------------------------------------------------
+      function updateButtons() {
+        if (selectedRowsIds.length === 0) {
+          $ ( "#view_button" ).prop('disabled', true);
+          $ ( "#edit_button" ).prop('disabled', true);
+          $ ( "#delete_button" ).prop('disabled', true);
+        }
+        if (selectedRowsIds.length === 1) {
+          $ ( "#view_button" ).prop('disabled', false);
+          $ ( "#edit_button" ).prop('disabled', false);
+          $ ( "#delete_button" ).prop('disabled', false);
+        }
+        if (selectedRowsIds.length > 1) {
+          $ ( "#view_button" ).prop('disabled', true);
+          $ ( "#edit_button" ).prop('disabled', true);
+          $ ( "#delete_button" ).prop('disabled', false);
         }
       }
-    });
 
-    // Listen for the 'deselect' event
-    table.on('deselect', function(e, dt, type, indexes) {
-      if (type === 'row') {
-        // Get the data of the selected row
-        var rowData = table.rows(indexes).data().toArray();
-
-        // Check if rowData is not empty and has at least one element
-        if (rowData.length > 0 && rowData[0].length > 0) {
-          // Get the content of the first cell (index 0) of the
-          // first selected row
-          var firstCellContent = rowData[0][0];
-
-          // if the first cell content is in the selectedRowsIds array,
-          //  remove it
-          if (selectedRowsIds.includes(firstCellContent)) {
-            selectedRowsIds = selectedRowsIds.filter(function(item) {
-              return item !== firstCellContent;
-            });
+      //----------------------------------------------------------------------
+      // Update the selectRowsIds array on select and deselect events
+      //----------------------------------------------------------------------
+      var selectedRowsIds = [];
+      updateButtons();
+      // Handle row selection in DataTable object table
+      table.on('select', function(e, dt, type, indexes) {
+        if (type === 'row') {
+          var rowData = table.rows(indexes).data().toArray();
+          if (rowData.length > 0 && rowData[0].length > 0) {
+            // Get the content of the first cell (index 0 = id)
+            // of the first selected row
+            var firstCellContent = rowData[0][0];
+            // if the first cell content is not already in
+            // the selectedRowsIds array, add it
+            if (!selectedRowsIds.includes(firstCellContent)) {
+              selectedRowsIds.push(firstCellContent);
+            }
             updateButtons();
           }
         }
-      }
-    });
+      });
+      // Handle row deselection in DataTable object table
+      table.on('deselect', function(e, dt, type, indexes) {
+        if (type === 'row') {
+          var rowData = table.rows(indexes).data().toArray();
+          if (rowData.length > 0 && rowData[0].length > 0) {
+            // Get the content of the first cell (index 0) of the
+            // first selected row
+            var firstCellContent = rowData[0][0];
+            // if the first cell content is in the selectedRowsIds array,
+            //  remove it
+            if (selectedRowsIds.includes(firstCellContent)) {
+              selectedRowsIds = selectedRowsIds.filter(function(item) {
+                return item !== firstCellContent;
+              });
+              updateButtons();
+            }
+          }
+        }
+      });
 
-    // Listen for the click event on the buttons View, Edit and Delete
-    // and redirect to the respective URL if the button is clicked and is
-    // not disabled, using jQuery
-    $(document).ready(function() {
+      //----------------------------------------------------------------------
+      // Button click event handlers when the buttons are enabled
+      //----------------------------------------------------------------------
       $( '#create_button' ).click(function() {
-          url_create_new = '{% url "company_manager:create_new" %}';
-          window.location.href = url_create_new;
+          window.location.href = create_new_url;
       });
-      $('#view_button').click(function() {
+      $( '#view_button' ).click(function() {
         if (!$(this).prop('disabled')) {
-          url_view_id = '/company_manager/view/'
-          window.location.href = url_view_id + selectedRowsIds[0] + '/';
+          window.location.href = view_id_url + selectedRowsIds[0] + '/';
         }
       });
-
-      $('#edit_button').click(function() {
+      $( '#edit_button' ).click(function() {
         if (!$(this).prop('disabled')) {
-          url_edit_id = '/company_manager/edit/'
-          window.location.href = url_edit_id + selectedRowsIds[0] + '/';
+          window.location.href = edit_id_url + selectedRowsIds[0] + '/';
         }
       });
-
-      $('#delete_button').click(function() {
+      $( '#delete_button' ).click(function() {
         // Show confirmation dialog before deletion
-        // it shows the total number of selected rows
+        // it shows the total number of selected rows and their IDs
         if (selectedRowsIds.length > 1) {
-          var isConfirmationOk = confirm('Você tem certeza que deseja apagar '
-            + selectedRowsIds.length + ' registros?' +
-          'escolhidos: ' + selectedRowsIds.join(', '));
+          var isConfirmationOk = confirm(
+            'Você tem certeza que deseja apagar ' + selectedRowsIds.length +
+            ' registros?\n' +
+            '- Escolhidos: ' + selectedRowsIds.join(', ') + '\n' +
+            '- CUIDADO: registros dependentes deles também serão apagados!'
+          );
         } else {
-          var isConfirmationOk =
-           confirm('Você tem certeza que deseja apagar o registro ' +
-           selectedRowsIds[0] + '?');
+          var isConfirmationOk = confirm(
+            'Você tem certeza que deseja apagar o registro ' +
+            selectedRowsIds[0] + '?\n' +
+            '- CUIDADO: registros dependentes dele também serão apagados!'
+          );
         }
         if (!$(this).prop('disabled') && isConfirmationOk) {
           // Send a POST request to the delete URL with the selected row IDs
           $.ajax({
-            url: '{% url "company_manager:delete_bulk" %}',
+            url: delete_bulk_url,
             type: 'POST',
             data: {
               'selected_rows': selectedRowsIds,

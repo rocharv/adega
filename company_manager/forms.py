@@ -5,10 +5,25 @@ from django_select2.forms import ModelSelect2Widget
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Button, Submit
 
-
+## Make changes here -------------------------------------------------------
 APP_STR = "company_manager"
 MODEL_STR = "Company"
 VIEW_ROUTE = f"/{APP_STR}/list/"
+# Define all the widgets for foreign key fields
+class AddressWidget(ModelSelect2Widget):
+    queryset = apps.get_model('address_manager', 'Address').objects.all()
+    search_fields = [
+        'zip_code__icontains',
+        'street__icontains',
+        'number__icontains',
+        'complement__icontains',
+        'neighborhood__icontains',
+        'city__icontains',
+        'state__icontains',
+        'country__icontains',
+    ]
+## -------------------------------------------------------------------------
+
 try:
     MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
 except ImportError:
@@ -17,16 +32,6 @@ except ImportError:
         f"Model {MODEL_STR} not found in app {APP_STR}. "
         f"Please check the model name and app name."
     )
-
-# Define the widget for the address field
-class AddressWidget(ModelSelect2Widget):
-    queryset = apps.get_model('address_manager', 'Address').objects.all()
-    search_fields = [
-        'street__icontains',
-        'city__icontains',
-        'zip_code__icontains',
-    ]
-
 
 class CrudForm(forms.ModelForm):
     class Meta:
@@ -47,27 +52,46 @@ class CrudForm(forms.ModelForm):
         if crud_form_type == "create":
             self.helper.layout.append(
                 ButtonHolder(
-                    Submit("submit", "Incluir", css_class="btn btn-primary"),
-                    Button("cancel", "Cancelar", css_class="btn btn-secondary", onclick=f"window.location.href='{VIEW_ROUTE}'"),
-                    css_class="d-grid gap-2 d-md-flex justify-content-end",
+                    Submit(
+                        "submit",
+                        "Incluir",
+                        css_class="btn btn-primary"),
+                    Button("cancel",
+                           "Cancelar",
+                           css_class="btn btn-secondary",
+                           onclick=f"window.location.href='{VIEW_ROUTE}'"),
+                           css_class=("d-grid gap-2 d-md-flex "
+                            "justify-content-end"),
                 )
             )
         elif crud_form_type == "edit":
              self.helper.layout.append(
                  ButtonHolder(
-                     Submit("submit", "Salvar", css_class="btn btn-primary"),
-                     Button("cancel", "Cancelar", css_class="btn btn-secondary", onclick=f"window.location.href='{VIEW_ROUTE}'"),
-                     css_class="d-grid gap-2 d-md-flex justify-content-end",
+                     Submit(
+                         "submit",
+                         "Salvar",
+                         css_class="btn btn-primary"),
+                     Button("cancel",
+                            "Cancelar",
+                            css_class="btn btn-secondary",
+                            onclick=f"window.location.href='{VIEW_ROUTE}'"),
+                           css_class=("d-grid gap-2 d-md-flex "
+                            "justify-content-end"),
                  )
              )
         elif crud_form_type == "view":
             for field_name in self.fields:
                 self.fields[field_name].disabled = True
-                self.fields[field_name].widget.attrs.update({"readonly": "readonly"})
+                self.fields[field_name].widget.attrs.update(
+                    {"readonly": "readonly"})
 
             self.helper.layout.append(
                 ButtonHolder(
-                    Button("edit", "Voltar", css_class="btn btn-primary", onclick=f"window.location.href='{VIEW_ROUTE}'"),
-                    css_class="d-grid gap-2 d-md-flex justify-content-end",
+                    Button("edit",
+                           "Voltar",
+                           css_class="btn btn-primary",
+                           onclick=f"window.location.href='{VIEW_ROUTE}'"),
+                           css_class=("d-grid gap-2 d-md-flex "
+                            "justify-content-end"),
                 )
             )

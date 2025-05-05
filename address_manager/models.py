@@ -27,7 +27,7 @@ class Address(models.Model):
 
     neighborhood = models.CharField(
         "Bairro",
-        max_length=32,
+        max_length=64,
     )
 
     city = models.CharField(

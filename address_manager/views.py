@@ -59,7 +59,7 @@ def get_match_in_any_column_query(search_value):
 def create_new(request):
     ACTION = "Incluir " + VERBOSE_NAME
     if request.method == "POST":
-        form = CrudForm(request.POST)
+        form = CrudForm(request.POST, crud_form_type="create")
         if form.is_valid():
             form.save()
             messages.success(
@@ -83,14 +83,14 @@ def create_new(request):
     )
 
 def delete_bulk(request):
-    ACTION = "Excluir " + VERBOSE_NAME
+    ACTION = "Apagar " + VERBOSE_NAME
     # Get the entity object by id
     if request.method == "POST":
         # delete all related ids in a single atomic bulk transaction
         ids = request.POST.getlist('selected_rows[]')
         with transaction.atomic():
             MODEL.objects.filter(id__in=ids).delete()
-    return redirect(reverse("address_manager:list_all"))
+    return redirect(reverse(f"{APP_STR}:list_all"))
 
 def edit_id(request, id):
     ACTION = "Editar " + VERBOSE_NAME
@@ -101,7 +101,7 @@ def edit_id(request, id):
         form = CrudForm(request.POST, instance=entity, crud_form_type="edit")
         if form.is_valid():
             form.save()
-            return redirect(reverse("address_manager:list_all"))
+            return redirect(reverse(f"{APP_STR}:list_all"))
     else:
         form = CrudForm(instance=entity, crud_form_type="edit")
     return render(
@@ -173,6 +173,7 @@ def view_id(request, id):
     ACTION = "Visualizar detalhes de " + VERBOSE_NAME
     # Get the entity object by id
     entity = MODEL.objects.get(id=id)
+
     # Create the form with the entity object
     form = CrudForm(instance=entity, crud_form_type="view")
     return render(

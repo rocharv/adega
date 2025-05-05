@@ -26,18 +26,10 @@
     </div>
     </div>
   </div>
-
 <script>
-  // Listen to the event of element  "id_zip_code" losing focus
-  // When the event is triggered and if the focus was previuslyon the
-  // same element, call the function getAddress
-  // getAddress will get the address through ajax GET method from the url
-  // format "https://brasilapi.com.br/api/cep/v2/"+zipCode
-  // Use jQuery whenever possible
-
   $(document).ready(function () {
     $('#id_zip_code').on('focusout', function () {
-      const zipCode = $(this).val().replace(/\D/g, ''); // Remove non-digit characters
+      const zipCode = $(this).val().replace(/\D/g, '');
       if (zipCode) {
         const url = "https://brasilapi.com.br/api/cep/v2/"+zipCode;
         $.ajax({
@@ -61,6 +53,5 @@
       }
     });
   });
-
 </script>
 {% endblock %}

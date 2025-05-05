@@ -19,14 +19,21 @@
       <button id="delete_button" class="btn btn-danger">Apagar</button>
     </div>
   </div>
-
   <script>
     $(document).ready(function () {
+      //- Change here --------------------------------------------------------
+      const create_new_url = '{% url "address_manager:create_new" %}';
+      const delete_bulk_url = '{% url "address_manager:delete_bulk" %}';
+      const edit_id_url = '/address_manager/edit/';
+      const list_all_api_url = '{% url "address_manager:list_all_api" %}';
+      const view_id_url = '/address_manager/view/';
+      //----------------------------------------------------------------------
+
       //----------------------------------------------------------------------
       // DataTables setup
       //----------------------------------------------------------------------
       const table = new DataTable('#data-table', {
-        ajax: '{% url "address_manager:list_all_api" %}',
+        ajax: list_all_api_url,
         language: {
           url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
         },
@@ -107,37 +114,39 @@
       // Button click event handlers when the buttons are enabled
       //----------------------------------------------------------------------
       $( '#create_button' ).click(function() {
-          var url_create_new = '{% url "address_manager:create_new" %}';
-          window.location.href = url_create_new;
+          window.location.href = create_new_url;
       });
       $( '#view_button' ).click(function() {
         if (!$(this).prop('disabled')) {
-          var url_view_id = '/address_manager/view/'
-          window.location.href = url_view_id + selectedRowsIds[0] + '/';
+          window.location.href = view_id_url + selectedRowsIds[0] + '/';
         }
       });
       $( '#edit_button' ).click(function() {
         if (!$(this).prop('disabled')) {
-          var url_edit_id = '/address_manager/edit/'
-          window.location.href = url_edit_id + selectedRowsIds[0] + '/';
+          window.location.href = edit_id_url + selectedRowsIds[0] + '/';
         }
       });
       $( '#delete_button' ).click(function() {
         // Show confirmation dialog before deletion
         // it shows the total number of selected rows and their IDs
         if (selectedRowsIds.length > 1) {
-          var isConfirmationOk = confirm('Você tem certeza que deseja apagar '
-            + selectedRowsIds.length + ' registros?' +
-          'escolhidos: ' + selectedRowsIds.join(', '));
+          var isConfirmationOk = confirm(
+            'Você tem certeza que deseja apagar ' + selectedRowsIds.length +
+            ' registros?\n' +
+            '- Escolhidos: ' + selectedRowsIds.join(', ') + '\n' +
+            '- CUIDADO: registros dependentes a eles também serão apagados!'
+          );
         } else {
-          var isConfirmationOk =
-            confirm('Você tem certeza que deseja apagar o registro ' +
-            selectedRowsIds[0] + '?');
+          var isConfirmationOk = confirm(
+            'Você tem certeza que deseja apagar o registro ' +
+            selectedRowsIds[0] + '?\n' +
+            '- CUIDADO: registros dependentes a ele também serão apagados!'
+          );
         }
         if (!$(this).prop('disabled') && isConfirmationOk) {
           // Send a POST request to the delete URL with the selected row IDs
           $.ajax({
-            url: '{% url "address_manager:delete_bulk" %}',
+            url: delete_bulk_url,
             type: 'POST',
             data: {
               'selected_rows': selectedRowsIds,

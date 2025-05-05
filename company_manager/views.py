@@ -79,7 +79,7 @@ def create_new(request):
     )
 
 def delete_bulk(request):
-    ACTION = "Excluir " + VERBOSE_NAME
+    ACTION = "Apagar " + VERBOSE_NAME
     # Get the entity object by id
     if request.method == "POST":
         # delete all related ids in a single atomic bulk transaction
