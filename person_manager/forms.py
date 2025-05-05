@@ -1,6 +1,7 @@
 from django import forms
 from django.apps import apps
-from django.db.models import Model
+from django.db.models import DateField, DateTimeField, Model
+from django.forms import DateInput, DateTimeInput
 from django_select2.forms import ModelSelect2Widget
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Button, Submit
@@ -9,6 +10,7 @@ from crispy_forms.layout import ButtonHolder, Button, Submit
 APP_STR = "person_manager"
 MODEL_STR = "Person"
 VIEW_ROUTE = f"/{APP_STR}/list/"
+
 # Define all the widgets for foreign key fields
 class AddressWidget(ModelSelect2Widget):
     queryset = apps.get_model('address_manager', 'Address').objects.all()
@@ -22,6 +24,8 @@ class AddressWidget(ModelSelect2Widget):
         'state__icontains',
         'country__icontains',
     ]
+
+
 class CompanyWidget(ModelSelect2Widget):
     queryset = apps.get_model('company_manager', 'Company').objects.all()
     search_fields = [
@@ -29,7 +33,16 @@ class CompanyWidget(ModelSelect2Widget):
         'name__icontains',
         'cnpj__icontains',
     ]
+
 ## -------------------------------------------------------------------------
+
+# Define the HTML5 date and datetime widgets
+class Html5DateInput(DateInput):
+    input_type = 'date'
+
+
+class Html5DateTimeInput(DateTimeInput):
+    input_type = 'datetime-local'
 
 try:
     MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
@@ -40,17 +53,16 @@ except ImportError:
         f"Please check the model name and app name."
     )
 
-## Make changes here -------------------------------------------------------
 class CrudForm(forms.ModelForm):
     class Meta:
         model = MODEL
         fields = "__all__"
-        # Assign the custom widget to the 'address' field
         widgets = {
+## Make changes here -------------------------------------------------------
             'address': AddressWidget,
             'company': CompanyWidget,
-        }
 ## -------------------------------------------------------------------------
+        }
 
     def __init__(self, *args, crud_form_type="create" ,**kwargs):
         super().__init__(*args, **kwargs)
@@ -58,8 +70,16 @@ class CrudForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method = "POST"
 
-        # Add buttons based on crud_form_type (Your existing logic)
         if crud_form_type == "create":
+            # Apply HTML5 date/datetime widgets only for 'create' form type
+            for field_name, field in self.fields.items():
+                # Get the model field to check its type
+                model_field = MODEL._meta.get_field(field_name)
+                if isinstance(model_field, DateField):
+                    self.fields[field_name].widget = Html5DateInput()
+                elif isinstance(model_field, DateTimeField):
+                    self.fields[field_name].widget = Html5DateTimeInput()
+
             self.helper.layout.append(
                 ButtonHolder(
                     Submit(
