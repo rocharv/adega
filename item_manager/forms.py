@@ -6,22 +6,21 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Button, Submit
 
 ## Make changes here -------------------------------------------------------
-APP_STR = "company_manager"
-MODEL_STR = "Company"
+APP_STR = "item_manager"
+MODEL_STR = "Item"
 VIEW_ROUTE = f"/{APP_STR}/list/"
 # Define all the widgets for foreign key fields
-class AddressWidget(ModelSelect2Widget):
-    queryset = apps.get_model('address_manager', 'Address').objects.all()
+class CategoryWidget(ModelSelect2Widget):
+    queryset = apps.get_model('category_manager', 'Category').objects.all()
     search_fields = [
-        'zip_code__icontains',
-        'street__icontains',
-        'number__icontains',
-        'complement__icontains',
-        'neighborhood__icontains',
-        'city__icontains',
-        'state__icontains',
-        'country__icontains',
+        'name__icontains',
+        'brand__icontains',
+        'author__icontains',
+        'sku__icontains',
+        'upc__icontains',
+        'description__icontains',
     ]
+
 ## -------------------------------------------------------------------------
 
 try:
@@ -39,7 +38,7 @@ class CrudForm(forms.ModelForm):
         fields = "__all__"
         # Assign the custom widget to the 'address' field
         widgets = {
-            'address': AddressWidget,
+            'category': CategoryWidget,
         }
 
     def __init__(self, *args, crud_form_type="create" ,**kwargs):

@@ -41,6 +41,11 @@ urlpatterns = [
         include('category_manager.urls'),
         name='category_manager'
     ),
+    path(
+        'item_manager/',
+        include('item_manager.urls'),
+        name='item_manager'
+    ),
 
     path("select2/", include("django_select2.urls")),
 ]
