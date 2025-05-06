@@ -40,7 +40,7 @@ class Category(models.Model):
     )
 
     upc = models.CharField(
-        "upc",
+        "UPC",
         max_length=16,
         blank=True,
     )

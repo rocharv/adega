@@ -22,11 +22,11 @@
   <script>
     $(document).ready(function () {
       //- Change here --------------------------------------------------------
-      const create_new_url = '{% url "item_manager:create_new" %}';
-      const delete_bulk_url = '{% url "item_manager:delete_bulk" %}';
-      const edit_id_url = '/item_manager/edit/';
-      const list_all_api_url = '{% url "item_manager:list_all_api" %}';
-      const view_id_url = '/item_manager/view/';
+      const create_new_url = '{% url "warehouse_manager:create_new" %}';
+      const delete_bulk_url = '{% url "warehouse_manager:delete_bulk" %}';
+      const edit_id_url = '/warehouse_manager/edit/';
+      const list_all_api_url = '{% url "warehouse_manager:list_all_api" %}';
+      const view_id_url = '/warehouse_manager/view/';
       //----------------------------------------------------------------------
 
       //----------------------------------------------------------------------
@@ -40,7 +40,7 @@
         processing: true, // show loading indicator
         serverSide: true,
         pageLength: 5,
-        lengthMenu: [5, 10, 25, 50, 100, 1000],
+        lengthMenu: [5, 10, 25, 50, 100],
         select: {
           style: 'multi',
         },

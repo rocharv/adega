@@ -42,6 +42,11 @@ urlpatterns = [
         name='category_manager'
     ),
     path(
+        'warehouse_manager/',
+        include('warehouse_manager.urls'),
+        name='warehouse_manager'
+    ),
+    path(
         'item_manager/',
         include('item_manager.urls'),
         name='item_manager'

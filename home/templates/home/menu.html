@@ -58,11 +58,23 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Armazéns
+            </a>
+            <ul class="dropdown-menu bg-body-secondary shadow">
+              <li><a class="dropdown-item" href="{% url 'warehouse_manager:create_new' %}">Incluir</a></li>
+              <li><a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Itens
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'item_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'item_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <span class="badge text-bg-secondary" style="margin-left: 0.5rem;">Itens</span>
+              <li><a class="dropdown-item" href="{% url 'item_manager:create_new' %}">Entrada</a></li>
+              <li><a class="dropdown-item" href="">Saída</a></li>
+              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
@@ -71,13 +83,8 @@
               Estoque
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <span class="badge text-bg-secondary" style="margin-left: 0.5rem;">Armazéns</span>
-              <li><a class="dropdown-item" href="">Incluir</a></li>
-              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <span class="badge text-bg-secondary" style="margin-left: 0.5rem;">Transações</span>
-              <li><a class="dropdown-item" href="">Incluir</a></li>
-              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="">por Categoria</a></li>
+              <li><a class="dropdown-item" href="">por Itens</a></li>
             </ul>
           </li>
 
@@ -109,7 +116,7 @@
                 <li><hr class="dropdown-divider"></li>
                 <li>
                   <a class="dropdown-item d-flex align-items-center" href="{% url 'admin:index' %}">
-                  Gerenciar usuários
+                  Gerenciar sistema
                   <i class="bi bi-shield-lock ms-2" style="color: #FA0; font-size: 1rem;"></i>
                   </a>
                 </li>
