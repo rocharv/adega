@@ -28,19 +28,14 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Empresas
-            </a>
-            <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'company_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'company_manager:list_all' %}">Listar/Editar/Apagar</a></li>
-            </ul>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Pessoas
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Pessoas Jurídicas</span>
+              <li><a class="dropdown-item" href="{% url 'company_manager:create_new' %}">Incluir</a></li>
+              <li><a class="dropdown-item" href="{% url 'company_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Pessoas Físicas</span>
               <li><a class="dropdown-item" href="{% url 'person_manager:create_new' %}">Incluir</a></li>
               <li><a class="dropdown-item" href="{% url 'person_manager:list_all' %}">Listar/Editar/Apagar</a></li>
             </ul>
@@ -48,11 +43,16 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Categorias
+              Itens
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Categorias</span>
               <li><a class="dropdown-item" href="{% url 'category_manager:create_new' %}">Incluir</a></li>
               <li><a class="dropdown-item" href="{% url 'category_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Itens Individuais</span>
+              <li><a class="dropdown-item" href="{% url 'item_manager:create_new' %}">Incluir</a></li>
+              <li><a class="dropdown-item" href="{% url 'item_manager:list_all' %}">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 
@@ -63,18 +63,6 @@
             <ul class="dropdown-menu bg-body-secondary shadow">
               <li><a class="dropdown-item" href="{% url 'warehouse_manager:create_new' %}">Incluir</a></li>
               <li><a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">Listar/Editar/Apagar</a></li>
-            </ul>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Itens
-            </a>
-            <ul class="dropdown-menu bg-body-secondary shadow">
-              <span class="badge text-bg-secondary" style="margin-left: 0.5rem;">Itens</span>
-              <li><a class="dropdown-item" href="{% url 'item_manager:create_new' %}">Entrada</a></li>
-              <li><a class="dropdown-item" href="">Saída</a></li>
-              <li><a class="dropdown-item" href="">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 

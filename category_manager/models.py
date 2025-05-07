@@ -9,6 +9,17 @@ class Category(models.Model):
         unique=True,
     )
 
+    is_fungible = models.BooleanField(
+        "Fungível",
+        help_text=(
+            'Marque se os itens criados a partir dessa categoria não '
+            'atributos de controle individual como etiqueta de patrimônio '
+            'ou número de série. Exemplo: papel, caneta, etc.'
+
+        ),
+        default=False,
+    )
+
     brand = models.CharField(
         "Marca",
         max_length=64,
@@ -33,6 +44,12 @@ class Category(models.Model):
         blank=True,
     )
 
+    barcode = models.CharField(
+        "Código de barras",
+        max_length=16,
+        blank=True,
+    )
+
     sku = models.CharField(
         "SKU",
         max_length=16,
@@ -41,12 +58,6 @@ class Category(models.Model):
 
     upc = models.CharField(
         "UPC",
-        max_length=16,
-        blank=True,
-    )
-
-    barcode = models.CharField(
-        "Código de barras",
         max_length=16,
         blank=True,
     )

@@ -28,6 +28,7 @@
   </div>
 <script>
   $(document).ready(function () {
+    $('#id_zip_code').focus();
     $('#id_zip_code').on('focusout', function () {
       const zipCode = $(this).val().replace(/\D/g, '');
       if (zipCode) {

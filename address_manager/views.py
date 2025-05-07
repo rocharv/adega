@@ -45,8 +45,8 @@ for field in TABLE_COLUMNS.values():
     VERBOSE_COLUMN_LIST.append(
         MODEL._meta.get_field(field).verbose_name
     )
-VERBOSE_NAME = MODEL._meta.verbose_name.lower()
-VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural.lower()
+VERBOSE_NAME = MODEL._meta.verbose_name
+VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural
 
 def get_match_in_any_column_query(search_value):
     """
