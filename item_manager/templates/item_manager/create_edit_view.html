@@ -27,5 +27,11 @@
     </div>
   </div>
   <script>
-  </script>
+    // - Change here ---------------------------------------------------------
+    // If #id_category select is not empty, focus on #id_corporate_tag
+    // -----------------------------------------------------------------------
+    $(document).ready(function () {
+      $('#id_corporate_tag').focus();
+    });
+</script>
 {% endblock %}

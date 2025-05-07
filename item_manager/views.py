@@ -17,6 +17,9 @@ TABLE_COLUMNS = {
     2: 'corporate_tag',
     3: 'serial_number',
 }
+KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE = [
+    'category',
+]
 ## -------------------------------------------------------------------------
 
 # Dynamic import of a class model described by MODEL_STR
@@ -65,8 +68,13 @@ def create_new(request):
                 request,
                 VERBOSE_NAME + " anterior criado(a) com sucesso."
             )
-            # clear the form
-            form = CrudForm(crud_form_type="create")
+            # Create a new form instance, passing the previous values for
+            # the fields in KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE
+            kept_data ={}
+            for field in KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE:
+                kept_data[field] = form.cleaned_data[field]
+            # Create a new form instance with the kept data
+            form = CrudForm(initial=kept_data, crud_form_type="create")
         else:
             messages.error(
                 request,
