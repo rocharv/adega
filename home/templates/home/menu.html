@@ -61,8 +61,7 @@
               Armazéns
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'warehouse_manager:create_new' %}">Entradas</a></li>
-              <li><a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">Saídas</a></li>
+              <li><a class="dropdown-item" href="{% url 'warehouse_manager:create_new' %}">Incluir</a></li>
               <li><a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
@@ -72,9 +71,9 @@
               Transações
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'warehouse_manager:create_new' %}">Entrada</a></li>
-              <li><a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">Saída</a></li>
-              <li><a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <li><a class="dropdown-item" href="{% url 'transaction_manager:create_new' 'inflow' %}">Entrada</a></li>
+              <li><a class="dropdown-item" href="{% url 'transaction_manager:create_new' 'outflow' %}">Saída</a></li>
+              <li><a class="dropdown-item" href="{% url 'transaction_manager:list_all' %}">Listar/Editar/Apagar</a></li>
             </ul>
           </li>
 

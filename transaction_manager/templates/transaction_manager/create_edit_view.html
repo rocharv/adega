@@ -1,0 +1,36 @@
+{% extends "home/menu.html" %}
+{% block content %}
+  <div class="container d-flex justify-content-center">
+    <div class="card bg-body-tertiary shadow" style="width: 36rem;">
+      <div class="container" style="padding: 2rem;">
+        {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == 'success' %}
+            <div class="alert alert-success mt-3" role="alert">
+              <b>Sucesso: </b>{{ message }}
+            </div>
+          {% endif %}
+          {% if message.tags == 'error' %}
+            <div class="alert alert-danger mt-3" role="alert">
+              <b>Erro: </b>{{ message }}
+            </div>
+          {% endif %}
+          {% endfor %}
+        {% endif %}
+      <h3 style="margin-bottom: 2rem;">{{ action }}</h3>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {% crispy form %}
+      </form>
+    </div>
+    </div>
+  </div>
+  <script>
+    // - Change here ---------------------------------------------------------
+    $(document).ready(function () {
+      $('#id_invoice').focus();
+    });
+    // -----------------------------------------------------------------------
+  </script>
+{% endblock %}
