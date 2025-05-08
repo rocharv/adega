@@ -74,7 +74,25 @@ def create_new(request, ttype: str):
         )
         if form.is_valid():
             form.save()
-            return redirect(reverse(f"{APP_STR}:list_all"))
+            messages.success(
+                request,
+                VERBOSE_NAME + " anterior criado(a) com sucesso."
+            )
+            # Create a new form but copies fields
+            # in KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE
+            kept_data ={}
+            for field in KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE:
+                kept_data[field] = form.cleaned_data[field]
+            form = CrudForm(
+                crud_form_type="create",
+                initial=kept_data,
+                transaction_type=TRANSACTION_TYPE,
+            )
+            return render(
+                request,
+                APP_STR + "/create_edit_view.html",
+                {'form': form, 'action': ACTION},
+            )
     else:
         # request method is GET
         form = CrudForm(
