@@ -22,6 +22,15 @@ class CompanyWidget(ModelSelect2Widget):
     ]
 
 
+class ItemWidget(ModelSelect2Widget):
+    queryset = apps.get_model('item_manager', 'Item').objects.all()
+    search_fields = [
+        'category__name__icontains',
+        'corporate_tag__icontains',
+        'serial_number__icontains',
+    ]
+
+
 class PersonWidget(ModelSelect2Widget):
     queryset = apps.get_model('person_manager', 'Person').objects.all()
     search_fields = [
@@ -35,7 +44,7 @@ class WarehouseWidget(ModelSelect2Widget):
     queryset = apps.get_model('warehouse_manager', 'Warehouse').objects.all()
     search_fields = [
         'name__icontains',
-        'company__icontains',
+        'company__name__icontains',
     ]
 ## -------------------------------------------------------------------------
 
@@ -66,10 +75,10 @@ class CrudForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
 ## Make changes here -------------------------------------------------------
-            'beginning_date': Html5DateInput(),
-            'company': CompanyWidget,
-            'end_date': Html5DateInput(),
-            'person': PersonWidget,
+            'company_counterpart': CompanyWidget,
+            'person_counterpart': PersonWidget,
+            'item': ItemWidget,
+            'warehouse': WarehouseWidget,
 ## -------------------------------------------------------------------------
         }
 

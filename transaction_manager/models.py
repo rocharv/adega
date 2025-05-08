@@ -21,7 +21,7 @@ class Transaction(models.Model):
     )
 
     type = models.CharField(
-        "Tipo de saída",
+        "Tipo",
         max_length=32,
         choices= DEFAULT_TYPE_CHOICES,
         default="sale",
@@ -59,15 +59,19 @@ class Transaction(models.Model):
     person_counterpart = models.ForeignKey(
         "person_manager.Person",
         verbose_name="Contraparte (pessoa)",
-        on_delete=models.CASCADE,
-        related_name="outflows"
+        on_delete=models.SET_NULL,
+        related_name="transactions",
+        null=True,
+        blank=True,
     )
 
     company_counterpart = models.ForeignKey(
         "company_manager.Company",
         verbose_name="Contraparte (empresa)",
-        on_delete=models.CASCADE,
-        related_name="outflows"
+        on_delete=models.SET_NULL,
+        related_name="transactions",
+        null=True,
+        blank=True,
     )
 
     beginning_date = models.DateField(
@@ -106,12 +110,14 @@ class Transaction(models.Model):
 
 
     class Meta:
-        verbose_name = "Saída"
-        verbose_name_plural = "Saídas"
+        verbose_name = "Transação"
+        verbose_name_plural = "Transações"
         ordering = ["created_at", "item"]
         indexes = [
             models.Index(fields=["warehouse"]),
+            models.Index(fields=["type"]),
             models.Index(fields=["item"]),
+            models.Index(fields=["invoice"]),
             models.Index(fields=["company_counterpart"]),
             models.Index(fields=["person_counterpart"]),
         ]

@@ -26,7 +26,7 @@
       const create_new_inflow_url = '/transaction_manager/create/inflow/';
       const create_new_outflow_url = '/transaction_manager/create/outflow/';
       const delete_bulk_url = '{% url "transaction_manager:delete_bulk" %}';
-      const edit_id_url = '/transaction_manager/edit/inflow/';
+      const edit_id_url = '/transaction_manager/edit/';
       const list_all_api_url = '{% url "transaction_manager:list_all_api" %}';
       const view_id_url = '/transaction_manager/view/';
       //----------------------------------------------------------------------
@@ -116,10 +116,10 @@
       // Button click event handlers when the buttons are enabled
       //----------------------------------------------------------------------
       $( '#create_button_inflow' ).click(function() {
-          window.location.href = create_new_url;
+          window.location.href = create_new_inflow_url;
       });
       $( '#create_button_outflow' ).click(function() {
-          window.location.href = create_new_url;
+          window.location.href = create_new_outflow_url;
       });
       $( '#view_button' ).click(function() {
         if (!$(this).prop('disabled')) {

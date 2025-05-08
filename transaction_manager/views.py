@@ -16,7 +16,11 @@ TABLE_COLUMNS = {
     2: 'type',
     3: 'invoice',
     4: 'quantity',
+    5: 'item',
 }
+KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE = [
+    'warehouse',
+]
 ## -------------------------------------------------------------------------
 
 # Dynamic import of a class model described by MODEL_STR
@@ -36,7 +40,6 @@ FK_FIELDS = [
 
 VERBOSE_NAME = MODEL._meta.verbose_name
 VERBOSE_NAME_PLURAL = MODEL._meta.verbose_name_plural
-print(f"Verbose name: {VERBOSE_NAME}")
 
 VERBOSE_COLUMN_LIST = []
 for field in TABLE_COLUMNS.values():
@@ -51,7 +54,8 @@ def get_match_in_any_column_query(search_value):
     query = Q()
     for field in TABLE_COLUMNS.values():
         if field in FK_FIELDS:
-            # Assuming we want to search on the primary key of the related model
+            # Assuming we want to search on the primary key
+            # of the related model
             query = query | Q(**{f"{field}__pk__icontains": search_value})
         else:
             query = query | Q(**{f"{field}__icontains": search_value})
@@ -74,15 +78,14 @@ def create_new(request, ttype: str):
     else:
         # request method is GET
         form = CrudForm(
-            request.POST,
             crud_form_type="create",
             transaction_type=TRANSACTION_TYPE,
         )
-        return render(
-            request,
-            APP_STR + "/create_edit_view.html",
-            {'form': form, 'action': ACTION},
-        )
+    return render(
+        request,
+        APP_STR + "/create_edit_view.html",
+        {'form': form, 'action': ACTION},
+    )
 
 def delete_bulk(request):
     # Get the entity object by id
@@ -93,9 +96,8 @@ def delete_bulk(request):
             MODEL.objects.filter(id__in=ids).delete()
     return redirect(reverse(f"{APP_STR}:list_all"))
 
-def edit_id(request, ttype, id):
+def edit_id(request, id):
     ACTION = "Editar " + VERBOSE_NAME
-    TRANSACTION_TYPE = ttype
 
     # Get the address object by id
     entity = MODEL.objects.get(id=id)
@@ -106,7 +108,6 @@ def edit_id(request, ttype, id):
             request.POST,
             instance=entity,
             crud_form_type="edit",
-            transaction_type=TRANSACTION_TYPE,
         )
         if form.is_valid():
             form.save()
@@ -114,15 +115,13 @@ def edit_id(request, ttype, id):
     else:
         # request method is GET
         form = CrudForm(
-            request.POST,
             instance=entity,
             crud_form_type="edit",
-            transaction_type=TRANSACTION_TYPE,
         )
-        return render(
-            request, APP_STR + "/create_edit_view.html",
-            {'form': form, 'action': ACTION},
-        )
+    return render(
+        request, APP_STR + "/create_edit_view.html",
+        {'form': form, 'action': ACTION},
+    )
 
 def list_all(request):
     ACTION = "Listar/Editar/Apagar " + VERBOSE_NAME_PLURAL
@@ -192,6 +191,7 @@ def list_all_api(request):
 
 def view_id(request, id):
     ACTION = "Visualizar detalhes de " + VERBOSE_NAME
+
     # Get the entity object by id
     entity = MODEL.objects.get(id=id)
 
