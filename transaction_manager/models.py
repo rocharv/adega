@@ -3,14 +3,13 @@ from django.db import models
 
 class Transaction(models.Model):
     DEFAULT_TYPE_CHOICES = [
-        ("purchase", "Compra"),
-        ("sale", "Venda"),
-        ("donation", "Doação"),
-        ("borrow", "Empréstimo"),
-        ("lent", "Empréstimo"),
-        ("return", "Retorno"),
-        ("transfer", "Transferência"),
-        ("waste", "Descarte"),
+        ("compra", "Compra"),
+        ("venda", "Venda"),
+        ("doação", "Doação"),
+        ("empréstimo", "Empréstimo"),
+        ("retorno", "Retorno"),
+        ("transferência", "Transferência"),
+        ("descarte", "Descarte"),
     ]
 
     warehouse = models.ForeignKey(

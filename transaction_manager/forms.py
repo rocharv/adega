@@ -94,20 +94,20 @@ class CrudForm(forms.ModelForm):
         # Adjust Transaction.type field based on the TRANSACTION_TYPE
         if TRANSACTION_TYPE == "inflow":
             self.fields["type"].choices = [
-                ("purchase", "Compra"),
+                ("compra", "Compra"),
                 ("donation", "Doação"),
-                ("borrow", "Empréstimo"),
-                ("return", "Retorno"),
-                ("transfer", "Transferência"),
+                ("empréstimo", "Empréstimo"),
+                ("retorno", "Retorno"),
+                ("transferência", "Transferência"),
             ]
         elif TRANSACTION_TYPE == "outflow":
             self.fields["type"].choices = [
-                ("sale", "Venda"),
-                ("donation", "Doação"),
-                ("lent", "Empréstimo"),
-                ("return", "Devolução"),
-                ("transfer", "Transferência"),
-                ("waste", "Descarte"),
+                ("venda", "Venda"),
+                ("doação", "Doação"),
+                ("empréstimo", "Empréstimo"),
+                ("retorno", "Retorno"),
+                ("transferência", "Transferência"),
+                ("descarte", "Descarte"),
             ]
 
         # Helper for crispy forms
