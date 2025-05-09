@@ -20,8 +20,6 @@ TABLE_COLUMNS = {
 }
 KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE = [
     'warehouse',
-    'type',
-    'invoice',
 ]
 ## -------------------------------------------------------------------------
 
@@ -37,7 +35,7 @@ except ImportError:
 
 FK_FIELDS = [
     field.name for field in MODEL._meta.get_fields()
-    if isinstance(field, ForeignKey) and field.name != "id"
+    if isinstance(field, ForeignKey)
 ]
 
 VERBOSE_NAME = MODEL._meta.verbose_name
@@ -51,22 +49,16 @@ for field in TABLE_COLUMNS.values():
 def get_match_in_any_column_query(search_value):
     """
     Creates a query object that matches the search_value in any of the fields
-    defined in TABLE_COLUMNS, including foreign key fields. For foreign key
-    fields, it searches on their string representation.
+    defined in TABLE_COLUMNS, including foreign key fields.
     """
     query = Q()
     for field in TABLE_COLUMNS.values():
-        # Special case for FK fields
-        if field == "warehouse":
-            query |= Q(**{f"{field}__name__icontains": search_value})
-            query |= Q(**{f"{field}__company__name__icontains": search_value})
-        elif field == "item":
-            query |= Q(**{f"{field}__category__name__icontains": search_value})
-            query |= Q(**{f"{field}__corporate_tag__icontains": search_value})
-            query |= Q(**{f"{field}__serial_number__icontains": search_value})
+        if field in FK_FIELDS:
+            # Assuming we want to search on the primary key
+            # of the related model
+            query = query | Q(**{f"{field}__pk__icontains": search_value})
         else:
-            # Search on regular fields
-            query |= Q(**{f"{field}__icontains": search_value})
+            query = query | Q(**{f"{field}__icontains": search_value})
     return query
 
 def create_new(request, ttype: str):

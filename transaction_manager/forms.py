@@ -1,11 +1,11 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import ButtonHolder, Button, Submit
 from django import forms
 from django.apps import apps
 from django.db.models import DateField, DateTimeField, Model
 from django.forms import DateInput, DateTimeInput
 from django_select2.forms import ModelSelect2Widget
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import ButtonHolder, Button, Submit
-
+from transaction_manager.models import Transaction
 ## Make changes here -------------------------------------------------------
 APP_STR = "transaction_manager"
 MODEL_STR = "Transaction"
@@ -82,6 +82,30 @@ class CrudForm(forms.ModelForm):
 ## -------------------------------------------------------------------------
         }
 
+    # validate quantity to ensure it is not negative
+    def clean(self):
+        cleaned_data = super().clean()
+        item = cleaned_data.get('item')
+        quantity = cleaned_data.get('quantity')
+        warehouse = cleaned_data.get('warehouse')
+        # Validate quantity for non-fungible items
+        if item and not item.category.is_fungible:
+            if quantity is None or quantity != 1:
+                raise forms.ValidationError(
+                    "Para itens não fungíveis, a quantidade deve ser 1.",
+                    code='unitary')
+        # validate warehouse to ensure there is enough stock
+        # for the requested quantity
+        if warehouse and quantity and item:
+            available_stock = Transaction.get_stock(warehouse, item)
+            if quantity is None or quantity > available_stock:
+                raise forms.ValidationError(
+                    "Não há estoque suficiente no armazém para efetuar "
+                    "essa transação de saída, para esse item.",
+                    code='out_of_stock',
+                )
+        return cleaned_data
+
     def __init__(self, *args, **kwargs):
         # Get the CRUD form type from the kwargs and pop it
         CRUD_FORM_TYPE = kwargs.pop("crud_form_type", None)
@@ -95,20 +119,27 @@ class CrudForm(forms.ModelForm):
         if TRANSACTION_TYPE == "inflow":
             self.fields["type"].choices = [
                 ("compra", "Compra"),
-                ("donation", "Doação"),
-                ("empréstimo", "Empréstimo"),
-                ("retorno", "Retorno"),
-                ("transferência", "Transferência"),
+                ("doação entrada", "Doação (entrada)"),
+                ("empréstimo entrada", "Empréstimo (entrada)"),
+                ("retorno entrada", "Retorno (entrada)"),
+                ("transferência entrada", "Transferência (entrada)"),
             ]
         elif TRANSACTION_TYPE == "outflow":
             self.fields["type"].choices = [
                 ("venda", "Venda"),
                 ("doação", "Doação"),
-                ("empréstimo", "Empréstimo"),
-                ("retorno", "Retorno"),
-                ("transferência", "Transferência"),
+                ("empréstimo saída", "Empréstimo (saída)"),
+                ("retorno saída", "Retorno (saída)"),
+                ("transferência saída", "Transferência (saída)"),
                 ("descarte", "Descarte"),
             ]
+
+        # Set custo error for quantity field
+        self.fields["quantity"].error_messages = {
+            "unitary": "Para itens não fungíveis, "
+                       "a quantidade deve ser 1.",
+            "out_of_stock": "Não há estoque suficiente no armazém."
+        }
 
         # Helper for crispy forms
         self.helper = FormHelper(self)

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'warehouse_manager',
     'item_manager',
     'transaction_manager',
+    'report_manager',
 ]
 
 # Django-Select2 Cache Configuration

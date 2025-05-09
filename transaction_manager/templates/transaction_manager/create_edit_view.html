@@ -29,7 +29,14 @@
   <script>
     // - Change here ---------------------------------------------------------
     $(document).ready(function () {
+      // focus on the first field of the form
       $('#id_invoice').focus();
+      // listen if escape key is pressed
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+          window.location.href = '/transaction_manager/list/';
+        }
+      });
     });
     // -----------------------------------------------------------------------
   </script>

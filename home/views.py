@@ -16,6 +16,7 @@ def home_index(request):
         return render(request, 'home/home.html')
     else:
         return redirect(reverse('home:home_login'))
+
 @login_not_required
 def home_login(request):
     form = LoginForm(request.POST or None)

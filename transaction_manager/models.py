@@ -2,15 +2,22 @@ from django.db import models
 
 
 class Transaction(models.Model):
-    DEFAULT_TYPE_CHOICES = [
+    INFLOW_TYPE_CHOICES = [
         ("compra", "Compra"),
+        ("doação entrada", "Doação (entrada)"),
+        ("empréstimo entrada", "Empréstimo (entrada)"),
+        ("retorno entrada", "Retorno (entrada)"),
+        ("transferência entrada", "Transferência (entrada)"),
+    ]
+    OUTFLOW_TYPE_CHOICES = [
         ("venda", "Venda"),
         ("doação", "Doação"),
-        ("empréstimo", "Empréstimo"),
-        ("retorno", "Retorno"),
-        ("transferência", "Transferência"),
+        ("empréstimo saída", "Empréstimo (saída)"),
+        ("retorno saída", "Retorno (saída)"),
+        ("transferência saída", "Transferência (saída)"),
         ("descarte", "Descarte"),
     ]
+    DEFAULT_TYPE_CHOICES = INFLOW_TYPE_CHOICES + OUTFLOW_TYPE_CHOICES
 
     warehouse = models.ForeignKey(
         "warehouse_manager.Warehouse",
@@ -99,6 +106,21 @@ class Transaction(models.Model):
         "Atualizado em",
         auto_now=True,
     )
+
+    def get_stock(target_warehouse, target_item):
+        inflow_transactions = Transaction.objects.filter(
+            warehouse=target_warehouse,
+            item=target_item,
+            type__in=[choice[0] for choice in Transaction.INFLOW_TYPE_CHOICES]
+        ).aggregate(total=models.Sum('quantity'))['total'] or 0
+
+        outflow_transactions = Transaction.objects.filter(
+            warehouse=target_warehouse,
+            item=target_item,
+            type__in=[choice[0] for choice in Transaction.OUTFLOW_TYPE_CHOICES]
+        ).aggregate(total=models.Sum('quantity'))['total'] or 0
+
+        return inflow_transactions - outflow_transactions
 
     def __str__(self):
         summary = self.warehouse.name
