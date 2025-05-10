@@ -77,14 +77,16 @@ class CrudForm(forms.ModelForm):
 ## Make changes here -------------------------------------------------------
             'company_counterpart': CompanyWidget,
             'person_counterpart': PersonWidget,
+            'is_inflow': forms.HiddenInput(),
             'item': ItemWidget,
-            'warehouse': WarehouseWidget,
+            'warehouse': WarehouseWidget
 ## -------------------------------------------------------------------------
         }
 
     # validate quantity to ensure it is not negative
     def clean(self):
         cleaned_data = super().clean()
+        is_inflow = cleaned_data.get('is_inflow')
         item = cleaned_data.get('item')
         quantity = cleaned_data.get('quantity')
         warehouse = cleaned_data.get('warehouse')
@@ -98,7 +100,7 @@ class CrudForm(forms.ModelForm):
         # for the requested quantity
         if warehouse and quantity and item:
             available_stock = Transaction.get_stock(warehouse, item)
-            if quantity is None or quantity > available_stock:
+            if not is_inflow and quantity > available_stock:
                 raise forms.ValidationError(
                     "Não há estoque suficiente no armazém para efetuar "
                     "essa transação de saída, para esse item.",
@@ -116,21 +118,28 @@ class CrudForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         # Adjust Transaction.type field based on the TRANSACTION_TYPE
+        if not TRANSACTION_TYPE:
+            if self.fields["is_inflow"].initial:
+                TRANSACTION_TYPE = "inflow"
+            else:
+                TRANSACTION_TYPE = "outflow"
         if TRANSACTION_TYPE == "inflow":
+            self.fields["is_inflow"].initial = True
             self.fields["type"].choices = [
                 ("compra", "Compra"),
-                ("doação entrada", "Doação (entrada)"),
-                ("empréstimo entrada", "Empréstimo (entrada)"),
-                ("retorno entrada", "Retorno (entrada)"),
-                ("transferência entrada", "Transferência (entrada)"),
+                ("doação", "Doação"),
+                ("empréstimo", "Empréstimo"),
+                ("retorno", "Retorno"),
+                ("transferência", "Transferência"),
             ]
         elif TRANSACTION_TYPE == "outflow":
+            self.fields["is_inflow"].initial = False
             self.fields["type"].choices = [
                 ("venda", "Venda"),
                 ("doação", "Doação"),
-                ("empréstimo saída", "Empréstimo (saída)"),
-                ("retorno saída", "Retorno (saída)"),
-                ("transferência saída", "Transferência (saída)"),
+                ("empréstimo", "Empréstimo"),
+                ("retorno", "Retorno"),
+                ("transferência", "Transferência"),
                 ("descarte", "Descarte"),
             ]
 

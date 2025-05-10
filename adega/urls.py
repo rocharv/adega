@@ -56,6 +56,11 @@ urlpatterns = [
         include('transaction_manager.urls'),
         name='transaction_manager'
     ),
+    path(
+        'report_manager/',
+        include('report_manager.urls'),
+        name='report_manager'
+    ),
 
     path("select2/", include("django_select2.urls")),
 ]
