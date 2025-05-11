@@ -18,8 +18,31 @@ A Adega foi desenvolvida, no backend e front-end, por **Rodrigo Viana Rocha** e 
 - Vanderlei Caetano de Souza
 - Zairemylli Francislayne Carreira M Silva
 
+## Características e Funcionalidades
+- **Design responsível** para dispositivos móveis e desktops.
+- O **tema** da Adega se adequa imediatamente ao tema do sistema operacional do usuário (dark/light mode).
+- Gestão de **Usuários** e **Superusuários**.
+- Gestão de **Endereços** com preenchimento automático a partir de um CEP válido.
+- Gestão de **Pessoas Físicas e Jurídicas** (com validação automática de CPF e CNPJ).
+- Gestão de **Categorias** de Itens e **Itens Individuais**.
+- Módulo de **Transações** para registrar atividades de:
+    - Compra
+    - Venda
+    - Doação
+    - Empréstimo
+    - Retorno
+    - Transferência
+    - Descarte
 
+- **Relatórios de Estoque**
+    - por Categoria
+    - por itens
 
+- **Ajuda** com exemplos de funcionalidade.
+
+- **Tabelas dinâmicas** com busca avançada para todos os itens tabelados, com ordenação por colunas.
+
+- **Perfomance comprovada e testada**: teste com entidades com mais de 1 milhão de registros, sem causar problemas às funcionalidades ou banco de dados do sistema.
 
 ## Tecnologias utilizadas
 A Adega foi desenvolvida utilizando o framework web fullstack de `Python`, o `Django`.
