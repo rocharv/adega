@@ -7,12 +7,18 @@ from transaction_manager.models import Transaction
 
 # Report queryset: stock by category
 # This queryset aggregates the stock of items by category and warehouse.
+from django.db.models import Case, When, IntegerField
+
 report_by_category = Transaction.objects.values(
     warehouse_name=F("warehouse__name"),
     item_category_name=F("item__category__name"),
 ).annotate(
     item_quantity=Sum(
-        F("quantity") * (1 if F("is_inflow") else -1)
+        Case(
+            When(is_inflow=True, then=F("quantity")),
+            When(is_inflow=False, then=-F("quantity")),
+            output_field=IntegerField(),
+        )
     )
 ).order_by("warehouse_name", "item_category_name")
 

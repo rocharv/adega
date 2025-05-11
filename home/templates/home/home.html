@@ -6,11 +6,13 @@
   <h2>Boas-vindas!</h2>
   <p style="font-style: italic;">
     Receba as boas-vindas da Adega,
-    {% if user.first_name %}
-      {{ user.first_name }} {{ user.last_name }}
-    {% else %}
-      {{ user }}
-    {% endif %}!
+    <code>
+      {% if user.first_name %}
+        {{ user.first_name }} {{ user.last_name }}
+      {% else %}
+        {{ user }}
+      {% endif %}
+    </code>!
   </p>
   <p>É um prazer ter você de volta conosco.</p>
   <h2>O que vamos fazer hoje?</h2>
