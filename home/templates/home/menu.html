@@ -110,7 +110,7 @@
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">Alterar senha</a></li>
+              <li><a class="dropdown-item" href="{% url 'home:home_change_password' %}">Alterar senha</a></li>
               {% if user.is_superuser %}
                 <li><hr class="dropdown-divider"></li>
                 <li>
