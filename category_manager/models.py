@@ -13,8 +13,9 @@ class Category(models.Model):
         "Fungível",
         help_text=(
             'Marque se os itens criados a partir dessa categoria não '
-            'atributos de controle individual como etiqueta de patrimônio '
-            'ou número de série. Exemplo: papel, caneta, etc.'
+            'necessitam de controle individual como etiqueta de patrimônio '
+            'ou número de série. Exemplo: Caneta Bic Azul, '
+            'Resma de Papel A4 - 500 folhas, etc.'
 
         ),
         default=False,
