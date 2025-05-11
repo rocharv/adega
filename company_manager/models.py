@@ -1,3 +1,4 @@
+from .validators import validate_cnpj
 from django.db import models
 
 
@@ -21,6 +22,7 @@ class Company(models.Model):
         "CNPJ",
         max_length=32,
         unique=True,
+        validators=[validate_cnpj],
     )
 
     email = models.CharField(

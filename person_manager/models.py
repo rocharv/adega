@@ -1,3 +1,4 @@
+from .validators import validate_cpf
 from django.db import models
 
 
@@ -6,6 +7,7 @@ class Person(models.Model):
         "CPF",
         max_length=32,
         unique=True,
+        validators=[validate_cpf],
     )
 
     full_name = models.CharField(

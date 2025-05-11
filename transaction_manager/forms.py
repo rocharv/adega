@@ -22,6 +22,13 @@ class CompanyWidget(ModelSelect2Widget):
     ]
 
 
+class Html5DateInput(DateInput):
+    input_type = 'date'
+
+    def __init__(self, attrs=None, format='%Y-%m-%d'):
+        super().__init__(attrs, format=format)
+
+
 class ItemWidget(ModelSelect2Widget):
     queryset = apps.get_model('item_manager', 'Item').objects.all()
     search_fields = [
@@ -48,16 +55,6 @@ class WarehouseWidget(ModelSelect2Widget):
     ]
 ## -------------------------------------------------------------------------
 
-
-# Define the HTML5 date and datetime widgets
-class Html5DateInput(DateInput):
-    input_type = 'date'
-
-
-class Html5DateTimeInput(DateTimeInput):
-    input_type = 'datetime-local'
-
-
 # Get the model dynamically
 try:
     MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
@@ -75,10 +72,12 @@ class CrudForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
 ## Make changes here -------------------------------------------------------
+            'beginning_date': Html5DateInput,
             'company_counterpart': CompanyWidget,
-            'person_counterpart': PersonWidget,
-            'is_inflow': forms.HiddenInput(),
+            'end_date': Html5DateInput,
+            'is_inflow': forms.HiddenInput,
             'item': ItemWidget,
+            'person_counterpart': PersonWidget,
             'warehouse': WarehouseWidget
 ## -------------------------------------------------------------------------
         }

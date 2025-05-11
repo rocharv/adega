@@ -25,6 +25,10 @@ class AddressWidget(ModelSelect2Widget):
         'country__icontains',
     ]
 
+    def __init__(self, attrs=None):
+        super().__init__(attrs)
+        self.attrs.update({'class': 'form-control', 'type': 'date'})
+
 
 class CompanyWidget(ModelSelect2Widget):
     queryset = apps.get_model('company_manager', 'Company').objects.all()
@@ -39,9 +43,8 @@ class CompanyWidget(ModelSelect2Widget):
 class Html5DateInput(DateInput):
     input_type = 'date'
 
-
-class Html5DateTimeInput(DateTimeInput):
-    input_type = 'datetime-local'
+    def __init__(self, attrs=None, format='%Y-%m-%d'):
+        super().__init__(attrs, format=format)
 
 try:
     MODEL: Model = apps.get_model(APP_STR, MODEL_STR)
@@ -60,6 +63,7 @@ class CrudForm(forms.ModelForm):
 ## Make changes here -------------------------------------------------------
             'address': AddressWidget,
             'company': CompanyWidget,
+            'birthdate': Html5DateInput,
 ## -------------------------------------------------------------------------
         }
 
@@ -70,15 +74,6 @@ class CrudForm(forms.ModelForm):
         self.helper.form_method = "POST"
 
         if crud_form_type == "create":
-            # Apply HTML5 date/datetime widgets only for 'create' form type
-            for field_name, field in self.fields.items():
-                # Get the model field to check its type
-                model_field = MODEL._meta.get_field(field_name)
-                if isinstance(model_field, DateField):
-                    self.fields[field_name].widget = Html5DateInput()
-                elif isinstance(model_field, DateTimeField):
-                    self.fields[field_name].widget = Html5DateTimeInput()
-
             self.helper.layout.append(
                 ButtonHolder(
                     Submit(
