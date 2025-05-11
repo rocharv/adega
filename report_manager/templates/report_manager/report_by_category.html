@@ -1,0 +1,40 @@
+{% extends "home/menu.html" %}
+{% block content %}
+  <div class="card bg-body-tertiary shadow" style="padding: 1rem;">
+    <h3 style="margin-bottom: 2rem;">{{ action }}</h3>
+    <p>Lista do estoque de itens por categoria.</p>
+    <table id="data-table" class="table table-striped" style=" width:100%">
+      <thead>
+        <tr>
+          {%for column in table_columns %}
+            <th>{{ column }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <script>
+    $(document).ready(function () {
+      //- Change here --------------------------------------------------------
+      const list_all_api_url = "/report_manager/list_by/api/category";
+      //----------------------------------------------------------------------
+
+      //----------------------------------------------------------------------
+      // DataTables setup
+      //----------------------------------------------------------------------
+      const table = new DataTable('#data-table', {
+        ajax: list_all_api_url,
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/pt-BR.json',
+        },
+        processing: true, // show loading indicator
+        serverSide: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50, 100, 1000],
+        select: {
+          style: 'multi',
+        },
+      });
+    });
+  </script>
+{% endblock %}

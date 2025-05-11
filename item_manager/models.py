@@ -11,11 +11,19 @@ class Item(models.Model):
 
     corporate_tag = models.CharField(
         "Etiqueta de Patrimônio", max_length=32,
+        help_text=(
+            "Número que identifica exclusivamente um item dentro de uma "
+            "empresa ou instituição. Exemplo: 123456, 1234-5678, etc."
+            ),
         blank=True
     )
 
     serial_number = models.CharField(
         "Número de Série", max_length=32,
+        help_text=(
+            "Número que identifica exclusivamente um item. Por exemplo: "
+            "o IMEI de um celular, o número de série de um computador, etc."
+            ),
         blank=True
     )
 
