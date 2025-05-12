@@ -79,4 +79,4 @@ def hlogout(request):
         messages.success(request, "Você fez o logout com sucesso.")
     else:
         messages.warning(request, "Você não está logado.")
-    return redirect("home:login")
+    return redirect("home:hlogin")

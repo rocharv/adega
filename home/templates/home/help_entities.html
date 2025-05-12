@@ -3,58 +3,149 @@
 {% block content %}
   <h1>Entidades</h1>
   <p>Nesse seção vamos esclarecer o funcionamento de cada uma das entidades do sistema Adega.</p>
-<div class="card bg-body-secondary" style="padding: 1rem; max-width: 15rem;">
-    <p class="card-title">
-      A <code>Adega</code> ajuda a gerenciar:
-      <ul class="card-body">
-        <li>Endereços</li>
-        <li>Pessoas Jurídicas e Físicas</li>
-        <li>Categorias de Itens & Itens Individuais</li>
-        <li>Transações de Entrada e Saída</li>
-        <li>Relatórios de Estoque</li>
-      </ul>
-    </p>
-  </div>
-  <h2>Armazéns</h2>
-  <p>
-    Um <code>armazém</code>, na perspectiva do sistema, é qualquer local onde possam ser gerenciados itens.
-  </p>
-  <p>
-    Ele pode ser um almoxarifado, um depósito, uma sala, um armário, etc.
-  </p>
-  <p>
-    O <code>armazém padrão</code> nada mais é do que aquele que aparecerá por padrão, pré-selecionado, em todos os campos de seleção de <code>armazém</code> do sistema. Ele pode ser alterado a qualquer momento.
-  </p>
-  <div class="bd-callout bd-callout-warning">
-    <strong>Dica: </strong>
-    Não é recomendada a criação indiscriminada de armazéns, já que isso pode tornar mais lenta a gestão do inventário. O ideal é criar armazéns apenas para locais que realmente necessitem de controle.
-  </div>
 
-  <h2>Pessoas</h2>
   <p>
-      Uma <code>pessoa</code> é qualquer indivíduo que precise estar cadastrada no sistema. Ela pode ser uma funcionária, uma colaboradora, uma fornecedora, uma cliente, etc.
+    A <code>Adega</code> ajuda a gerenciar todas as entidades abaixo. Clique em uma delas para ver mais detalhes:
   </p>
 
-  <h2>Empresas</h2>
-  <p>
-      Uma <code>empresa</code> é qualquer entidade que precise estar cadastrada no sistema. Ela pode ser uma empresa, uma instituição, um órgão público, etc.
-  </p>
+<div class="accordion" id="accordionExample">
 
-  <h2>Itens & Categoria de Itens</h2>
-  <p>
-      Um <code>item</code> é qualquer coisa que possa ser gerenciada em um <code>armazém</code>. Ele pode ser um produto, um equipamento, um material, uma licença digital de software, etc. Porém, todo <code>item</code> deve ter uma maneira de ser <strong>unicamente identificado</strong>, seja por um número de série, uma etiqueta patrimonial ou, no limite, o <code>id</code> gerado pelo sistema.
-  </p>
-  <p>
-      Todo <code>item</code> deve ser criado a partir de uma <code>categoria de itens</code>. A <code>categoria de itens</code> é uma abstração que define as características comuns de um grupo de itens.
-  <p>
-      Por exemplo, <code>a categoria de itens</code> com o nome <strong>"Apple iPhone 16 Pro Max - Titânio Preto"</strong> define perfeitamente um tipo de celular, mas não define um <code>item</code> armazenável. Um <code>item</code> precisa ter sido criado a partir de uma <code>categoria de itens</code> e conter um número exclusivo.
-  </p>
-  <p>
-      Uma <code>categoria de itens</code> não pode ser incluída ou removida de um armazém.
-  </p>
-  <div class="bd-callout bd-callout-info">
-    <strong>Dica: </strong>
-    A vantagem de criar uma <code>categoria de itens</code> é que ela permite o cadastro em massa de diversos item no <code>armazém</code>, cada um com seu <strong>id</strong> de sistema. Posteriormente, é possível entrar no <code>armazém</code> e editar detalhes dos <code>itens</code> individualmente sempre que necessário, atribuindo-lhes um número de série, etiqueta patrimonial etc.
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Endereços
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          Um <code>endereço</code> é a descrição de um local que será  associado ao cadastro de uma <code>pessoa</code> ou <code>empresa</code>.
+        </p>
+        <div class="bd-callout bd-callout-info">
+          <strong>Dica: </strong>
+          Se você estiver cadastrando um endereço no Brasil, comece pelo CEP. O sistema Adega vai procurar os dados disponíveis, a partir do CEP, e preencherá automaticamente os campos restantes (geralmente com exceção do número e complemento, todos os outros campos).
+        </div>
+      </div>
+    </div>
   </div>
 
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Pessoas Físicas e Jurídicas
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <h3>Pessoas Físicas (Pessoas)</h3>
+        <p>
+            Uma <code>pessoa</code> é qualquer indivíduo que precise estar cadastrada no sistema. Ela pode ser uma funcionária, uma colaboradora, uma fornecedora, uma cliente, etc.
+        </p>
+
+        <h3>Pessoas Jurídicas (Empresas)</h3>
+        <p>
+            Uma <code>empresa</code> é qualquer entidade que precise estar cadastrada no sistema. Ela pode ser uma empresa, uma instituição, um órgão público, etc.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Categorias de Itens e Itens Individuais
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          Um <code>item</code> é qualquer coisa que possa ser gerenciada em um <code>armazém</code>. Ele pode ser um produto, um equipamento, um material, uma obra de arte, uma licença digital de software, etc. Porém, todo <code>item</code> deve ter uma maneira de ser <strong>unicamente identificado</strong>, seja por um número de série, uma etiqueta patrimonial ou, no limite, o <code>id</code> gerado pelo sistema.
+        </p>
+        <p>
+          Todo <code>item</code> deve ser criado a partir de uma <code>categoria de itens</code>. A <code>categoria de itens</code> é uma abstração que define as características comuns de um grupo de itens.
+        <p>
+          Por exemplo, <code>a categoria de itens</code> com o nome <strong>"Apple iPhone 16 Pro Max - Titânio Preto"</strong> define perfeitamente um tipo de celular, mas não define um <code>item</code> armazenável. Um <code>item</code> precisa ter sido criado a partir de uma <code>categoria de itens</code> e conter um número exclusivo (dado por uma etiqueta patrimonial, número de série ou id). Pense que a empresa pode ter comprado 3 iPhones iguas, mas cada um deles é um <code>item</code> diferente. O mesmo vale para computadores, impressoras, etc. Telefones celulares, por exemplo, possuem IMEI diferentes, que pode ser cadastrado como um número de série.
+        </p>
+        <p>
+          Uma <code>categoria de itens</code> não pode ser incluída ou removida de um armazém. Mas existe um tipo especial de categoria de itens, para os itens chamados <code>fungíveis</code>. Itens fungíveis são aqueles que não precisam ser individualmente identificados, como papel, canetas, grampos, etc. Quando você criar uma categoria de item fungível, ela automaticamente cadastrará um item padrão com essa categoria.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+        Armazéns
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          Um <code>armazém</code>, na perspectiva do sistema, é qualquer local onde possam ser gerenciados itens.
+        </p>
+        <p>
+          Ele pode ser um almoxarifado, um depósito, uma sala, um armário, etc.
+        </p>
+        <p>
+          O <code>armazém padrão</code> nada mais é do que aquele que aparecerá por padrão, pré-selecionado, em todos os campos de seleção de <code>armazém</code> do sistema. Ele pode ser alterado a qualquer momento.
+        </p>
+        <div class="bd-callout bd-callout-info">
+          <strong>Dica: </strong>
+          Não é recomendada a criação indiscriminada de armazéns, já que isso pode tornar mais lenta a gestão do inventário. O ideal é criar armazéns apenas para locais que realmente necessitem de controle.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+        Transações de Entrada e Saída
+      </button>
+    </h2>
+    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          As <code>transações de entrada e saída</code> são registradas no sistema para controlar o fluxo de <code>itens</code> nos <code>armazéns</code>.
+        </p>
+        <ol>
+          <li>Escolha se quer incluir uma transação de entrada ou saída de estoque.</li>
+          <li>Escolher o <code>armazém</code> envolvido.</li>
+          <li>Selecionar o <code>tipo</code> de transação. As de entrada são: compra, doação, empréstimo, retorno e transferência. As de saída são: venda, doação, empréstimo, retorno, transferência e descarte.</li>
+          <li>Adicione o <code>número da nota fiscal ou recibo</code>, caso exista.</li>
+          <li>Selecione a <code>quantidade</code>.</li>
+          <li>Selecione o <code>item</code>.</li>
+          <li>Selecione o <code>preço</code>.</li>
+          <li>Selecione a <code>contraparte</code>. Contrapartes podem ser pessoas e/ou empresas. Por exemplo: se a transação for uma compra, a contraparte será o fornecedor.</li>
+          <li>Selecione a <code>data de início</code>, opcionalmente quando ocorreu o início transação.</li>
+          <li>Selecione a <code>data de término</code>, opcionalmente quando ocorrerá o término transação. Por exemplo: digamos que você está fazendo uma operação de empréstimo de um livro para um colaborador. Você pode colocar aqui a data limite para a devolução.</li>
+          <li>Selecione uma <code>descrição</code> da transação, se quiser.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
+        Relatórios de Estoque
+      </button>
+    </h2>
+    <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          Os <code>Relatórios de Estoque</code> são gerados a partir das transações registradas no sistema. Eles consolidam a posição do <code>armazém</code>, somando todas as transações de <code>entradas</code> ocorridas e subtraindo todas as <code>saídas</code> ocorridas.
+        </p>
+        <p>
+          Quando selecionado o <code>Estoque por Categoria</code>, a agregação é feita por <code>categoria de itens</code>. Ou seja, itens diferentes, mas que pertencem à mesma <code>categoria de itens</code>, são somados e subtraídos.
+        </p>
+        <p>
+          Já quando selecionado o <code>Estoque por Itens</code>, são mostrados os itens remanescentes no estoque, individualmente.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
 {% endblock %}
