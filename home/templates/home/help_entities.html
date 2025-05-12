@@ -1,22 +1,25 @@
 {% extends 'home/menu.html' %}
 {% load static %}
 {% block content %}
-  <h1>Entidades</h1>
-  <p>Nesse seção vamos esclarecer o funcionamento de cada uma das entidades do sistema Adega.</p>
+  <h1>Ajuda</h1>
 
+  <h2>Entidades</h2>
   <p>
-    A <code>Adega</code> ajuda a gerenciar todas as entidades abaixo. Clique em uma delas para ver mais detalhes:
+    Nesse seção vamos esclarecer o funcionamento de cada uma das entidades do sistema <code>Adega</code>.
+  </p>
+  <p>
+    Clique em uma delas para ver mais detalhes:
   </p>
 
-<div class="accordion" id="accordionExample">
+<div class="accordion accordion" id="accordionEntities">
 
   <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+    <h3 class="accordion-header">
+      <button class="accordion-button collapsed type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
         Endereços
       </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+    </h3>
+    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
       <div class="accordion-body">
         <p>
           Um <code>endereço</code> é a descrição de um local que será  associado ao cadastro de uma <code>pessoa</code> ou <code>empresa</code>.
@@ -30,19 +33,20 @@
   </div>
 
   <div class="accordion-item">
-    <h2 class="accordion-header">
+    <h3 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         Pessoas Físicas e Jurídicas
       </button>
-    </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    </h3>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
       <div class="accordion-body">
-        <h3>Pessoas Físicas (Pessoas)</h3>
+
+        <h4>Pessoas Físicas (Pessoas)</h4>
         <p>
             Uma <code>pessoa</code> é qualquer indivíduo que precise estar cadastrada no sistema. Ela pode ser uma funcionária, uma colaboradora, uma fornecedora, uma cliente, etc.
         </p>
 
-        <h3>Pessoas Jurídicas (Empresas)</h3>
+        <h4>Pessoas Jurídicas (Empresas)</h4>
         <p>
             Uma <code>empresa</code> é qualquer entidade que precise estar cadastrada no sistema. Ela pode ser uma empresa, uma instituição, um órgão público, etc.
         </p>
@@ -51,12 +55,12 @@
   </div>
 
   <div class="accordion-item">
-    <h2 class="accordion-header">
+    <h3 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
         Categorias de Itens e Itens Individuais
       </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    </h3>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
       <div class="accordion-body">
         <p>
           Um <code>item</code> é qualquer coisa que possa ser gerenciada em um <code>armazém</code>. Ele pode ser um produto, um equipamento, um material, uma obra de arte, uma licença digital de software, etc. Porém, todo <code>item</code> deve ter uma maneira de ser <strong>unicamente identificado</strong>, seja por um número de série, uma etiqueta patrimonial ou, no limite, o <code>id</code> gerado pelo sistema.
@@ -74,12 +78,12 @@
   </div>
 
   <div class="accordion-item">
-    <h2 class="accordion-header">
+    <h3 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
         Armazéns
       </button>
-    </h2>
-    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    </h3>
+    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
       <div class="accordion-body">
         <p>
           Um <code>armazém</code>, na perspectiva do sistema, é qualquer local onde possam ser gerenciados itens.
@@ -99,12 +103,12 @@
   </div>
 
   <div class="accordion-item">
-    <h2 class="accordion-header">
+    <h3 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
         Transações de Entrada e Saída
       </button>
-    </h2>
-    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    </h3>
+    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
       <div class="accordion-body">
         <p>
           As <code>transações de entrada e saída</code> são registradas no sistema para controlar o fluxo de <code>itens</code> nos <code>armazéns</code>.
@@ -127,12 +131,12 @@
   </div>
 
   <div class="accordion-item">
-    <h2 class="accordion-header">
+    <h3 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
         Relatórios de Estoque
       </button>
-    </h2>
-    <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    </h3>
+    <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
       <div class="accordion-body">
         <p>
           Os <code>Relatórios de Estoque</code> são gerados a partir das transações registradas no sistema. Eles consolidam a posição do <code>armazém</code>, somando todas as transações de <code>entradas</code> ocorridas e subtraindo todas as <code>saídas</code> ocorridas.

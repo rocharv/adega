@@ -18,83 +18,196 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-geo-alt"></i>
               Endereços
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'address_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'address_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'address_manager:create_new' %}">
+                <i class="bi bi-plus-circle"></i>
+                  Incluir
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'address_manager:list_all' %}">
+                  <i class="bi bi-table"></i>
+                  Listar/Editar/Apagar
+                </a>
+              </li>
             </ul>
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-people"></i>
               Pessoas
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Pessoas Jurídicas</span>
-              <li><a class="dropdown-item" href="{% url 'company_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'company_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">
+                <i class="bi bi-building-fill"></i>
+                Pessoas Jurídicas
+              </span>
+              <li>
+                <a class="dropdown-item" href="{% url 'company_manager:create_new' %}">
+                  <i class="bi bi-plus-circle"></i>
+                  Incluir
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'company_manager:list_all' %}">
+                  <i class="bi bi-table"></i>
+                  Listar/Editar/Apagar
+              </a>
+            </li>
               <li><hr class="dropdown-divider"></li>
-              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Pessoas Físicas</span>
-              <li><a class="dropdown-item" href="{% url 'person_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'person_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">
+                <i class="bi bi-people-fill"></i>
+                Pessoas Físicas
+              </span>
+              <li>
+                <a class="dropdown-item" href="{% url 'person_manager:create_new' %}">
+                  <i class="bi bi-plus-circle"></i>
+                  Incluir
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'person_manager:list_all' %}">
+                  <i class="bi bi-table"></i>
+                  Listar/Editar/Apagar
+                </a>
+              </li>
             </ul>
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-tag"></i>
               Itens
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Categorias</span>
-              <li><a class="dropdown-item" href="{% url 'category_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'category_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">
+                <i class="bi bi-grid-fill"></i>
+                Categorias
+              </span>
+              <li>
+                <a class="dropdown-item" href="{% url 'category_manager:create_new' %}">
+                  <i class="bi bi-plus-circle"></i>
+                  Incluir
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'category_manager:list_all' %}">
+                  <i class="bi bi-table"></i>
+                  Listar/Editar/Apagar
+                </a>
+              </li>
               <li><hr class="dropdown-divider"></li>
-              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">Itens Individuais</span>
-              <li><a class="dropdown-item" href="{% url 'item_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'item_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <span class="badge bg-secondary text-light" style="margin-left: 0.5rem;">
+                <i class="bi bi-tag-fill"></i>
+                Itens Individuais
+              </span>
+              <li>
+                <a class="dropdown-item" href="{% url 'item_manager:create_new' %}">
+                  <i class="bi bi-plus-circle"></i>
+                  Incluir
+              </a>
+            </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'item_manager:list_all' %}">
+                  <i class="bi bi-table"></i>
+                  Listar/Editar/Apagar
+                </a>
+              </li>
             </ul>
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-archive"></i>
               Armazéns
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'warehouse_manager:create_new' %}">Incluir</a></li>
-              <li><a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'warehouse_manager:create_new' %}">
+                  <i class="bi bi-plus-circle"></i>
+                  Incluir
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'warehouse_manager:list_all' %}">
+                  <i class="bi bi-table"></i>
+                  Listar/Editar/Apagar
+                </a>
+              </li>
             </ul>
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-arrow-left-right"></i>
               Transações
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'transaction_manager:create_new' 'inflow' %}">Entrada</a></li>
-              <li><a class="dropdown-item" href="{% url 'transaction_manager:create_new' 'outflow' %}">Saída</a></li>
-              <li><a class="dropdown-item" href="{% url 'transaction_manager:list_all' %}">Listar/Editar/Apagar</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'transaction_manager:create_new' 'inflow' %}">
+                  <i class="bi bi-plus-circle"></i>
+                  Entrada</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'transaction_manager:create_new' 'outflow' %}">
+                  <i class="bi bi-dash-circle"></i>
+                  Saída</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'transaction_manager:list_all' %}">
+                  <i class="bi bi-table"></i>
+                  Listar/Editar/Apagar
+                </a>
+              </li>
             </ul>
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-file-earmark-text"></i>
               Relatórios
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'report_manager:list_by' 'category' %}">Estoque por Categoria</a></li>
-              <li><a class="dropdown-item" href="{% url 'report_manager:list_by' 'item' %}">Estoque por Itens</a></li>
+              <li><a class="dropdown-item" href="{% url 'report_manager:list_by' 'category' %}">
+                <i class="bi bi-grid"></i>
+                Estoque por Categoria
+              </a>
+            </li>
+              <li><a class="dropdown-item" href="{% url 'report_manager:list_by' 'item' %}">
+                <i class="bi bi-tag"></i>
+                Estoque por Itens
+              </a>
+            </li>
             </ul>
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-question-circle"></i>
               Ajuda
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'home:help_entities' %}">Entidades</a></li>
-              <li><a class="dropdown-item" href="{% url 'home:help_examples' %}">Exemplos</a></li>
-              <li><a class="dropdown-item" href="{% url 'home:help_about' %}">Sobre</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'home:help_entities' %}">
+                  <i class="bi bi-collection"></i>
+                  Entidades
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'home:help_examples' %}">
+                  <i class="bi bi-play-btn"></i>
+                  Exemplos
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'home:help_about' %}">
+                  <i class="bi bi-info-circle"></i>
+                  Sobre
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -104,26 +217,36 @@
         <ul class="navbar-nav mb-2" style="align-items: center;">
             <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" style="padding: 0px;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-person-circle" style="color: #0AF; font-size: 2rem;"></i>
+              <i class="bi bi-person-circle" style="color: #0AF; font-size: 1.5rem;"></i>
                 {% if user.is_superuser %}
-                <i class="bi bi-shield-lock" style="color: #FA0; font-size: 1rem; position: relative; top: 0.5rem;"></i>
+                <i class="bi bi-shield-lock" style="color: #F60; font-size: 1rem; position: relative; top: 0.5rem;"></i>
               {% endif %}
               <span class="ms-2">{{ user.username }}</span>
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="{% url 'home:change_password' %}">Alterar senha</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'home:change_password' %}">
+                    <i class="bi bi-key"></i>
+                    Alterar senha
+              </a>
+            </li>
               {% if user.is_superuser %}
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                  <a class="dropdown-item d-flex align-items-center" href="{% url 'admin:index' %}">
-                  Gerenciar sistema
-                  <i class="bi bi-shield-lock ms-2" style="color: #FA0; font-size: 1rem;"></i>
+                  <a class="dropdown-item" href="{% url 'admin:index' %}">
+                    <i class="bi bi-gear" style="color: #F60"></i>
+                    Gerenciar Sistema
                   </a>
                 </li>
               {% endif %}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'home:hlogout' %}">Fazer logout</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'home:hlogout' %}">
+                  <i class="bi bi-door-closed"></i>
+                  Fazer logout
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
