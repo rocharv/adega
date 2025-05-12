@@ -3,38 +3,82 @@
 {% block content %}
   <h1>Ajuda</h1>
 
-  <h2>Exemplo</h2>
-  <div class="accordion accordion" id="accordionFlushExample">
+  <h2>Exemplos</h2>
+  <br>
+  <div class="card">
+    <h5 class="card-header">1. Cadastro de Endereço</h5>
+    <div class="card-body">
+      <h5 class="card-title">Situação</h5>
+      <p class="card-text">
+        Vamos considerar que a Adega está controlando o estoque da Secretaria de TI da Prefeitura Municipal de Vinhedo.
+      </p>
+      <p class="card-text">
+        O primeiro passo é cadastrar o endereço da prefeitura:
+      </p>
+      <ul>
+        <li><strong>Rua Humberto Pescarini, 330, Centro, Vinhedo/SP, Brasil, 13280-085.</strong></li>
+      </ul>
+      <h5 class="card-title">Menu</h5>
+      <ul>
+        <li style="color: #0d6efd;">Endereços > Incluir</li>
+      </ul>
+      <h5 class="card-title">Ação</h5>
+      <ul>
+        <li>Preencher o formulário “Incluir Endereço” com:</li>
+        <ul>
+          <li><strong>CEP*:</strong> 13280-085</li>
+          <li><strong>Logradouro*:</strong> Rua Humberto Pescarini</li>
+          <li><strong>Número:</strong> 330</li>
+          <li><strong>Bairro*:</strong> Centro</li>
+          <li><strong>Cidade*:</strong> Vinhedo</li>
+          <li><strong>Estado*:</strong> SP</li>
+          <li><strong>País*:</strong> Brasil</li>
+          <li><strong>Referência:</strong> ** deixar em branco **</li>
+        </ul>
+      </ul>
+      <h5 class="card-title">Comentários</h5>
+      <ul>
+        <li>Os campos com asterisco (*) são obrigatórios.</li>
+        <li>O campo “Referência” é opcional, mas pode ser utilizado para adicionar informações adicionais sobre o endereço.</li>
+        <li>Note que ao digitar o CEP e mudar para o próximo campo, todos os campos serão preenchidos automaticamente (com exceção do número e complemento).</li>
+      </ul>
+    </div>
+  </div>
 
-  <div class="accordion-item">
-    <h3 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        Accordion Item #1
-      </button>
-    </h3>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+
+
+  <br>
+  <div class="card">
+    <h5 class="card-header">2. Cadastro de Pessoa Jurídica</h5>
+    <div class="card-body">
+      <h5 class="card-title">Situação</h5>
+      <p class="card-text">
+        Agora  precisamos cadastrar a pessoa jurídica da prefeitura.
+      </p>
+      <h5 class="card-title">Menu</h5>
+      <ul>
+        <li style="color: #0d6efd;">Pessoas > Pessoas Jurídicas > Incluir</li>
+      </ul>
+      <h5 class="card-title">Ação</h5>
+      <ul>
+        <li>Preencher o formulário “Incluir Empresa” com:</li>
+        <ul>
+          <li><strong>Empresa*:</strong> Prefeitura de Vinhedo</li>
+          <li><strong>Razão Social*:</strong> Prefeitura Municipal de Vinhedo</li>
+          <li><strong>CNPJ*:</strong> 46.446.696/0001-85</li>
+          <li><strong>Email:</strong> secretaria.administracao@vinhedo.sp.gov.br</li>
+          <li><strong>Telefone:</strong> +55 (19) 3826-7499</li>
+          <li><strong>Website:</strong> https://www.vinhedo.sp.gov.br/</li>
+          <li><strong>Endereço:</strong> ** clique e selecione o endereço cadastrado no passo anterior **</li>
+          <li><strong>Descrição:</strong> ** deixar em branco **</li>
+        </ul>
+      </ul>
+      <h5 class="card-title">Comentários</h5>
+      <ul>
+        <li>Os campos com asterisco (*) são obrigatórios.</li>
+        <li>O campo “Referência” é opcional, mas pode ser utilizado para adicionar informações adicionais sobre o endereço.</li>
+        <li>Note que ao digitar o CEP e mudar para o próximo campo, todos os campos serão preenchidos automaticamente (com exceção do número e complemento).</li>
+      </ul>
     </div>
-  </div>
-  <div class="accordion-item">
-    <h3 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        Accordion Item #2
-      </button>
-    </h3>
-    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item’s accordion body. Let’s imagine this being filled with some actual content.</div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h3 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-        Accordion Item #3
-      </button>
-    </h3>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-    </div>
-  </div>
-</div>
+
 {% endblock %}
