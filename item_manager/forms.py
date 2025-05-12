@@ -11,7 +11,9 @@ MODEL_STR = "Item"
 VIEW_ROUTE = f"/{APP_STR}/list/"
 # Define all the widgets for foreign key fields
 class CategoryWidget(ModelSelect2Widget):
-    queryset = apps.get_model('category_manager', 'Category').objects.all()
+    queryset = apps.get_model('category_manager', 'Category').objects.filter(
+        is_fungible=False
+    )
     search_fields = [
         'name__icontains',
         'brand__icontains',
@@ -64,7 +66,13 @@ class CrudForm(forms.ModelForm):
                 )
             )
         elif crud_form_type == "edit":
-             self.helper.layout.append(
+            if self.instance.category.is_fungible:
+                for field_name in self.fields:
+                    self.fields[field_name].disabled = True
+                    self.fields[field_name].widget.attrs.update(
+                        {"readonly": "readonly"})
+
+            self.helper.layout.append(
                  ButtonHolder(
                      Submit(
                          "submit",

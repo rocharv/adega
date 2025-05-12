@@ -5,7 +5,7 @@ class Category(models.Model):
     name = models.CharField(
         "Nome",
         help_text="Use um nome que descreva bem um item/produto.",
-        max_length=64,
+        max_length=256,
         unique=True,
     )
 
@@ -29,19 +29,19 @@ class Category(models.Model):
 
     model = models.CharField(
         "Modelo",
-        max_length=128,
+        max_length=256,
         blank=True,
     )
 
     color = models.CharField(
         "Cor",
-        max_length=16,
+        max_length=32,
         blank=True,
     )
 
     author = models.CharField(
         "Autor(es)",
-        max_length=128,
+        max_length=256,
         blank=True,
     )
 
@@ -86,7 +86,7 @@ class Category(models.Model):
 
     dimension_x = models.DecimalField(
         "Comprimento",
-        max_digits=4,
+        max_digits=9,
         decimal_places=2,
         blank=True,
         null=True,
@@ -94,7 +94,7 @@ class Category(models.Model):
 
     dimension_y = models.DecimalField(
         "largura",
-        max_digits=4,
+        max_digits=9,
         decimal_places=2,
         blank=True,
         null=True,
@@ -102,7 +102,7 @@ class Category(models.Model):
 
     dimension_z = models.DecimalField(
         "Profundidade",
-        max_digits=4,
+        max_digits=9,
         decimal_places=2,
         blank=True,
         null=True,

@@ -62,6 +62,15 @@ def create_new(request):
         form = CrudForm(request.POST, crud_form_type="create")
         if form.is_valid():
             form.save()
+            # If the category is_fungible, create a new item
+            # associated with it
+            if form.cleaned_data.get('is_fungible'):
+                # Create a new item associated with the category
+                new_item = apps.get_model("item_manager", "Item").objects.create(
+                    category=form.instance,
+                )
+                new_item.save()
+
             messages.success(
                 request,
                 VERBOSE_NAME + " anterior criado(a) com sucesso."

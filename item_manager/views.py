@@ -95,8 +95,12 @@ def delete_bulk(request):
     if request.method == "POST":
         # delete all related ids in a single atomic bulk transaction
         ids = request.POST.getlist('selected_rows[]')
+        # remove the ids of items which category is fungible
+        selected_ids = [
+            id for id in ids if not MODEL.objects.get(id=id).category.is_fungible
+        ]
         with transaction.atomic():
-            MODEL.objects.filter(id__in=ids).delete()
+            MODEL.objects.filter(id__in=selected_ids).delete()
     return redirect(reverse(f"{APP_STR}:list_all"))
 
 def edit_id(request, id):
