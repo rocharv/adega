@@ -41,37 +41,14 @@
     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
       <div class="accordion-body">
 
-        <h4>Pessoas Físicas (Pessoas)</h4>
+        <h5>Pessoas Físicas (Pessoas)</h5>
         <p>
             Uma <code>pessoa</code> é qualquer indivíduo que precise estar cadastrada no sistema. Ela pode ser uma funcionária, uma colaboradora, uma fornecedora, uma cliente, etc.
         </p>
 
-        <h4>Pessoas Jurídicas (Empresas)</h4>
+        <h5>Pessoas Jurídicas (Empresas)</h5>
         <p>
             Uma <code>empresa</code> é qualquer entidade que precise estar cadastrada no sistema. Ela pode ser uma empresa, uma instituição, um órgão público, etc.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="accordion-item">
-    <h3 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        Categorias de Itens e Itens Individuais
-      </button>
-    </h3>
-    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
-      <div class="accordion-body">
-        <p>
-          Um <code>item</code> é qualquer coisa que possa ser gerenciada em um <code>armazém</code>. Ele pode ser um produto, um equipamento, um material, uma obra de arte, uma licença digital de software, etc. Porém, todo <code>item</code> deve ter uma maneira de ser <strong>unicamente identificado</strong>, seja por um número de série, uma etiqueta patrimonial ou, no limite, o <code>id</code> gerado pelo sistema.
-        </p>
-        <p>
-          Todo <code>item</code> deve ser criado a partir de uma <code>categoria de itens</code>. A <code>categoria de itens</code> é uma abstração que define as características comuns de um grupo de itens.
-        <p>
-          Por exemplo, <code>a categoria de itens</code> com o nome <strong>"Apple iPhone 16 Pro Max - Titânio Preto"</strong> define perfeitamente um tipo de celular, mas não define um <code>item</code> armazenável. Um <code>item</code> precisa ter sido criado a partir de uma <code>categoria de itens</code> e conter um número exclusivo (dado por uma etiqueta patrimonial, número de série ou id). Pense que a empresa pode ter comprado 3 iPhones iguas, mas cada um deles é um <code>item</code> diferente. O mesmo vale para computadores, impressoras, etc. Telefones celulares, por exemplo, possuem IMEI diferentes, que pode ser cadastrado como um número de série.
-        </p>
-        <p>
-          Uma <code>categoria de itens</code> não pode ser incluída ou removida de um armazém. Mas existe um tipo especial de categoria de itens, para os itens chamados <code>fungíveis</code>. Itens fungíveis são aqueles que não precisam ser individualmente identificados, como papel, canetas, grampos, etc. Quando você criar uma categoria de item fungível, ela automaticamente cadastrará um item padrão com essa categoria.
         </p>
       </div>
     </div>
@@ -98,6 +75,29 @@
           <strong>Dica: </strong>
           Não é recomendada a criação indiscriminada de armazéns, já que isso pode tornar mais lenta a gestão do inventário. O ideal é criar armazéns apenas para locais que realmente necessitem de controle.
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h3 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Categorias de Itens e Itens Individuais
+      </button>
+    </h3>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionEntities">
+      <div class="accordion-body">
+        <p>
+          Um <code>item</code> é qualquer coisa que possa ser gerenciada em um <code>armazém</code>. Ele pode ser um produto, um equipamento, um material, uma obra de arte, uma licença digital de software, etc. Porém, todo <code>item</code> deve ter uma maneira de ser <strong>unicamente identificado</strong>, seja por um número de série, uma etiqueta patrimonial ou, no limite, o <code>id</code> gerado pelo sistema.
+        </p>
+        <p>
+          Todo <code>item</code> deve ser criado a partir de uma <code>categoria de itens</code>. A <code>categoria de itens</code> é uma abstração que define as características comuns de um grupo de itens.
+        <p>
+          Por exemplo, <code>a categoria de itens</code> com o nome <strong>"Apple iPhone 16 Pro Max - Titânio Preto"</strong> define perfeitamente um tipo de celular, mas não define um <code>item</code> armazenável. Um <code>item</code> precisa ter sido criado a partir de uma <code>categoria de itens</code> e conter um número exclusivo (dado por uma etiqueta patrimonial, número de série ou id). Pense que a empresa pode ter comprado 3 iPhones iguas, mas cada um deles é um <code>item</code> diferente. O mesmo vale para computadores, impressoras, etc. Telefones celulares, por exemplo, possuem IMEI diferentes, que pode ser cadastrado como um número de série.
+        </p>
+        <p>
+          Uma <code>categoria de itens</code> não pode ser incluída ou removida de um armazém. Mas existe um tipo especial de categoria de itens, para os itens chamados <code>fungíveis</code>. Itens fungíveis são aqueles que não precisam ser individualmente identificados, como papel, canetas, grampos, etc. Quando você criar uma categoria de item fungível, ela automaticamente cadastrará um item padrão com essa categoria.
+        </p>
       </div>
     </div>
   </div>

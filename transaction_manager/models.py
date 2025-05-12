@@ -61,6 +61,15 @@ class Transaction(models.Model):
         default=0.00,
     )
 
+    actor = models.ForeignKey(
+        "person_manager.Person",
+        verbose_name="Pessoa que executou a transação",
+        on_delete=models.SET_NULL,
+        related_name="transactions_actor",
+        null=True,
+        blank=True,
+    )
+
     person_counterpart = models.ForeignKey(
         "person_manager.Person",
         verbose_name="Contraparte (pessoa)",

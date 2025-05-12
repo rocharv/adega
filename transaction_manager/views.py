@@ -22,6 +22,10 @@ KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE = [
     'warehouse',
     'type',
     'invoice',
+    'actor',
+    'company_counterpart',
+    'person_counterpart',
+    'beginning_date',
 ]
 ## -------------------------------------------------------------------------
 
@@ -64,6 +68,12 @@ def get_match_in_any_column_query(search_value):
             query |= Q(**{f"{field}__category__name__icontains": search_value})
             query |= Q(**{f"{field}__corporate_tag__icontains": search_value})
             query |= Q(**{f"{field}__serial_number__icontains": search_value})
+        elif field == "company_counterpart":
+            query |= Q(**{f"{field}__name__icontains": search_value})
+        elif field == "person_counterpart":
+            query |= Q(**{f"{field}__full_name__icontains": search_value})
+        elif field == "actor":
+            query |= Q(**{f"{field}__full_name__icontains": search_value})
         else:
             # Search on regular fields
             query |= Q(**{f"{field}__icontains": search_value})
