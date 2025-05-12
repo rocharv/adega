@@ -4,13 +4,15 @@ from django.urls import path, include
 
 app_name = 'home'
 urlpatterns = [
-    path('', views.home_index, name='home_index'),
-    path('help/', views.home_help, name='home_help'),
-    path('login/', views.home_login, name='home_login'),
-    path('logout/', views.home_logout, name='home_logout'),
+    path('', views.index, name='index'),
+    path('help/about/', views.help_about, name='help_about'),
+    path('help/entities/', views.help_entities, name='help_entities'),
+    path('help/examples/', views.help_examples, name='help_examples'),
+    path('login/', views.hlogin, name='hlogin'),
+    path('logout/', views.hlogout, name='hlogout'),
     path(
         'change_password/',
-        views.home_change_password,
-        name='home_change_password'
+        views.change_password,
+        name='change_password'
     ),
 ]

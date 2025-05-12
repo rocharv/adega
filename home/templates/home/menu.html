@@ -3,7 +3,7 @@
 {% block body %}
   <nav class="navbar navbar-expand-md shadow fixed-top bg-body-secondary" style="padding: 0rem; margin: 5px;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home:home_index' %}" style="padding: 0px;">
+        <a class="navbar-brand" href="{% url 'home:index' %}" style="padding: 0px;">
           <img src="{% static 'home/images/three_barrels_light.png' %}" alt="Logo" class="img-fluid" style="width: 40px; height: auto;">
           Adega
         </a>
@@ -92,7 +92,9 @@
               Ajuda
             </a>
             <ul class="dropdown-menu bg-body-secondary shadow">
-              <li><a class="dropdown-item" href="{% url 'home:home_help' %}">Sobre</a></li>
+              <li><a class="dropdown-item" href="{% url 'home:help_entities' %}">Entidades</a></li>
+              <li><a class="dropdown-item" href="{% url 'home:help_examples' %}">Exemplos</a></li>
+              <li><a class="dropdown-item" href="{% url 'home:help_about' %}">Sobre</a></li>
             </ul>
           </li>
 
@@ -110,7 +112,7 @@
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="{% url 'home:home_change_password' %}">Alterar senha</a></li>
+              <li><a class="dropdown-item" href="{% url 'home:change_password' %}">Alterar senha</a></li>
               {% if user.is_superuser %}
                 <li><hr class="dropdown-divider"></li>
                 <li>
@@ -121,7 +123,7 @@
                 </li>
               {% endif %}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'home:home_logout' %}">Fazer logout</a></li>
+              <li><a class="dropdown-item" href="{% url 'home:hlogout' %}">Fazer logout</a></li>
             </ul>
           </li>
         </ul>
