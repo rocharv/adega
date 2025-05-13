@@ -98,8 +98,17 @@ class CrudForm(forms.ModelForm):
                     code='unitary')
         # validate warehouse to ensure there is enough stock
         # for the requested quantity
+
+        # CrudForm type is 'edit' and the instance is outflow
+        if self.instance.quantity and not self.instance.is_inflow:
+            current_transaction_quantity = self.instance.quantity
+        else:
+            current_transaction_quantity = 0
+
         if warehouse and quantity and item:
-            available_stock = Transaction.get_stock(warehouse, item)
+            available_stock = (
+                Transaction.get_stock(warehouse, item) +
+                current_transaction_quantity)
             if not is_inflow and quantity > available_stock:
                 raise forms.ValidationError(
                     "Não há estoque suficiente no armazém para efetuar "
@@ -128,19 +137,19 @@ class CrudForm(forms.ModelForm):
             self.fields["is_inflow"].initial = True
             self.fields["type"].choices = [
                 ("compra", "Compra"),
-                ("doação", "Doação"),
-                ("empréstimo", "Empréstimo"),
-                ("retorno", "Retorno"),
-                ("transferência", "Transferência"),
+                ("doação (entrada)", "Doação (Entrada)"),
+                ("empréstimo (entrada)", "Empréstimo (Entrada)"),
+                ("retorno (entrada)", "Retorno (Entrada)"),
+                ("transferência (entrada)", "Transferência (Entrada)"),
             ]
         elif TRANSACTION_TYPE == "outflow":
             self.fields["is_inflow"].initial = False
             self.fields["type"].choices = [
                 ("venda", "Venda"),
-                ("doação", "Doação"),
-                ("empréstimo", "Empréstimo"),
-                ("retorno", "Retorno"),
-                ("transferência", "Transferência"),
+                ("doação (saída)", "Doação (Saída)"),
+                ("empréstimo (saída)", "Empréstimo (Saída)"),
+                ("retorno (saída)", "Retorno (Saída)"),
+                ("transferência (saída)", "Transferência (Saída)"),
                 ("descarte", "Descarte"),
             ]
 

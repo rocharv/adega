@@ -124,12 +124,28 @@ def create_new(request, ttype: str):
     )
 
 def delete_bulk(request):
-    # Get the entity object by id
     if request.method == "POST":
+        selected_ids = request.POST.getlist('selected_rows[]')
+        # remove the ids of inflow transactions
+        # that will leave the warehouse with negative stock if deleted
+        deletable_ids = []
+        for id in selected_ids:
+            current_transaction = MODEL.objects.get(id=id)
+            if current_transaction.is_inflow:
+                current_stock = MODEL.get_stock(
+                    current_transaction.warehouse,
+                    current_transaction.item,
+                )
+                if current_stock - current_transaction.quantity >= 0:
+                    deletable_ids.append(id)
+            else:
+                # outflow transaction
+                deletable_ids.append(id)
+
         # delete all related ids in a single atomic bulk transaction
-        ids = request.POST.getlist('selected_rows[]')
         with transaction.atomic():
-            MODEL.objects.filter(id__in=ids).delete()
+            MODEL.objects.filter(id__in=deletable_ids).delete()
+
     return redirect(reverse(f"{APP_STR}:list_all"))
 
 def edit_id(request, id):

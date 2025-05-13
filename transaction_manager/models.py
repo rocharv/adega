@@ -12,10 +12,14 @@ class Transaction(models.Model):
     DEFAULT_TYPE_CHOICES = [
         ("compra", "Compra"),
         ("venda", "Venda"),
-        ("doação", "Doação"),
-        ("empréstimo", "Empréstimo"),
-        ("retorno", "Retorno"),
-        ("transferência", "Transferência"),
+        ("doação (entrada)", "Doação (Entrada)"),
+        ("doação (saída)", "Doação (Saída)"),
+        ("empréstimo (entrada)", "Empréstimo (Entrada)"),
+        ("empréstimo (saída)", "Empréstimo (Saída)"),
+        ("retorno (entrada)", "Retorno (Entrada)"),
+        ("retorno (saída)", "Retorno (Saída)"),
+        ("transferência (entrada)", "Transferência (Entrada)"),
+        ("transferência (saída)", "Transferência (Saída)"),
         ("descarte", "Descarte"),
     ]
     type = models.CharField(
