@@ -72,6 +72,7 @@ class CrudForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
 ## Make changes here -------------------------------------------------------
+            'actor': PersonWidget,
             'beginning_date': Html5DateInput,
             'company_counterpart': CompanyWidget,
             'end_date': Html5DateInput,
@@ -118,10 +119,11 @@ class CrudForm(forms.ModelForm):
 
         # Adjust Transaction.type field based on the TRANSACTION_TYPE
         if not TRANSACTION_TYPE:
-            if self.fields["is_inflow"].initial:
+            if self.instance.is_inflow:
                 TRANSACTION_TYPE = "inflow"
             else:
                 TRANSACTION_TYPE = "outflow"
+        print("TRANSACTION_TYPE", TRANSACTION_TYPE)
         if TRANSACTION_TYPE == "inflow":
             self.fields["is_inflow"].initial = True
             self.fields["type"].choices = [
@@ -161,8 +163,6 @@ class CrudForm(forms.ModelForm):
                 model_field = MODEL._meta.get_field(field_name)
                 if isinstance(model_field, DateField):
                     self.fields[field_name].widget = Html5DateInput()
-                elif isinstance(model_field, DateTimeField):
-                    self.fields[field_name].widget = Html5DateTimeInput()
 
             self.helper.layout.append(
                 ButtonHolder(

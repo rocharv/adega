@@ -51,9 +51,9 @@ def get_match_in_any_column_query(search_value):
     """
     query = Q()
     for field in TABLE_COLUMNS.values():
-        if field in FK_FIELDS:
+        if field == "category":
             # Assuming we want to search on the primary key of the related model
-            query = query | Q(**{f"{field}__pk__icontains": search_value})
+            query = query | Q(**{f"{field}__name__icontains": search_value})
         else:
             query = query | Q(**{f"{field}__icontains": search_value})
     return query

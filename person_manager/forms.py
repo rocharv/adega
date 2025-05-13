@@ -25,10 +25,6 @@ class AddressWidget(ModelSelect2Widget):
         'country__icontains',
     ]
 
-    def __init__(self, attrs=None):
-        super().__init__(attrs)
-        self.attrs.update({'class': 'form-control', 'type': 'date'})
-
 
 class CompanyWidget(ModelSelect2Widget):
     queryset = apps.get_model('company_manager', 'Company').objects.all()
