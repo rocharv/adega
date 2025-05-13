@@ -32,6 +32,13 @@
     // -----------------------------------------------------------------------
     $(document).ready(function () {
       $('#id_corporate_tag').focus();
+      // In case escape key is pressed, exit the form and go to the list page
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+          window.location.href = '/item_manager/list/';
+        }
+      });
+
     });
 </script>
 {% endblock %}

@@ -17,6 +17,7 @@ TABLE_COLUMNS = {
     3: 'invoice',
     4: 'quantity',
     5: 'item',
+    6: 'price',
 }
 KEPT_FIELDS_AFTER_SUCCESSFUL_CREATE = [
     'warehouse',

@@ -30,6 +30,12 @@
     // - Change here ---------------------------------------------------------
     $(document).ready(function () {
       $('#id_name').focus();
+      // In case escape key is pressed, exit the form and go to the list page
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+          window.location.href = '/category_manager/list/';
+        }
+      });
     });
     // -----------------------------------------------------------------------
   </script>

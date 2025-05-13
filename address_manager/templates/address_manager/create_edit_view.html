@@ -29,6 +29,13 @@
 <script>
   $(document).ready(function () {
     $('#id_zip_code').focus();
+    // In case escape key is pressed, exit the form and go to the list page
+    $(document).on('keydown', function (e) {
+      if (e.key === 'Escape') {
+        window.location.href = '/address_manager/list/';
+      }
+    });
+    // Search for address using zip code
     $('#id_zip_code').on('focusout', function () {
       const zipCode = $(this).val().replace(/\D/g, '');
       if (zipCode) {

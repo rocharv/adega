@@ -31,6 +31,12 @@
     $(document).ready(function () {
       $('#id_cpf').focus();
       $('#id_cpf').mask('000.000.000-00', {reverse: true});
+      // In case escape key is pressed, exit the form and go to the list page
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+          window.location.href = '/person_manager/list/';
+        }
+      });
     });
     // -----------------------------------------------------------------------
   </script>

@@ -31,7 +31,7 @@
     $(document).ready(function () {
       // focus on the first field of the form
       $('#id_invoice').focus();
-      // listen if escape key is pressed
+      // In case escape key is pressed, exit the form and go to the list page
       $(document).on('keydown', function (e) {
         if (e.key === 'Escape') {
           window.location.href = '/transaction_manager/list/';

@@ -62,7 +62,7 @@ class Transaction(models.Model):
         "Preço",
         max_digits=10,
         decimal_places=2,
-        default=0.00,
+        default=0,
     )
 
     actor = models.ForeignKey(
