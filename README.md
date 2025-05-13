@@ -86,7 +86,7 @@ poetry run python manage.py createcachetable select2_cache_table
 - Execute as migrações do projeto:
 ```bash
 poetry run python manage.py makemigrations
-poetry run python manage.py migrate
+poetry run python manage.py migrate --run-syncdb
 ```
 
 - Crie um `superuser` do `Django` para o projeto. Através deste usuário você poderá criar:
