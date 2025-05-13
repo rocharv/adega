@@ -5,22 +5,24 @@
 
   <h2>Exemplos</h2>
   <br>
-  <div class="card">
+  <div class="card" id="card1">
     <h5 class="card-header">1. Cadastro de Endereço</h5>
     <div class="card-body">
       <h5 class="card-title">Situação</h5>
-      <p class="card-text">
-        Vamos considerar que a Adega está controlando o estoque da Secretaria de TI da Prefeitura Municipal de Vinhedo.
-      </p>
-      <p class="card-text">
-        O primeiro passo é cadastrar o endereço da prefeitura:
-      </p>
       <ul>
-        <li><strong>Rua Humberto Pescarini, 330, Centro, Vinhedo/SP, Brasil, 13280-085.</strong></li>
+        <li>
+          Vamos considerar que a <code>Adega</code> está controlando o estoque da Secretaria de TI da Prefeitura Municipal de Vinhedo.
+        </li>
+        <li>
+          O primeiro passo é cadastrar o <code>endereço</code> da prefeitura:
+        </li>
+        <ul>
+          <li>Rua Humberto Pescarini, 330, Centro, Vinhedo/SP, Brasil, 13280-085.</li>
+        </ul>
       </ul>
       <h5 class="card-title">Menu</h5>
-      <ul>
-        <li style="color: #0d6efd;">Endereços > Incluir</li>
+      <ul style="color: #0d6efd;">
+        <li>Endereços > Incluir</li>
       </ul>
       <h5 class="card-title">Ação</h5>
       <ul>
@@ -29,6 +31,7 @@
           <li><strong>CEP*:</strong> 13280-085</li>
           <li><strong>Logradouro*:</strong> Rua Humberto Pescarini</li>
           <li><strong>Número:</strong> 330</li>
+          <li><strong>Complemento:</strong> ** deixar em branco **</li>
           <li><strong>Bairro*:</strong> Centro</li>
           <li><strong>Cidade*:</strong> Vinhedo</li>
           <li><strong>Estado*:</strong> SP</li>
@@ -48,16 +51,18 @@
 
 
   <br>
-  <div class="card">
+  <div class="card" id="card2">
     <h5 class="card-header">2. Cadastro de Pessoa Jurídica</h5>
     <div class="card-body">
       <h5 class="card-title">Situação</h5>
-      <p class="card-text">
-        Agora  precisamos cadastrar a pessoa jurídica da prefeitura.
-      </p>
-      <h5 class="card-title">Menu</h5>
       <ul>
-        <li style="color: #0d6efd;">Pessoas > Pessoas Jurídicas > Incluir</li>
+        <li>
+          Agora precisamos cadastrar a pessoa jurídica da prefeitura.
+        </li>
+      </ul>
+      <h5 class="card-title">Menu</h5>
+      <ul style="color: #0d6efd;">
+        <li>Pessoas > Pessoas Jurídicas > Incluir</li>
       </ul>
       <h5 class="card-title">Ação</h5>
       <ul>
@@ -75,10 +80,400 @@
       </ul>
       <h5 class="card-title">Comentários</h5>
       <ul>
-        <li>Os campos com asterisco (*) são obrigatórios.</li>
-        <li>O campo “Referência” é opcional, mas pode ser utilizado para adicionar informações adicionais sobre o endereço.</li>
-        <li>Note que ao digitar o CEP e mudar para o próximo campo, todos os campos serão preenchidos automaticamente (com exceção do número e complemento).</li>
+        <li>O sistema irá testar o <strong>CNPJ</strong> após o envio do formulário para conferir a validade do mesmo.</li>
+        <li><strong>Campos com lista de opções</strong> devem ter sido cadastrados em passos anteriores como foi aqui o caso do <code>endereço</code> da empresa. Mas não se preocupe, também é possível abrir outra aba do sistema e cadastrar o valor daquele campo e retornar.</li>
+        <li><strong>Campos com lista de opções</strong> precisam ser deliberadamente clicados com o mouse (ou dedo) e devemos digitar pelo menos dois caracteres para começar a busca.</li>
       </ul>
     </div>
+  </div>
+
+
+
+  <br>
+  <div class="card" id="card3">
+    <h5 class="card-header">3. Cadastro de Armazém</h5>
+    <div class="card-body">
+      <h5 class="card-title">Situação</h5>
+      <p class="card-text">
+        Agora precisamos cadastrar um <code>armazém</code> onde armazenaremos os nossos itens em estoque.
+      </p>
+      <h5 class="card-title">Menu</h5>
+      <ul>
+        <li style="color: #0d6efd;">Armazéns > Incluir</li>
+      </ul>
+      <h5 class="card-title">Ação</h5>
+      <ul>
+        <li>Preencher o formulário “Incluir Armazém” com:</li>
+        <ul>
+          <li><strong>Nome*:</strong> Sala 37</li>
+          <li><strong>Empresa*:</strong> ** clique e selecione a empresa cadastrada no passo anterior **</li>
+          <li><strong>Descrição:</strong> ** deixar em branco **</li>
+        </ul>
+      </ul>
+      <h5 class="card-title">Comentários</h5>
+      <ul>
+        <li>Não crie armazéns desnecessários.</li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <br>
+  <div class="card" id="card4">
+    <h5 class="card-header">4. Cadastro de Categorias, Itens e Transações</h5>
+    <div class="card-body">
+      <h5 class="card-title">Situação</h5>
+      <p class="card-text">
+        <p>
+          Digamos que o responsável pelo estoque da prefeitura (<strong>Pedro Vieira Martins - CPF: 278.579.986-05</strong>) acaba de receber alguns itens comprados em uma papelaria que devem ser cadastrados no sistema. Essa papelaria está sendo usada pela primeira vez (logo começamos cadastrando o <code>endereço</code> e a <code>pessoa jurídica</code> da loja) e esses <code>itens</code> nunca foram comprados anteriormente, portanto precisamos cadastrar suas <code>categorias</code> e <code>itens individuais</code>.
+        </p>
+        <ul>
+          <li>
+            Os produtos foram comprados na <strong>Kalunga de Jundiaí</strong> (Av. Jundiaí, 1.465 - Jardim Ana Maria, Jundiaí - SP, 13208-053, CNPJ: 43.283.811/0001-50)
+          </li>
+          <li>
+            Lista de itens da nota fiscal 000175:
+          </li>
+          <ul>
+            <li>
+              <strong>13 x Papel Sulfite A4, 75g, 210mmx297mm, Chamex - PT 500 FL</strong> (código de barras: 7891173023001, peso: 2,3 kg, preço individual R$ 32,90).
+            </li>
+            <li>
+              <strong>01 x Impressora Multifuncional Tanque de Tinta Ecotank L3250, Colorida, Wi-Fi, Conexão USB, Bivolt, Epson</strong> (código de barras: 0010343958111, SKU: 358359-1, peso: 3,9 kg, preço individual: R$ 1.099,00, s/n de cada item: XAABJ68686).
+            </li>
+            <li>
+              <strong>02 x Smartphone Galaxy A06, Android 14, 128GB, Câmera Selfie de 8MP, Câmera Dupla Traseira 50MP + 2MP, Tela Infinita de 6.7", Dual Chip, Azul escuro, A065M, Samsung</strong> (código de barras: 7892509136952,  SKU: 416515-3, peso: 189g,  preço individual: R$ 863,10, IMEIs de cada aparelho: 350073340281362, 350073340281364.
+            </li>
+          </ul>
+        </ul>
+      </p>
+      <h5 class="card-title">Menus</h5>
+      <ul style="color: #0d6efd;">
+        <li>Armazéns > Incluir</li>
+        <li>Pessoas > Pessoas Físicas > Incluir</li>
+        <li>Endereços > Incluir</li>
+        <li>Pessoas > Pessoas Jurídicas > Incluir</li>
+        <li>Itens > Categorias > Incluir</li>
+        <li>Itens > Itens Individuais > Incluir</li>
+        <li>Transações > Entrada</li>
+      </ul>
+      <h5 class="card-title">Ação</h5>
+      <ul>
+        <li>Primeiro cadastramos o Pedro como uma <code>pessoa física</code> no sistema.</li>
+        <li>Segundo cadastramos o <code>endereço</code> da papelaria.</li>
+        <li>Terceiro cadastramos a <code>pessoa jurídica</code> da papelaria.</li>
+        <li>Quarto cadastramos a <code>categoria</code> de cada item comprado</li>
+        <li>Quinto cadastramos os detalhes dos <code>itens individuais</code> comprados.</li>
+        <li>Sexto cadastramos as <code>transações</code> de entrada de cada um dos itens.</li>
+        <li>Vamos focar nos três últimos passos.</li>
+        <ol>
+          <li>
+            Cadastrar a <code>categoria</code> “papel sulfite”. Preencher o formulário “Incluir Categoria”:
+            <ul>
+              <li><strong>Nome*: </strong>Papel Sulfite A4, 75g, 210mmx297mm, Chamex - PT 500 FL</li>
+              <li><strong>Fungível*? </strong>Sim</li>
+              <li><strong>Marca: </strong>Chamex</li>
+              <li><strong>Modelo: </strong>A4, 75g/m³</li>
+              <li><strong>Cor: </strong>Branco</li>
+              <li><strong>Autor(es): </strong>** não preencher **</li>
+              <li><strong>Código de barras: </strong>7891173023001</li>
+              <li><strong>SKU: </strong>** não preencher **</li>
+              <li><strong>UPC: </strong>** não preencher **</li>
+              <li><strong>Peso: </strong>2,3</li>
+              <li><strong>Unidade de Peso: </strong>quilogramas</li>
+              <li><strong>Comprimento: </strong>297</li>
+              <li><strong>Largura: </strong>210</li>
+              <li><strong>Profundidade: </strong>50</li>
+              <li><strong>Unidade de Medida: </strong>milímetros</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar a <code>categoria</code> da “impressora”. Preencher o formulário “Incluir Categoria”:
+            <ul>
+              <li><strong>Nome*: </strong>Impressora Multifuncional Tanque de Tinta Ecotank L3250, Colorida, Wi-Fi, Conexão USB, Bivolt, Epson</li>
+              <li><strong>Fungível*? </strong>Não</li>
+              <li><strong>Marca: </strong>Epson</li>
+              <li><strong>Modelo: </strong>Ecotank L3250</li>
+              <li><strong>Cor: </strong>Preto</li>
+              <li><strong>Autor(es): </strong>** não preencher **</li>
+              <li><strong>Código de barras: </strong>0010343958111</li>
+              <li><strong>SKU: </strong>358359-1</li>
+              <li><strong>UPC: </strong>** não preencher **</li>
+              <li><strong>Peso: </strong>3,9</li>
+              <li><strong>Unidade de Peso: </strong>quilogramas</li>
+              <li><strong>Comprimento: </strong>24,4</li>
+              <li><strong>Largura: </strong>40,8</li>
+              <li><strong>Profundidade: </strong>43,6</li>
+              <li><strong>Unidade de Medida: </strong>centímetros</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar a <code>categoria</code> do “celular”. Preencher o formulário “Incluir Categoria”:
+            <ul>
+              <li><strong>Nome*: </strong>Smartphone Galaxy A06, Android 14, 128GB, Câmera Selfie de 8MP, Câmera Dupla Traseira 50MP + 2MP, Tela Infinita de 6.7", Dual Chip, Azul escuro, A065M, Samsung</li>
+              <li><strong>Fungível*? </strong>Não</li>
+              <li><strong>Marca: </strong>Samsung</li>
+              <li><strong>Modelo: </strong>Galaxy A06</li>
+              <li><strong>Cor: </strong>Azul escuro</li>
+              <li><strong>Autor(es): </strong>** não preencher **</li>
+              <li><strong>Código de barras: </strong>7892509136952</li>
+              <li><strong>SKU: </strong>416515-3</li>
+              <li><strong>UPC: </strong>** não preencher **</li>
+              <li><strong>Peso: </strong>189</li>
+              <li><strong>Unidade de Peso: </strong>gramas</li>
+              <li><strong>Comprimento: </strong>16,7</li>
+              <li><strong>Largura: </strong>7,6</li>
+              <li><strong>Profundidade: </strong>8,4</li>
+              <li><strong>Unidade de Medida: </strong>centímetros</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar o <code>item</code> com a primeira impressora. Preencher o formulário “Incluir Item”:
+            <ul>
+              <li><strong>Categoria*: </strong>Impressora Multifuncional Tanque de Tinta Ecotank L3250, Colorida, Wi-Fi, Conexão USB, Bivolt, Epson</li>
+              <li><strong>Etiqueta de Patrimônio: </strong>** não preencher **</li>
+              <li><strong>Número de Série: </strong>XAABJ68686</li>
+              <li><strong>Novo? </strong>Sim</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar o <code>item</code> com a segunda impressora. Preencher o formulário “Incluir Item”:
+            <ul>
+              <li><strong>Categoria*: </strong>Impressora Multifuncional Tanque de Tinta Ecotank L3250, Colorida, Wi-Fi, Conexão USB, Bivolt, Epson</li>
+              <li><strong>Etiqueta de Patrimônio: </strong>** não preencher **</li>
+              <li><strong>Número de Série: </strong>XAABJ68687</li>
+              <li><strong>Novo? </strong>Sim</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar o <code>item</code> com o primeiro celular. Preencher o formulário “Incluir Item”:
+            <ul>
+              <li><strong>Categoria*: </strong>Smartphone Galaxy A06, Android 14, 128GB, Câmera Selfie de 8MP, Câmera Dupla Traseira 50MP + 2MP, Tela Infinita de 6.7", Dual Chip, Azul escuro, A065M, Samsung</li>
+              <li><strong>Etiqueta de Patrimônio: </strong>** não preencher **</li>
+              <li><strong>Número de Série: </strong>350073340281362</li>
+              <li><strong>Novo? </strong>Sim</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar o <code>item</code> com o segundo celular. Preencher o formulário “Incluir Item”:
+            <ul>
+              <li><strong>Categoria*: </strong>Smartphone Galaxy A06, Android 14, 128GB, Câmera Selfie de 8MP, Câmera Dupla Traseira 50MP + 2MP, Tela Infinita de 6.7", Dual Chip, Azul escuro, A065M, Samsung</li>
+              <li><strong>Etiqueta de Patrimônio: </strong>** não preencher **</li>
+              <li><strong>Número de Série: </strong>350073340281364</li>
+              <li><strong>Novo? </strong>Sim</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar a <code>transação</code> do “papel sulfite”. Preencher o formulário “Incluir Transação”:
+            <ul>
+              <li><strong>Armazém*: </strong>** digite Sala 37 **</li>
+              <li><strong>Tipo*: </strong>Compra</li>
+              <li><strong>Nota Fiscal ou Recibo: </strong>000175</li>
+              <li><strong>Quantidade*: </strong>13</li>
+              <li><strong>Item*: </strong>** digitar, por exemplo, Chamex e achar o item **</li>
+              <li><strong>Preço*: </strong>32,90</li>
+              <li><strong>Pessoa que executou a transação: </strong>** procure por Pedro Vieira Martins **</li>
+              <li><strong>Contraparte (pessoa): </strong>** vamos deixar em branco pois foi feito via internet **</li>
+              <li><strong>Contraparte (empresa): </strong>** procure a Kalunga de Jundiai **</li>
+              <li><strong>Data de Início: </strong>** selecione a data da compra **</li>
+              <li><strong>Data de Término: </strong>** podemos deixar sem preencher pois a compra não tem prazo **</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar a <code>transação</code> da “impressora”. Preencher o formulário “Incluir Transação”:
+            <ul>
+              <li><strong>Armazém*: </strong>** digite Sala 37 **</li>
+              <li><strong>Tipo*: </strong>Compra</li>
+              <li><strong>Nota Fiscal ou Recibo: </strong>000175</li>
+              <li><strong>Quantidade*: </strong>1</li>
+              <li><strong>Item*: </strong>** digitar, por exemplo, Ecotank e achar o item **</li>
+              <li><strong>Preço*: </strong>1.099,00</li>
+              <li><strong>Pessoa que executou a transação: </strong>** procure por Pedro Vieira Martins **</li>
+              <li><strong>Contraparte (pessoa): </strong>** vamos deixar em branco foi feito via internet **</li>
+              <li><strong>Contraparte (empresa): </strong>** procure a Kalunga de Jundiai **</li>
+              <li><strong>Data de Início: </strong>** selecione a data da compra **</li>
+              <li><strong>Data de Término: </strong>** podemos deixar sem preencher pois a compra não tem prazo **</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar a <code>transação</code> do primeiro “smartphone”. Preencher o formulário “Incluir Transação”:
+            <ul>
+              <li><strong>Armazém*: </strong>** digite Sala 37 **</li>
+              <li><strong>Tipo*: </strong>Compra</li>
+              <li><strong>Nota Fiscal ou Recibo: </strong>000175</li>
+              <li><strong>Quantidade*: </strong>1</li>
+              <li><strong>Item*: </strong>** digitar, por exemplo, Samsung e achar o item **</li>
+              <li><strong>Preço*: </strong>863,10</li>
+              <li><strong>Pessoa que executou a transação: </strong>** procure por Pedro Vieira Martins **</li>
+              <li><strong>Contraparte (pessoa): </strong>** vamos deixar em branco foi feito via internet **</li>
+              <li><strong>Contraparte (empresa): </strong>** procure a Kalunga de Jundiai **</li>
+              <li><strong>Data de Início: </strong>** selecione a data da compra **</li>
+              <li><strong>Data de Término: </strong>** podemos deixar sem preencher pois a compra não tem prazo **</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+          <li>
+            Cadastrar a <code>transação</code> do segundo “smartphone”. Preencher o formulário “Incluir Transação”
+            <ul>
+              <li><strong>Armazém*: </strong>** digite Sala 37 **</li>
+              <li><strong>Tipo*: </strong>Compra</li>
+              <li><strong>Nota Fiscal ou Recibo: </strong>000175</li>
+              <li><strong>Quantidade*: </strong>1</li>
+              <li><strong>Item*: </strong>** digitar, por exemplo, Ecotank e achar o item **</li>
+              <li><strong>Preço*: </strong>1.099,00</li>
+              <li><strong>Pessoa que executou a transação: </strong>** procure por Pedro Vieira Martins **</li>
+              <li><strong>Contraparte (pessoa): </strong>** vamos deixar em branco foi feito via internet **</li>
+              <li><strong>Contraparte  (empresa): </strong>** procure a Kalunga de Jundiai **</li>
+              <li><strong>Data de Início: </strong>** selecione a data da compra **</li>
+              <li><strong>Data de Término: </strong>** podemos deixar sem preencher pois a compra não tem prazo **</li>
+              <li><strong>Descrição: </strong>** não preencher **</li>
+            </ul>
+          </li>
+        </ol>
+      </ul>
+      <h5 class="card-title">Comentários</h5>
+      <ul>
+        <li>Não se preocupe! Quanto mais cadastramos entidades no sistema como <code>endereços</code>, <code>pessoas</code>, <code>empresas</code>, <code>categorias</code>, nunca mais precisaremos cadastrá-los novamente. O processo ficará cada vez mais simples.</li>
+        <li>Marcar a categoria do “Papel Sulfite A4” como <code>fungível</code>, gera automaticamente o <code>item individual</code> no sistema.</li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <br>
+  <div class="card" id="card1">
+    <h5 class="card-header">5. Relatório de Estoque por Categoria</h5>
+    <div class="card-body">
+      <h5 class="card-title">Situação</h5>
+      <ul>
+        <li>
+          Agora testemos o <code>Relatório de Estoque por Categoria</code>.
+        </li>
+      </ul>
+      <h5 class="card-title">Menu</h5>
+      <ul style="color: #0d6efd;">
+        <li>Relatórios > Estoque por Categoria</li>
+      </ul>
+      <h5 class="card-title">Ação</h5>
+      <ul>
+        <li>Basta entrar no menu que você verá a tabela a seguir:</li>
+          <table  id="data-table" class="table table-striped" style=" width:100%">
+            <thead>
+                <tr>
+                    <th>Nome do Armazém</th>
+                    <th>Quantidade de Itens</th>
+                    <th>Nome da Categoria</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>2</td>
+                    <td>Impressora Multifuncional Tanque de Tinta Ecotank L3250, Colorida, Wi-Fi, Conexão USB, Bivolt, Epson</td>
+                </tr>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>13</td>
+                    <td>Papel Sulfite A4, 75g, 210mmx297mm, Chamex - PT 500 FL</td>
+                </tr>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>2</td>
+                    <td>Smartphone Galaxy A06, Android 14, 128GB, Câmera Selfie de 8MP, Câmera Dupla Traseira 50MP + 2MP, Tela Infinita de 6.7", Dual Chip, Azul escuro, A065M, Samsung</td>
+                </tr>
+            </tbody>
+          </table>
+      </ul>
+      <h5 class="card-title">Comentários</h5>
+      <ul>
+        <li>Note que as impressoras e celulares por serem da mesma categoria foram consolidados em apenas 2 linhas (ao invés de 4).</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <br>
+  <div class="card" id="card1">
+    <h5 class="card-header">6. Relatório de Estoque por Item</h5>
+    <div class="card-body">
+      <h5 class="card-title">Situação</h5>
+      <ul>
+        <li>
+          Agora testemos o <code>Relatório de Estoque por Item</code>.
+        </li>
+      </ul>
+      <h5 class="card-title">Menu</h5>
+      <ul style="color: #0d6efd;">
+        <li>Relatórios > Estoque por Item</li>
+      </ul>
+      <h5 class="card-title">Ação</h5>
+      <ul>
+        <li>Basta entrar no menu que você verá a tabela a seguir:</li>
+          <table  id="data-table" class="table table-striped" style=" width:100%">
+            <thead>
+                <tr>
+                    <th>Nome do Armazém</th>
+                    <th>Quantidade de Itens</th>
+                    <th>Nome do Item</th>
+                    <th>Etiqueta de Patrimônio</th>
+                    <th>Número de Série</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>1</td>
+                    <td>Impressora Multifuncional Tanque de Tinta Ecotank L3250, Colorida, Wi-Fi, Conexão USB, Bivolt, Epson</td>
+                    <td></td>
+                    <td>XAABJ68686</td>
+                </tr>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>1</td>
+                    <td>Impressora Multifuncional Tanque de Tinta Ecotank L3250, Colorida, Wi-Fi, Conexão USB, Bivolt, Epson</td>
+                    <td></td>
+                    <td>XAABJ68687</td>
+                </tr>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>13</td>
+                    <td>Papel Sulfite A4, 75g, 210mmx297mm, Chamex - PT 500 FL</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>1</td>
+                    <td>Smartphone Galaxy A06, Android 14, 128GB, Câmera Selfie de 8MP, Câmera Dupla Traseira 50MP + 2MP, Tela Infinita de 6.7", Dual Chip, Azul escuro, A065M, Samsung</td>
+                    <td></td>
+                    <td>350073340281362</td>
+                </tr>
+                <tr>
+                    <td>Sala 37</td>
+                    <td>1</td>
+                    <td>Smartphone Galaxy A06, Android 14, 128GB, Câmera Selfie de 8MP, Câmera Dupla Traseira 50MP + 2MP, Tela Infinita de 6.7", Dual Chip, Azul escuro, A065M, Samsung</td>
+                    <td></td>
+                    <td>350073340281364</td>
+                </tr>
+            </tbody>
+        </table>
+      </ul>
+      <h5 class="card-title">Comentários</h5>
+      <ul>
+        <li>Note que todos os itens estão listados na tabela. A consolidação apenas ocorrem nos itens fungíveis (como o papel sulfite).</li>
+      </ul>
+    </div>
+  </div>
 
 {% endblock %}

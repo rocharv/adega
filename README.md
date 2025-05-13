@@ -50,16 +50,16 @@ A Adega foi desenvolvida utilizando o framework web fullstack de `Python`, o `Dj
 Devido a essa escolha - e suas soluções prontas para as camadas de modelo, visualização e template - nos parece que não faz sentido usar algo como React para o frontend. Em vez disso, estamos usando `Bootstrap` e algumas outras ferramentas para construir os componentes voltados para o usuário.
 
 Lista de linguagens, frameworks e bibliotecas utilizadas:
-```
-- Python
-- Django
-    - django-crispy-forms
-    - django-select2
-- Bootstrap
-- jQuery
-    - jQuery Mask
-- DataTables
-```
+- **Python**
+- **Django**
+    - **django-crispy-forms**: aprimorar visualmente os formulários
+    - **django-select2**: campos dropdown com buscas
+- **Bootstrap**: web framework
+- **jQuery**: dependência de diversas bibliotecas javascript utilizads
+    - **jQuery Mask**: para criar máscaras nos campos de formulários (ex: CPF e CNPJ)
+- **DataTables**: tabelas dinâmicas
+- **Faker** (dependência de desenvolvimento): usado para criar milhões de registros para testes
+
 ## Configuração do ambiente de desenvolvimento
 
 ### 1. Instalando o pipx

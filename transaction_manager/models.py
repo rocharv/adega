@@ -26,12 +26,12 @@ class Transaction(models.Model):
     )
 
     is_inflow = models.BooleanField(
-        "Operação de entrada",
+        "Operação de Entrada",
         default=True,
     )
 
     invoice = models.CharField(
-        "Nota fiscal ou recibo",
+        "Nota Fiscal ou Recibo",
         max_length=32,
         blank=True,
         help_text=(
@@ -89,12 +89,12 @@ class Transaction(models.Model):
     )
 
     beginning_date = models.DateField(
-        "Data de início",
+        "Data de Início",
         blank=True,
         null=True,
     )
     end_date = models.DateField(
-        "Data de término",
+        "Data de Término",
         blank=True,
         null=True,
     )

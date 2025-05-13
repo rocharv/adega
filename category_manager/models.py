@@ -46,7 +46,7 @@ class Category(models.Model):
     )
 
     barcode = models.CharField(
-        "Código de barras",
+        "Código de Barras",
         max_length=16,
         blank=True,
     )
@@ -71,7 +71,7 @@ class Category(models.Model):
         null=True,
     )
     weight_unit = models.CharField(
-        "Unidade de peso",
+        "Unidade de Peso",
         max_length=2,
         choices=[
             ("mg", "miligramas"),
@@ -109,7 +109,7 @@ class Category(models.Model):
     )
 
     dimension_unit = models.CharField(
-        "Unidade de medida",
+        "Unidade de Medida",
         max_length=2,
         choices=[
             ("mm", "milímetros"),

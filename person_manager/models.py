@@ -11,7 +11,7 @@ class Person(models.Model):
     )
 
     full_name = models.CharField(
-        "Nome completo",
+        "Nome Completo",
         max_length=64,
     )
 
@@ -44,14 +44,14 @@ class Person(models.Model):
 
     address = models.ForeignKey(
         "address_manager.Address",
-        verbose_name="Endereço completo",
+        verbose_name="Endereço Residencial",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
     )
 
     birthdate = models.DateField(
-        "Data de nascimento",
+        "Data de Nascimento",
         blank=True,
         null=True
     )
