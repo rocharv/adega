@@ -98,3 +98,9 @@ poetry run python manage.py createsuperuser
 ```bash
 poetry run python manage.py runserver
 ```
+
+### 4. Como configurar o ambiente para usar o banco Postgres
+- Para o Django conseguir conectar com o banco é necessário que o sistema operacional tenha a biblioteca PostgreSQL instalada. No Ubuntu isso pode ser feito com o seguinte comando:
+```bash
+sudo apt-get install libpq-dev
+```
