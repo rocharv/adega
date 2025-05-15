@@ -31,7 +31,10 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Clone the repository
-RUN git clone https://github.com/rocharv/adega.git /app
+# RUN git clone https://github.com/rocharv/adega.git /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Install project dependencies (but do not include dev dependencies)
 # RUN ${POETRY_VENV}/bin/poetry install --no-interaction --no-ansi
