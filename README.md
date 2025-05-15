@@ -68,43 +68,86 @@ O `Poetry` recomenda sua instalação através do `pipx`.
 Por favor, siga os [passos](https://github.com/pypa/pipx?tab=readme-ov-file#install-pipx) apropriados
 de acordo com o seu Sistema Operacional.
 
-### 2. Instale o Poetry
+### 2. Instalando o Poetry
 ```bash
 pipx install poetry
 ```
-### 3. Instalação do projeto
-- Na raiz do projeto `adega\`, instale as dependências do projeto:
+
+### 3. Instalando o projeto Adega
+Na raiz do projeto `adega\`, instale as dependências do projeto:
 ```bash
 poetry install
 ```
 
-- Crie a tabela de cache para o `select2`
+Crie a tabela de cache para o `select2`:
 ```bash
 poetry run python manage.py createcachetable select2_cache_table
 ```
 
-- Execute as migrações do projeto:
+Execute as migrações do projeto:
 ```bash
 poetry run python manage.py makemigrations
 poetry run python manage.py migrate --run-syncdb
 ```
 
-- Crie um `superuser` do `Django` para o projeto. Através deste usuário você poderá criar:
+### 4. Criando um superusuário
+Crie um `superuser` do `Django` para o projeto. Através deste usuário você poderá criar:
 ```bash
 poetry run python manage.py createsuperuser
 ```
 
-- Tudo pronto! Agora você pode iniciar o servidor web leve do Django para desenvolvimento:
+### 5. Rodando o servidor interno do Django
+Tudo pronto! Agora você pode iniciar o servidor web leve do Django para desenvolvimento:
 ```bash
 poetry run python manage.py runserver
 ```
 
-### 4. Como configurar o ambiente para usar o banco Postgres
-- Para o Django conseguir conectar com o banco é necessário que o sistema operacional tenha a biblioteca PostgreSQL instalada. No Ubuntu isso pode ser feito com o seguinte comando:
+### 6. Abrindo o projeto no navegador
+O projeto estará disponível em [http://127.0.0.1:8000](http://127.0.0.1:8000) e poderá ser acessado através do seu navegador:
+```bash
+google-chrome http://127.0.0.1:8000
+```
+
+## Configuração do ambiente de produção
+
+### Detalhes do ambiente de desenvolvimento
+Na seção anterior, foi demonstrado como você pode configurar e rodar o projeto Adega em um ambiente de desenvolvimento: um conjunto de configurações propício para criar novas funcionalidades e resolver eventuais bugs.
+
+O arquivo de configuração `adega/settings.py` está preparado justamente para o cenário de desenvolvimento:
+- A `SECRET_KEY` é insegura e está publicada nesse Github.
+- O banco de dados padrão é `sqlite3`.
+- O modo de debug está ligado (`DEBUG = True`).
+- O servidor utilizado é o simples `runserver` do Django.
+
+
+### Detalhes do ambiente de desenvolvimento
+No ambiente de produção devemos ter:
+- Uma Django `SECRET_KEY` segura e não publicada. Ela somente existirá em um secret manager e será injetada no ambiente de produção via variável de ambiente.
+- O banco de dados proposto é o `PostgreSQL`, mas você pode usar outro banco de dados, desde que o Django tenha suporte.
+- O modo de debug deve estar desligado (`DEBUG = False`).
+- O servidor utilizado deve ser um servidor WSGI adequado para produção, como o `gunicorn`.
+
+### 1. Ajustando o settings.py para produção
+Para o ambiente de produção sugerimos substituir o arquivo padrão de configurações, `adega/settings.py` por `adega/settings_prod.py`:
+
+```bash
+mv adega/settings.py adega/settings_dev.py
+cp adega/settings_prod.py adega/settings.py
+```
+### 2. Instalando libs locais para conexão com PostgreSQL
+Para o Django conseguir conectar com o banco é necessário que o sistema operacional tenha a biblioteca PostgreSQL instalada. No Ubuntu isso pode ser feito com o seguinte comando:
 ```bash
 sudo apt-get install libpq-dev
 ```
-- Você deve ter o `Docker` instalado e poderá subir os container prontos com o comando:
+### 3. Containerizando o projeto
+- Na raiz do projeto, `adega\`, existe uma proposta de containerização  com o `Docker`. O arquivo `compose.yaml` contém as instruções para subir os containers necessários para rodar o projeto em produção.
+- O arquivo `Dockerfile` contém as instruções para criar a imagem do projeto específica para atender as dependências do projeto em si.
+Você deve ter o `Docker` instalado e poderá subir os container prontos com o comando:
+- Se você quiser testar localmente esses containers, o primeiro passo é ter as variáveis de ambiente simuladas. Para isso:
+```bash
+cp .env.example .env
+```
+- Agora pode subir todo o ambiente de produção com o comando:
 ```bash
 sudo docker compose up -d
 ```
