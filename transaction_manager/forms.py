@@ -132,7 +132,6 @@ class CrudForm(forms.ModelForm):
                 TRANSACTION_TYPE = "inflow"
             else:
                 TRANSACTION_TYPE = "outflow"
-        print("TRANSACTION_TYPE", TRANSACTION_TYPE)
         if TRANSACTION_TYPE == "inflow":
             self.fields["is_inflow"].initial = True
             self.fields["type"].choices = [

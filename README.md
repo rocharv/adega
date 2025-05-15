@@ -104,3 +104,7 @@ poetry run python manage.py runserver
 ```bash
 sudo apt-get install libpq-dev
 ```
+- Você deve ter o `Docker` instalado e poderá subir os container prontos com o comando:
+```bash
+sudo docker compose up -d
+```

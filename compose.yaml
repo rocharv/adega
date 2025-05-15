@@ -1,4 +1,21 @@
 services:
+  adega:
+    container_name: adega
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ADEGA_DB_HOST=postgres
+      - ADEGA_DB_PORT=5432
+      - ADEGA_DB_USER=${POSTGRES_USER}
+      - ADEGA_DB_PASSWORD=${POSTGRES_PW}
+      - ADEGA_DB_NAME=${POSTGRES_DB}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    restart: always
+
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -25,6 +42,7 @@ services:
     depends_on:
       - postgres
     restart: always
+
 
 volumes:
   db_data:
