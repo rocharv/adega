@@ -129,16 +129,17 @@ No ambiente de produção devemos ter:
 
 ### 1. Ajustando o settings.py para produção
 Para o ambiente de produção sugerimos substituir o arquivo padrão de configurações, `adega/settings.py` por `adega/settings_prod.py`:
-
 ```bash
-mv adega/settings.py adega/settings_dev.py
 cp adega/settings_prod.py adega/settings.py
 ```
+Obs: Lembre-se de ajustar a lista `ALLOWED_HOSTS` para o domínio do seu servidor dentro do `settings.py`!!!
+
 ### 2. Instalando libs locais para conexão com PostgreSQL
 Para o Django conseguir conectar com o banco é necessário que o sistema operacional tenha a biblioteca PostgreSQL instalada. No Ubuntu isso pode ser feito com o seguinte comando:
 ```bash
 sudo apt-get install libpq-dev
 ```
+
 ### 3. Containerizando o projeto
 - Na raiz do projeto, `adega\`, existe uma proposta de containerização  com o `Docker`. O arquivo `compose.yaml` contém as instruções para subir os containers necessários para rodar o projeto em produção.
 - O arquivo `Dockerfile` contém as instruções para criar a imagem do projeto específica para atender as dependências do projeto em si.

@@ -37,7 +37,6 @@ services:
       - postgres
     restart: always
 
-
 volumes:
   db_data:
   pgadmin_data:
