@@ -14,6 +14,8 @@ dependencies = [
     "django-select2 (>=8.4.0,<9.0.0)",
     "psycopg (>=3.2.9,<4.0.0)",
     "dotenv (>=0.9.9,<0.10.0)",
+    "whitenoise (>=6.9.0,<7.0.0)",
+    "gunicorn (>=23.0.0,<24.0.0)",
 ]
 
 [tool.poetry]

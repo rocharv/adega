@@ -37,14 +37,23 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 COPY . /app
 
 # Install project dependencies (but do not include dev dependencies)
-# RUN ${POETRY_VENV}/bin/poetry install --no-interaction --no-ansi
 RUN poetry install --no-interaction --no-ansi
 
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Start the application
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Create table for django-select2
+CMD ["poetry", "run", "python", "manage.py", "createcachetable", "select2_cache_table"]
 
-# Just leave the container running
-# CMD ["tail", "-f", "/dev/null"]
+# Collect static files
+CMD ["poetry", "run", "python", "manage.py", "collectstatic", "--noinput"]
+
+# Apply database migrations
+CMD ["poetry", "run", "python", "manage.py", "makemigrations"]
+CMD ["poetry", "run", "python", "manage.py", "migrate", "--run-syncdb"]
+
+# Create a superuser (replace 'admin' and 'password' with your desired credentials)
+ CMD ["poetry", "run", "python", "manage.py", "createsuperuser", "--noinput"]
+
+ # Start the application
+CMD ["poetry", "run", "gunicorn", "--bind", "0.0.0.0:8000", "adega.wsgi:application"]

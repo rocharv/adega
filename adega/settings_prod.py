@@ -69,13 +69,13 @@ CACHES = {
         'LOCATION': 'select2_cache_table', # Name your cache table
     }
 }
-
 # Tell select2 which cache configuration to use:
 SELECT2_CACHE_BACKEND = 'select2'
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # For serving static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -152,7 +152,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-STATIC_URL = 'home/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'home/static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'home/static'),  # Or wherever your project's static files are
+    #  If django-select2's static files aren't in a standard location, you might
+    #  need to add a path to its 'static' directory within your virtualenv's
+    #  site-packages. This is less common but possible.  For example:
+    #  '/path/to/your/virtualenv/Lib/site-packages/django_select2/static',
+    os.path.join(BASE_DIR, '.venv/lib/python3.13/site-packages/django_select2/static/'),
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
